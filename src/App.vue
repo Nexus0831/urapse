@@ -19,4 +19,9 @@
   @media(max-width 619px)
     /*grid-template-rows 50px 1fr*/
     grid-template-columns 16px 1fr 16px
+
+#nav
+  background-color white
+  grid-row 1 / 2
+  grid-column 1 / 4
 </style>
