@@ -21,7 +21,9 @@
     grid-template-columns 16px 1fr 16px
 
 #nav
-  background-color white
+  background linear-gradient(45deg,  transparent 10px, #FFF 10px)
+  background-position bottom left, bottom right, top right, top left;
+  background-repeat no-repeat;
   grid-row 1 / 2
   grid-column 1 / 4
 </style>
