@@ -21,9 +21,11 @@
     grid-template-columns 16px 1fr 16px
 
 #nav
-  background linear-gradient(45deg,  transparent 10px, #FFF 10px)
+  background linear-gradient(45deg,  transparent 15px, #FFF 15px)
+  /*background linear-gradient(45deg,  transparent 10px, rgba(0, 0, 0, 0) 10px)*/
   background-position bottom left, bottom right, top right, top left;
   background-repeat no-repeat;
+  /*border-style hidden hidden solid*/
   grid-row 1 / 2
   grid-column 1 / 4
 </style>
