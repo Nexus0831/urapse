@@ -9,7 +9,7 @@
 #app
   height 100%
   display grid
-  grid-template-rows 80px 1fr
+  grid-template-rows 60px 1fr
   grid-template-columns 24px 1fr 24px
   font-family: 'Roboto', 'Noto Sans JP', sans-serif
   -webkit-font-smoothing antialiased
@@ -17,6 +17,6 @@
   color #FFF
 
   @media(max-width 619px)
-    grid-template-rows 70px 1fr
+    /*grid-template-rows 50px 1fr*/
     grid-template-columns 16px 1fr 16px
 </style>
