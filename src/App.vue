@@ -24,14 +24,17 @@
   z-index 100
   width 100%
   height 60px
+  background-color #303030
   /*position fixed*/
+
   /* --- 左下のエッジを斜めにする --- */
-  background linear-gradient(45deg,  transparent 15px, #424242 15px)
+  /* background linear-gradient(45deg,  transparent 15px, #424242 15px) */
   /*background linear-gradient(45deg,  transparent 10px, rgba(0, 0, 0, 0) 10px)*/
-  background-position bottom left, bottom right, top right, top left;
-  background-repeat no-repeat;
+  /*background-position bottom left, bottom right, top right, top left;*/
+  /*background-repeat no-repeat;*/
   /*border-style hidden hidden solid*/
   /* --- end --- */
+
   /* --- gridのどこに配置するかを設定 --- */
   grid-row 1 / 2
   grid-column 1 / 4
