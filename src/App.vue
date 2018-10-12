@@ -26,7 +26,7 @@
   height 60px
   /*position fixed*/
   /* --- 左下のエッジを斜めにする --- */
-  background linear-gradient(45deg,  transparent 15px, #FFEA00 15px)
+  background linear-gradient(45deg,  transparent 15px, #424242 15px)
   /*background linear-gradient(45deg,  transparent 10px, rgba(0, 0, 0, 0) 10px)*/
   background-position bottom left, bottom right, top right, top left;
   background-repeat no-repeat;
@@ -35,6 +35,12 @@
   /* --- gridのどこに配置するかを設定 --- */
   grid-row 1 / 2
   grid-column 1 / 4
+  /* --- end --- */
+
+  /* --- elevation --- */
+  box-shadow 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+  0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 10px 0px rgba(0, 0, 0, 0.12)
   /* --- end --- */
 #content
   grid-row 2 / 3
