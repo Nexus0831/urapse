@@ -12,7 +12,7 @@
 #app
   height 100%
   display grid
-  grid-template-rows 60px 20px 1fr
+  grid-template-rows 50px 20px 1fr
   grid-template-columns 24px 1fr 24px
   font-family: 'Roboto', 'Noto Sans JP', sans-serif
   -webkit-font-smoothing antialiased
@@ -32,8 +32,8 @@
   position fixed
   z-index 100
   width 100%
-  height 60px
-  background-color #424242
+  height 50px
+  background-color #303030
 
   /* --- 左下のエッジを斜めにする --- */
   /* background linear-gradient(45deg,  transparent 15px, #424242 15px) */
@@ -58,6 +58,6 @@
   grid-column 2/ 3
 
 #title
-  font-size 28px
+  font-size 24px
   font-weight 500
 </style>
