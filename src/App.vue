@@ -33,7 +33,7 @@
   z-index 100
   width 100%
   height 50px
-  background-color #424242
+  background-color #303030
 
   /* --- 左下のエッジを斜めにする --- */
   /* background linear-gradient(45deg,  transparent 15px, #424242 15px) */
