@@ -1,5 +1,13 @@
 <template>
-  <div class="home">
+  <div id="home">
+    <div class="card">
+    </div>
+    <div class="card">
+    </div>
+    <div class="card">
+    </div>
+    <div class="card">
+    </div>
   </div>
 </template>
 
@@ -30,4 +38,8 @@ export default class HelloWorld extends Vue {
       grid-template-columns: 32% 32% 32%;
       grid-row-gap: 20px;
       grid-column-gap: 2%;
+
+  .card
+    background-color #303030
+    height 210px
 </style>
