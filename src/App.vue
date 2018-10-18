@@ -12,7 +12,7 @@
 #app
   height 100%
   display grid
-  grid-template-rows 60px 1fr
+  grid-template-rows 60px 20px 1fr
   grid-template-columns 24px 1fr 24px
   font-family: 'Roboto', 'Noto Sans JP', sans-serif
   -webkit-font-smoothing antialiased
@@ -54,7 +54,7 @@
   0px 1px 10px 0px rgba(0, 0, 0, 0.12)
   /* --- end --- */
 #content
-  grid-row 2 / 3
+  grid-row 3 / 4
   grid-column 2/ 3
 
 #title
