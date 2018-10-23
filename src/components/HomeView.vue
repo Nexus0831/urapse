@@ -1,12 +1,21 @@
 <template>
-  <div class="home">
+  <div id="home">
+    <Card />
+    <Card />
+    <Card />
+    <Card />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import Card from './Card.vue';
 
-@Component
+@Component({
+  components: {
+  Card,
+  },
+  })
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 }
@@ -14,20 +23,20 @@ export default class HelloWorld extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
-  #home
-    display grid
+#home
+  display grid
 
-    @media (max-width 619px)
-      grid-template-columns: 1fr;
-      grid-row-gap: 20px;
+  @media (max-width 619px)
+    grid-template-columns: 1fr;
+    grid-row-gap: 20px;
 
-    @media (min-width 620px)
-      grid-template-columns: 49% 49%;
-      grid-row-gap: 16px;
-      grid-column-gap: 2%;
+  @media (min-width 619px)
+    grid-template-columns: 49% 49%;
+    grid-row-gap: 16px;
+    grid-column-gap: 2%;
 
-    @media (min-width 1024px)
-      grid-template-columns: 32% 32% 32%;
-      grid-row-gap: 20px;
-      grid-column-gap: 2%;
+  @media (min-width 1024px)
+    grid-template-columns: 32% 32% 32%;
+    grid-row-gap: 20px;
+    grid-column-gap: 2%;
 </style>
