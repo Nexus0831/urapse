@@ -14,7 +14,7 @@ export default class Card extends Vue {
 <style scoped lang="stylus">
   .card
     /*--- style ---*/
-    background-color #303030
+    background-color #424242
     height 210px
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
       0px 1px 1px 0px rgba(0, 0, 0, 0.14),
