@@ -1,20 +1,21 @@
 <template>
   <div id="home">
-    <div class="card">
-    </div>
-    <div class="card">
-    </div>
-    <div class="card">
-    </div>
-    <div class="card">
-    </div>
+    <Card />
+    <Card />
+    <Card />
+    <Card />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import Card from './Card.vue';
 
-@Component
+@Component({
+  components: {
+  Card,
+  },
+  })
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 }
@@ -38,12 +39,4 @@ export default class HelloWorld extends Vue {
     grid-template-columns: 32% 32% 32%;
     grid-row-gap: 20px;
     grid-column-gap: 2%;
-
-.card
-  background-color #303030
-  height 210px
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
-  0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-  0px 2px 1px -1px rgba(0, 0, 0, 0.12)
-  border-radius 4px
 </style>
