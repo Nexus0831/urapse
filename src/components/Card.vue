@@ -1,7 +1,11 @@
 <template>
-  <div class="card">
-    <div class="card-title">{{ mindMap.title }}</div>
-    <!--<div class="card-body"></div>-->
+  <div class="card" :id="mindMap.key">
+    <div class="card-title">
+      {{ mindMap.title }}
+    </div>
+    <div class="card-body">
+      {{ mindMap.body }}
+    </div>
   </div>
 </template>
 
@@ -45,5 +49,11 @@ export default class Card extends Vue {
     /*--- layout ---*/
     display flex
     align-items center
+    /*--- end ---*/
+
+  .card-body
+    /*--- style ---*/
+    grid-row 4 / 5
+    grid-column 2 / 3
     /*--- end ---*/
 </style>
