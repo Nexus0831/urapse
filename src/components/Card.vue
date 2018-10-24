@@ -23,5 +23,8 @@ export default class Card extends Vue {
     /*--- end --- */
 
     /*--- layout ---*/
+    display grid
+    grid-template-rows 12px 32px 8px 1fr 8px 32px 12px
+    grid-template-columns 16px 1fr 16px
     /*--- end ---*/
 </style>
