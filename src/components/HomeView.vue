@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <Card>
+    <Card :mindMap="testDate">
     </Card>
   </div>
 </template>
@@ -15,7 +15,13 @@ import Card from './Card.vue';
   },
   })
 export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
+  // @Prop() private mindMap!: object;
+  testDate = {
+    key: '12345',
+    title: 'Card Title',
+    body: 'Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
+    nodes: [{}, {}, {}],
+  };
 }
 </script>
 

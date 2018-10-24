@@ -1,7 +1,7 @@
 <template>
   <div class="card">
-    <!--<div class="card-title">{{ mindMap.title }}</div>-->
-    <div class="card-body"></div>
+    <div class="card-title">{{ mindMap.title }}</div>
+    <!--<div class="card-body"></div>-->
   </div>
 </template>
 
@@ -11,9 +11,12 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class Card extends Vue {
   @Prop() private mindMap!: {
+    key: string,
     title: string,
     body: string,
+    nodes: object[],
   };
+  // @Prop() private title!: string;
 }
 </script>
 
@@ -32,5 +35,15 @@ export default class Card extends Vue {
     display grid
     grid-template-rows 12px 32px 8px 1fr 8px 32px 12px
     grid-template-columns 16px 1fr 16px
+    /*--- end ---*/
+
+  .card-title
+    /*--- style ---*/
+    grid-row 2 / 3
+    grid-column 2 / 3
+    /*--- end ---*/
+    /*--- layout ---*/
+    display flex
+    align-items center
     /*--- end ---*/
 </style>
