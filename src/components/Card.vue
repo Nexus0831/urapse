@@ -1,13 +1,19 @@
 <template>
   <div class="card">
+    <!--<div class="card-title">{{ mindMap.title }}</div>-->
+    <div class="card-body"></div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Card extends Vue {
+  @Prop() private mindMap!: {
+    title: string,
+    body: string,
+  };
 }
 </script>
 
