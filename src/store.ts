@@ -8,7 +8,7 @@ export default new Vuex.Store({
     testData: {
       key: '12345',
       title: 'Card Title aaaaaaaaaaaaaaa',
-      body: 'Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
+      body: 'Lizards \n are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
       nodes: [{}, {}, {}],
     },
   },

@@ -32,10 +32,11 @@ export default class Card extends Vue {
 
     /*--- layout ---*/
     display grid
-    grid-template-rows 12px 32px 8px 1fr 8px 32px 12px
+    grid-template-rows 16px 32px 8px 1fr 8px 32px 12px
     grid-template-columns 16px 1fr 16px
     /*position absolute*/
     /*--- end ---*/
+
   .card-title
     /*--- style ---*/
     font-size 24px
@@ -44,18 +45,24 @@ export default class Card extends Vue {
     text-overflow ellipsis
     white-space nowrap
     /*--- end ---*/
-
     /*--- position ---*/
     grid-row 2 / 3
     grid-column 2 / 3
     /*--- end ---*/
 
     /*--- layout ---*/
-    display flex
-    align-items center
+    /*display flex*/
+    /*align-items center*/
     /*--- end ---*/
 
   .card-body
+    /*--- style ---*/
+    font-size 16px
+    font-weight 400
+    overflow hidden
+    text-overflow ellipsis
+    /*--- end ---*/
+
     /*--- position ---*/
     grid-row 4 / 5
     grid-column 2 / 3
