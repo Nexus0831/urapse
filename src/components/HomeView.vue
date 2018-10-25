@@ -1,27 +1,31 @@
 <template>
   <div id="home">
-    <Card :mindMap="testDate">
+    <Card :mindMap="testData">
     </Card>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { mapState } from 'vuex';
 import Card from './Card.vue';
 
 @Component({
   components: {
   Card,
   },
+  computed: {
+  ...mapState([
+    'testData'
+    ]),
+  }
   })
-export default class HelloWorld extends Vue {
+export default class HomeView extends Vue {
   // @Prop() private mindMap!: object;
-  testDate = {
-    key: '12345',
-    title: 'Card Title',
-    body: 'Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
-    nodes: [{}, {}, {}],
-  };
+
+  // mounted() {
+  //   console.log(this.$store.state.title);
+  // }
 }
 </script>
 
