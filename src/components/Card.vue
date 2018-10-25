@@ -1,11 +1,10 @@
 <template>
   <div class="card">
-    <div class="card-title">
-      {{ title }}
-    </div>
-    <div class="card-body">
-      {{ body }}
-    </div>
+    <div v-show="!isTitleEdit" class="card-title" @dblclick="titleEdit">{{ title }}</div>
+    <!--<input type="text" :value="title" @dblclick="" @keyup.enter="" autofocus>-->
+    <input class="title-input" v-show="isTitleEdit" type="text" :value="title" autofocus />
+    <div class="card-body">{{ body }}</div>
+    <!--<textarea :value="title" @dblclick="" @keyup.enter="" autofocus></textarea>-->
   </div>
 </template>
 
@@ -16,6 +15,21 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class Card extends Vue {
   @Prop() private title!: string;
   @Prop() private body!: string;
+
+  isTitleEdit: boolean = false;
+  // isBodyEdit: boolean = false;
+
+  titleEdit() {
+    this.isTitleEdit = !this.isTitleEdit;
+  }
+
+  // set titleEdit(current: boolean) {
+  //   this.isTitleEdit = !current;
+  // }
+
+  // set bodyEdit(current: boolean) {
+  //   this.isBodyEdit = !current;
+  // }
 }
 </script>
 
@@ -67,4 +81,10 @@ export default class Card extends Vue {
     grid-row 4 / 5
     grid-column 2 / 3
     /*--- end ---*/
+
+  .title-input
+    /*--- position ---*/
+    grid-row 2 / 3
+    grid-column 2 / 3
+  /*--- end ---*/
 </style>
