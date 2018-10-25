@@ -1,10 +1,10 @@
 <template>
-  <div class="card" :id="mindMap.key">
+  <div class="card">
     <div class="card-title">
-      {{ mindMap.title }}
+      {{ title }}
     </div>
     <div class="card-body">
-      {{ mindMap.body }}
+      {{ body }}
     </div>
   </div>
 </template>
@@ -14,13 +14,14 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Card extends Vue {
-  @Prop() private mindMap!: {
-    key: string,
-    title: string,
-    body: string,
-    nodes: object[],
-  };
-  // @Prop() private title!: string;
+  // @Prop() private mindMap!: {
+  //   key: string,
+  //   title: string,
+  //   body: string,
+  //   nodes: object[],
+  // };
+  @Prop() private title!: string;
+  @Prop() private body!: string;
 }
 </script>
 
@@ -42,17 +43,18 @@ export default class Card extends Vue {
     /*--- end ---*/
 
   .card-title
-    /*--- style ---*/
+    /*--- position ---*/
     grid-row 2 / 3
     grid-column 2 / 3
     /*--- end ---*/
+
     /*--- layout ---*/
     display flex
     align-items center
     /*--- end ---*/
 
   .card-body
-    /*--- style ---*/
+    /*--- position ---*/
     grid-row 4 / 5
     grid-column 2 / 3
     /*--- end ---*/

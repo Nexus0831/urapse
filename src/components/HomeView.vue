@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <Card :mindMap="testData">
+    <Card :id="testData.key" :title="testData.title" :body="testData.body">
     </Card>
   </div>
 </template>
