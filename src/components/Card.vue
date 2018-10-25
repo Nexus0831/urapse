@@ -2,7 +2,14 @@
   <div class="card">
     <div v-show="!isTitleEdit" class="card-title" @dblclick="titleEdit">{{ title }}</div>
     <!--<input type="text" :value="title" @dblclick="" @keyup.enter="" autofocus>-->
-    <input class="title-input" v-show="isTitleEdit" type="text" :value="title" autofocus />
+    <input
+      class="title-input"
+      v-show="isTitleEdit"
+      type="text"
+      @blur="titleEdit"
+      :value="title"
+      autofocus
+    />
     <div class="card-body">{{ body }}</div>
     <!--<textarea :value="title" @dblclick="" @keyup.enter="" autofocus></textarea>-->
   </div>
