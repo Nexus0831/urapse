@@ -1,7 +1,7 @@
 <template>
   <div id="home">
-    <Card :id="testData.key" :title="testData.title" :body="testData.body">
-    </Card>
+    <Card :id="testData.key" :title="testData.title" :body="testData.body" />
+    <Card :id="testData.key" :title="testData.title" :body="testData.body" />
   </div>
 </template>
 

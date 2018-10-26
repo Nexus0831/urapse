@@ -10,8 +10,15 @@
       :value="title"
       autofocus
     />
-    <div class="card-body">{{ body }}</div>
-    <!--<textarea :value="title" @dblclick="" @keyup.enter="" autofocus></textarea>-->
+    <div class="card-body" v-show="!isBodyEdit" @dblclick="bodyEdit">{{ body }}</div>
+    <textarea
+      class="body-input"
+      v-show="isBodyEdit"
+      @blur="bodyEdit"
+      :value="body"
+      autofocus
+    >
+    </textarea>
   </div>
 </template>
 
@@ -24,10 +31,14 @@ export default class Card extends Vue {
   @Prop() private body!: string;
 
   isTitleEdit: boolean = false;
-  // isBodyEdit: boolean = false;
+  isBodyEdit: boolean = false;
 
   titleEdit() {
     this.isTitleEdit = !this.isTitleEdit;
+  }
+
+  bodyEdit() {
+    this.isBodyEdit = !this.isBodyEdit;
   }
 
   // set titleEdit(current: boolean) {
@@ -92,6 +103,12 @@ export default class Card extends Vue {
   .title-input
     /*--- position ---*/
     grid-row 2 / 3
+    grid-column 2 / 3
+    /*--- end ---*/
+
+  .body-input
+    /*--- position ---*/
+    grid-row 4 / 5
     grid-column 2 / 3
   /*--- end ---*/
 </style>
