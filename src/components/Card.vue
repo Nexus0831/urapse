@@ -55,7 +55,7 @@ export default class Card extends Vue {
   .card
     /*--- style ---*/
     background-color #424242
-    height 210px
+    height 180px
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
       0px 1px 1px 0px rgba(0, 0, 0, 0.14),
       0px 2px 1px -1px rgba(0, 0, 0, 0.12)
@@ -82,7 +82,9 @@ export default class Card extends Vue {
     overflow hidden
     text-overflow ellipsis
     white-space nowrap
+    user-select none
     /*--- end ---*/
+
     /*--- position ---*/
     grid-row 2 / 3
     grid-column 2 / 3
@@ -99,6 +101,8 @@ export default class Card extends Vue {
     font-weight 400
     overflow hidden
     text-overflow ellipsis
+    user-select none
+    white-space pre-wrap
     /*--- end ---*/
 
     /*--- position ---*/
