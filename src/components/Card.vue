@@ -60,6 +60,7 @@ export default class Card extends Vue {
       0px 1px 1px 0px rgba(0, 0, 0, 0.14),
       0px 2px 1px -1px rgba(0, 0, 0, 0.12)
     border-radius 4px
+    transition-duration .3s
     /*--- end --- */
 
     /*--- layout ---*/
@@ -68,6 +69,11 @@ export default class Card extends Vue {
     grid-template-columns 16px 1fr 16px
     /*position absolute*/
     /*--- end ---*/
+
+    &:hover
+      background-color #3b3b3b
+      cursor pointer
+
 
   .card-title
     /*--- style ---*/
