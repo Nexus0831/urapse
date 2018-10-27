@@ -1,7 +1,6 @@
 <template>
   <div class="card">
     <div v-show="!isTitleEdit" class="card-title" @dblclick="titleEdit">{{ title }}</div>
-    <!--<input type="text" :value="title" @dblclick="" @keyup.enter="" autofocus>-->
     <input
       class="title-input"
       v-show="isTitleEdit"
@@ -40,14 +39,6 @@ export default class Card extends Vue {
   bodyEdit() {
     this.isBodyEdit = !this.isBodyEdit;
   }
-
-  // set titleEdit(current: boolean) {
-  //   this.isTitleEdit = !current;
-  // }
-
-  // set bodyEdit(current: boolean) {
-  //   this.isBodyEdit = !current;
-  // }
 }
 </script>
 
@@ -93,6 +84,7 @@ export default class Card extends Vue {
     /*--- layout ---*/
     /*display flex*/
     /*align-items center*/
+    padding-top 3px
     /*--- end ---*/
 
   .card-body
