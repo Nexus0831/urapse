@@ -107,6 +107,15 @@ export default class Card extends Vue {
     /*--- end ---*/
 
   .title-input
+    /*--- style ---*/
+    background-color transparent
+    color white
+    font-size 24px
+    font-weight 400
+    outline none
+    box-shadow none !important
+    border none
+    /*--- end ---*/
     /*--- position ---*/
     grid-row 2 / 3
     grid-column 2 / 3
