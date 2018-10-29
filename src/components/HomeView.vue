@@ -1,23 +1,32 @@
 <template>
   <div id="home">
-    <Card />
-    <Card />
-    <Card />
-    <Card />
+    <Card :id="testData.key" :title="testData.title" :body="testData.body" />
+    <Card :id="testData.key" :title="testData.title" :body="testData.body" />
+    <!--<i class="material-icons" style="color: #FB8C00">add</i>-->
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { mapState } from 'vuex';
 import Card from './Card.vue';
 
 @Component({
   components: {
   Card,
   },
+  computed: {
+  ...mapState([
+    'testData'
+    ]),
+  }
   })
-export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
+export default class HomeView extends Vue {
+  // @Prop() private mindMap!: object;
+
+  // mounted() {
+  //   console.log(this.$store.state.title);
+  // }
 }
 </script>
 
