@@ -1,7 +1,8 @@
 <template>
   <div id="home">
-    <Card :id="testData.key" :title="testData.title" :body="testData.body" />
-    <Card :id="testData.key" :title="testData.title" :body="testData.body" />
+    <template v-for="item in testData">
+      <Card :id="item.key" :key="item.key" :title="item.title" :body="item.body" />
+    </template>
     <!--<i class="material-icons" style="color: #FB8C00">add</i>-->
   </div>
 </template>
