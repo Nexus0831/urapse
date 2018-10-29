@@ -9,13 +9,13 @@
       :value="title"
       v-focus
     />
-    <div class="card-body" v-show="!isBodyEdit" @dblclick="bodyEdit">{{ body }}</div>
+    <div class="card-body" v-if="!isBodyEdit" @dblclick="bodyEdit">{{ body }}</div>
     <textarea
       class="body-input"
-      v-show="isBodyEdit"
+      v-if="isBodyEdit"
       @blur="bodyEdit"
       :value="body"
-      autofocus
+      v-focus
     >
     </textarea>
   </div>
