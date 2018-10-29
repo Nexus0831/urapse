@@ -1,13 +1,13 @@
 <template>
   <div class="card">
-    <div v-show="!isTitleEdit" class="card-title" @dblclick="titleEdit">{{ title }}</div>
+    <div v-if="!isTitleEdit" class="card-title" @dblclick="titleEdit">{{ title }}</div>
     <input
       class="title-input"
-      v-show="isTitleEdit"
+      v-if="isTitleEdit"
       type="text"
       @blur="titleEdit"
       :value="title"
-      autofocus
+      v-focus
     />
     <div class="card-body" v-show="!isBodyEdit" @dblclick="bodyEdit">{{ body }}</div>
     <textarea
@@ -24,7 +24,15 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-@Component
+@Component({
+  directives: {
+  focus: {
+  inserted: (el) => {
+  el.focus()
+  }
+  }
+  }
+  })
 export default class Card extends Vue {
   @Prop() private title!: string;
   @Prop() private body!: string;
