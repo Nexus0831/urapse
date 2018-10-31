@@ -1,19 +1,21 @@
 <template>
   <div class="card">
-    <div v-if="!isTitleEdit" class="card-title" @dblclick="titleEdit">{{ title }}</div>
+    <div v-if="!isTitleEdit" class="card-title" @dblclick="toggleTitleEdit">
+      {{ title }}
+    </div>
     <input
       class="title-input"
       v-if="isTitleEdit"
       type="text"
-      @blur="titleEdit"
+      @blur="toggleTitleEdit"
       :value="title"
       v-focus
     />
-    <div class="card-body" v-if="!isBodyEdit" @dblclick="bodyEdit">{{ body }}</div>
+    <div class="card-body" v-if="!isBodyEdit" @dblclick="toggleBodyEdit">{{ body }}</div>
     <textarea
       class="body-input"
       v-if="isBodyEdit"
-      @blur="bodyEdit"
+      @blur="toggleBodyEdit"
       :value="body"
       v-focus
     >
@@ -40,11 +42,11 @@ export default class Card extends Vue {
   isTitleEdit: boolean = false;
   isBodyEdit: boolean = false;
 
-  titleEdit() {
+  toggleTitleEdit() {
     this.isTitleEdit = !this.isTitleEdit;
   }
 
-  bodyEdit() {
+  toggleBodyEdit() {
     this.isBodyEdit = !this.isBodyEdit;
   }
 }
