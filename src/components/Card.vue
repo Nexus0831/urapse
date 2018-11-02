@@ -51,7 +51,6 @@ export default class Card extends Vue {
   }
 
   rippleEffect(event: MouseEvent) {
-    console.log(event);
     const el: HTMLElement = this.$el;
 
     let rippleEl: HTMLSpanElement = document.querySelector('span.ripple') as HTMLSpanElement;
