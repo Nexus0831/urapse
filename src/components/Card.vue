@@ -1,19 +1,21 @@
 <template>
-  <div class="card">
-    <div v-if="!isTitleEdit" class="card-title" @dblclick="titleEdit">{{ title }}</div>
+  <div class="card" @click="rippleEffect">
+    <div v-if="!isTitleEdit" class="card-title" @dblclick="toggleTitleEdit">
+      {{ title }}
+    </div>
     <input
       class="title-input"
       v-if="isTitleEdit"
       type="text"
-      @blur="titleEdit"
+      @blur="toggleTitleEdit"
       :value="title"
       v-focus
     />
-    <div class="card-body" v-if="!isBodyEdit" @dblclick="bodyEdit">{{ body }}</div>
+    <div class="card-body" v-if="!isBodyEdit" @dblclick="toggleBodyEdit">{{ body }}</div>
     <textarea
       class="body-input"
       v-if="isBodyEdit"
-      @blur="bodyEdit"
+      @blur="toggleBodyEdit"
       :value="body"
       v-focus
     >
@@ -40,17 +42,37 @@ export default class Card extends Vue {
   isTitleEdit: boolean = false;
   isBodyEdit: boolean = false;
 
-  titleEdit() {
+  toggleTitleEdit() {
     this.isTitleEdit = !this.isTitleEdit;
   }
 
-  bodyEdit() {
+  toggleBodyEdit() {
     this.isBodyEdit = !this.isBodyEdit;
+  }
+
+  rippleEffect(event: MouseEvent) {
+    const el: HTMLElement = this.$el;
+
+    let rippleEl: HTMLSpanElement = document.querySelector('span.ripple') as HTMLSpanElement;
+    if (!rippleEl) {
+      rippleEl = document.createElement('span');
+    }
+    el.appendChild(rippleEl);
+
+    const max = Math.max(el.offsetWidth, el.offsetHeight);
+    rippleEl.style.width = `${max}px`;
+    rippleEl.style.height = `${max}px`;
+
+    const rect = el.getBoundingClientRect();
+    rippleEl.style.left = `${event.clientX - rect.left - (max / 2)}px`;
+    rippleEl.style.top = `${event.clientY - rect.top - (max / 2)}px`;
+
+    rippleEl.classList.add('ripple');
   }
 }
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus">
   .card
     /*--- style ---*/
     background-color #424242
@@ -59,7 +81,9 @@ export default class Card extends Vue {
       0px 1px 1px 0px rgba(0, 0, 0, 0.14),
       0px 2px 1px -1px rgba(0, 0, 0, 0.12)
     border-radius 4px
-    transition-duration .3s
+    transition all .3s
+    overflow hidden
+    position relative
     /*--- end --- */
 
     /*--- layout ---*/
@@ -82,6 +106,7 @@ export default class Card extends Vue {
     text-overflow ellipsis
     white-space nowrap
     user-select none
+    z-index 10
     /*--- end ---*/
 
     /*--- position ---*/
@@ -103,6 +128,7 @@ export default class Card extends Vue {
     text-overflow ellipsis
     user-select none
     white-space pre-wrap
+    z-index 10
     /*--- end ---*/
 
     /*--- position ---*/
@@ -119,6 +145,7 @@ export default class Card extends Vue {
     outline none
     box-shadow none !important
     border none
+    z-index 10
     /*--- end ---*/
 
     /*--- position ---*/
@@ -136,10 +163,28 @@ export default class Card extends Vue {
     box-shadow none !important
     border none
     resize none
+    z-index 10
     /*--- end ---*/
 
     /*--- position ---*/
     grid-row 4 / 5
     grid-column 2 / 3
-  /*--- end ---*/
+    /*--- end ---*/
+
+  .ripple
+    display block
+    position absolute
+    background-color rgba(32, 32, 32, 0.5)
+    border-radius 50%
+    transform scale(0)
+    z-index 1
+    animation ripple 0.4s linear
+
+  @keyframes ripple {
+    to {
+      opacity 0
+      transform scale(2.5)
+    }
+  }
+
 </style>
