@@ -1,11 +1,14 @@
 <template>
   <div id="home">
+    <div class="create-button">
+      <i class="material-icons">add</i>
+      Create a MindMap
+    </div>
     <div id="cards">
       <template v-for="item in testData">
         <Card :id="item.key" :key="item.key" :title="item.title" :body="item.body" />
       </template>
     </div>
-    <!--<i class="material-icons" style="color: #FB8C00">add</i>-->
   </div>
 </template>
 
@@ -39,6 +42,23 @@ export default class HomeView extends Vue {
   display grid
   grid-template-rows 40px 1fr
   grid-template-columns 1fr
+
+.create-button
+  /*--- style ---*/
+  font-size 24px
+  font-weight 500
+  /*--- end ---*/
+
+  /*--- position ---*/
+  grid-row 1 / 2
+  grid-column 1 / 2
+  /*--- end ---*/
+
+  /*--- layout ---*/
+  display flex
+  justify-content center
+  align-items center
+  /*--- end ---*/
 
 #cards
   display grid
