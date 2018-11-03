@@ -2,7 +2,7 @@
   <div id="home">
     <div class="create-button">
       <i class="material-icons">add</i>
-      Create a MindMap
+      Create MindMap
     </div>
     <div id="cards">
       <template v-for="item in testData">
@@ -46,7 +46,7 @@ export default class HomeView extends Vue {
 .create-button
   /*--- style ---*/
   font-size 24px
-  font-weight 500
+  font-weight 400
   /*--- end ---*/
 
   /*--- position ---*/
@@ -57,7 +57,6 @@ export default class HomeView extends Vue {
   /*--- layout ---*/
   display flex
   justify-content center
-  align-items center
   /*--- end ---*/
 
 #cards
