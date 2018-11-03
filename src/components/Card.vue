@@ -1,5 +1,5 @@
 <template>
-  <div class="card" @click="rippleEffect">
+  <div class="card" @click="rippleEvent">
     <div v-if="!isTitleEdit" class="card-title" @dblclick="toggleTitleEdit">
       {{ title }}
     </div>
@@ -25,6 +25,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import rippleEffect from '@/functions/ripple';
 
 @Component({
   directives: {
@@ -32,6 +33,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
   inserted: (el) => {
   el.focus()
   }
+  }
+  },
+  methods: {
+  rippleEvent: (event) => {
+  rippleEffect(event);
   }
   }
   })
@@ -48,26 +54,6 @@ export default class Card extends Vue {
 
   toggleBodyEdit() {
     this.isBodyEdit = !this.isBodyEdit;
-  }
-
-  rippleEffect(event: MouseEvent) {
-    const el: HTMLElement = this.$el;
-
-    let rippleEl: HTMLSpanElement = document.querySelector('span.ripple') as HTMLSpanElement;
-    if (!rippleEl) {
-      rippleEl = document.createElement('span');
-    }
-    el.appendChild(rippleEl);
-
-    const max = Math.max(el.offsetWidth, el.offsetHeight);
-    rippleEl.style.width = `${max}px`;
-    rippleEl.style.height = `${max}px`;
-
-    const rect = el.getBoundingClientRect();
-    rippleEl.style.left = `${event.clientX - rect.left - (max / 2)}px`;
-    rippleEl.style.top = `${event.clientY - rect.top - (max / 2)}px`;
-
-    rippleEl.classList.add('ripple');
   }
 }
 </script>
