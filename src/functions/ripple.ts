@@ -1,6 +1,4 @@
-"use strict";
-
-export const rippleEffect = (event: MouseEvent) => {
+const rippleEffect = (event: MouseEvent) => {
   const el: HTMLElement = event.currentTarget as HTMLElement;
 
   let rippleEl: HTMLSpanElement = document.querySelector('span.ripple') as HTMLSpanElement;
@@ -10,12 +8,15 @@ export const rippleEffect = (event: MouseEvent) => {
   el.appendChild(rippleEl);
 
   const max = Math.max(el.offsetWidth, el.offsetHeight);
-  rippleEl.style.width = rippleEl.style.height = max + 'px';
+  rippleEl.style.width = `${max}px`;
+  rippleEl.style.height = `${max}px`;
 
   const rect = el.getBoundingClientRect();
-  rippleEl.style.left = event.clientX - rect.left - (max / 2) + 'px';
-  rippleEl.style.top = event.clientY - rect.top - (max / 2) + 'px';
+  rippleEl.style.left = `${event.clientX - rect.left - (max / 2)}px`;
+  rippleEl.style.top = `${event.clientY - rect.top - (max / 2)}px`;
 
 
   rippleEl.classList.add('ripple');
 };
+
+export default rippleEffect;
