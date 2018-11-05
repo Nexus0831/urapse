@@ -156,21 +156,4 @@ export default class Card extends Vue {
     grid-row 4 / 5
     grid-column 2 / 3
     /*--- end ---*/
-
-  .ripple
-    display block
-    position absolute
-    background-color rgba(32, 32, 32, 0.5)
-    border-radius 50%
-    transform scale(0)
-    z-index 1
-    animation ripple 0.4s linear
-
-  @keyframes ripple {
-    to {
-      opacity 0
-      transform scale(2.5)
-    }
-  }
-
 </style>
