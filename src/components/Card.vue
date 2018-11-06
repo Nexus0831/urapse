@@ -37,7 +37,7 @@ import rippleEffect from '@/functions/ripple';
   },
   methods: {
   rippleEvent: (event) => {
-  rippleEffect(event);
+  rippleEffect(event, "rgba(32, 32, 32, 0.5)");
   }
   }
   })

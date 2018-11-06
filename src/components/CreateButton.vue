@@ -14,7 +14,7 @@ import rippleEffect from '@/functions/ripple';
 @Component({
   methods: {
   rippleEvent: (event) => {
-  rippleEffect(event);
+  rippleEffect(event, "rgba(255, 255, 255, 0.5)");
   }
   }
   })
