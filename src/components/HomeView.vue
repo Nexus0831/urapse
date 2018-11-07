@@ -17,15 +17,15 @@ import CreateButton from './CreateButton.vue';
 
 @Component({
   components: {
-  Card,
-  CreateButton,
+    Card,
+    CreateButton,
   },
   computed: {
-  ...mapState([
-    'testData'
+    ...mapState([
+      'testData'
     ]),
   }
-  })
+})
 export default class HomeView extends Vue {
   // @Prop() private mindMap!: object;
 

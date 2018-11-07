@@ -29,18 +29,18 @@ import rippleEffect from '@/functions/ripple';
 
 @Component({
   directives: {
-  focus: {
-  inserted: (el) => {
-  el.focus()
-  }
-  }
+    focus: {
+      inserted: (el) => {
+        el.focus()
+      }
+    }
   },
   methods: {
-  rippleEvent: (event) => {
-  rippleEffect(event, "rgba(32, 32, 32, 0.5)");
+    rippleEvent: (event) => {
+      rippleEffect(event, "rgba(32, 32, 32, 0.5)");
+    }
   }
-  }
-  })
+})
 export default class Card extends Vue {
   @Prop() private title!: string;
   @Prop() private body!: string;
