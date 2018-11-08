@@ -20,14 +20,19 @@
       v-focus
     >
     </textarea>
+    <MaterialIcon class="delete-icon" icon="delete" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import rippleEffect from '@/functions/ripple';
+import MaterialIcon from './MaterialIcon.vue';
 
 @Component({
+  components: {
+    MaterialIcon,
+  },
   directives: {
     focus: {
       inserted: (el) => {
@@ -154,6 +159,15 @@ export default class Card extends Vue {
 
     /*--- position ---*/
     grid-row 4 / 5
+    grid-column 2 / 3
+    /*--- end ---*/
+
+  .delete-icon
+    /*--- style ---*/
+    /*--- end ---*/
+
+    /*--- position ---*/
+    grid-row 6 / 7
     grid-column 2 / 3
     /*--- end ---*/
 </style>
