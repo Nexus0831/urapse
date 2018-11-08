@@ -22,9 +22,10 @@
     </textarea>
     <div class="icon-container">
       <MaterialIcon
-        class="delete-icon"
         icon="delete"
+        style="color: #B00020"
         rippleColor="rgba(176, 0, 32, 0.5)"
+        hoverColor="rgba(176, 0, 32, 0.2)"
       />
     </div>
   </div>
@@ -178,10 +179,5 @@ export default class Card extends Vue {
     /*--- position ---*/
     grid-row 6 / 7
     grid-column 2 / 3
-    /*--- end ---*/
-
-  .delete-icon
-    /*--- style ---*/
-    color #B00020
     /*--- end ---*/
 </style>
