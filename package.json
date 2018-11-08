@@ -38,7 +38,9 @@
       "@vue/airbnb",
       "@vue/typescript"
     ],
-    "rules": {},
+    "rules": {
+      "indent": "off"
+    },
     "parserOptions": {
       "parser": "typescript-eslint-parser"
     }

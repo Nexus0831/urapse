@@ -20,27 +20,39 @@
       v-focus
     >
     </textarea>
+    <div class="icon-container">
+      <MaterialIcon
+        icon="delete"
+        style="color: #B00020"
+        rippleColor="rgba(176, 0, 32, 0.5)"
+        hoverColor="rgba(176, 0, 32, 0.2)"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import rippleEffect from '@/functions/ripple';
+import MaterialIcon from './MaterialIcon.vue';
 
 @Component({
+  components: {
+    MaterialIcon,
+  },
   directives: {
-  focus: {
-  inserted: (el) => {
-  el.focus()
-  }
-  }
+    focus: {
+      inserted: (el) => {
+        el.focus()
+      }
+    }
   },
   methods: {
-  rippleEvent: (event) => {
-  rippleEffect(event);
+    rippleEvent: (event) => {
+      rippleEffect(event, "rgba(32, 32, 32, 0.5)");
+    }
   }
-  }
-  })
+})
 export default class Card extends Vue {
   @Prop() private title!: string;
   @Prop() private body!: string;
@@ -74,7 +86,7 @@ export default class Card extends Vue {
 
     /*--- layout ---*/
     display grid
-    grid-template-rows 16px 32px 8px 1fr 8px 32px 12px
+    grid-template-rows 16px 32px 8px 1fr 12px 32px 8px
     grid-template-columns 16px 1fr 16px
     /*position absolute*/
     /*--- end ---*/
@@ -154,6 +166,18 @@ export default class Card extends Vue {
 
     /*--- position ---*/
     grid-row 4 / 5
+    grid-column 2 / 3
+    /*--- end ---*/
+
+  .icon-container
+    /*--- style ---*/
+    display flex
+    align-items center
+    flex-direction row-reverse
+    /*--- end ---*/
+
+    /*--- position ---*/
+    grid-row 6 / 7
     grid-column 2 / 3
     /*--- end ---*/
 </style>

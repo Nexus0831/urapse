@@ -64,7 +64,6 @@
 .ripple
   display block
   position absolute
-  background-color rgba(32, 32, 32, 0.5)
   border-radius 50%
   transform scale(0)
   z-index 1

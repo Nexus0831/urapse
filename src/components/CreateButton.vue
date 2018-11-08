@@ -13,11 +13,11 @@ import rippleEffect from '@/functions/ripple';
 
 @Component({
   methods: {
-  rippleEvent: (event) => {
-  rippleEffect(event);
+    rippleEvent: (event) => {
+      rippleEffect(event, "rgba(255, 255, 255, 0.5)");
+    }
   }
-  }
-  })
+})
 export default class CreateButton extends Vue {
 }
 </script>
