@@ -6,6 +6,7 @@
         <Card :id="item.key" :key="item.key" :title="item.title" :body="item.body" />
       </template>
     </div>
+    <Alert />
   </div>
 </template>
 
@@ -14,11 +15,13 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import Card from './Card.vue';
 import CreateButton from './CreateButton.vue';
+import Alert from './Alert.vue';
 
 @Component({
   components: {
     Card,
     CreateButton,
+    Alert
   },
   computed: {
     ...mapState([
