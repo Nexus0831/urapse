@@ -20,7 +20,9 @@
       v-focus
     >
     </textarea>
-    <MaterialIcon class="delete-icon" icon="delete" />
+    <div class="icon-container">
+      <MaterialIcon class="delete-icon" icon="delete" />
+    </div>
   </div>
 </template>
 
@@ -79,7 +81,7 @@ export default class Card extends Vue {
 
     /*--- layout ---*/
     display grid
-    grid-template-rows 16px 32px 8px 1fr 8px 32px 12px
+    grid-template-rows 16px 32px 8px 1fr 12px 32px 12px
     grid-template-columns 16px 1fr 16px
     /*position absolute*/
     /*--- end ---*/
@@ -162,8 +164,11 @@ export default class Card extends Vue {
     grid-column 2 / 3
     /*--- end ---*/
 
-  .delete-icon
+  .icon-container
     /*--- style ---*/
+    display flex
+    align-items center
+    flex-direction row-reverse
     /*--- end ---*/
 
     /*--- position ---*/

@@ -14,5 +14,6 @@ export default class MaterialIcon extends Vue {
 </script>
 
 <style scoped lang="stylus">
-
+#icon
+  user-select none
 </style>
