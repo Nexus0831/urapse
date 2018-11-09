@@ -26,13 +26,13 @@
         style="color: #B00020"
         rippleColor="rgba(176, 0, 32, 0.5)"
         hoverColor="rgba(176, 0, 32, 0.2)"
-        :clickFunction="alertOpen"
+        @click-action="alertOpen"
       />
     </div>
     <Alert
       :title="title"
       v-if="alertId === keyNumber"
-      @alert-action="test"
+      @alert-action="itemDelete"
     />
   </div>
 </template>
@@ -68,9 +68,6 @@ import Alert from './Alert.vue';
     rippleEvent: (event) => {
       rippleEffect(event, "rgba(32, 32, 32, 0.5)");
     },
-    test: () => {
-      console.log('click');
-    }
   }
 })
 export default class Card extends Vue {
@@ -91,6 +88,10 @@ export default class Card extends Vue {
 
   toggleBodyEdit() {
     this.isBodyEdit = !this.isBodyEdit;
+  }
+
+  itemDelete() {
+    console.log(`${this.keyNumber}delete action`);
   }
 }
 </script>
