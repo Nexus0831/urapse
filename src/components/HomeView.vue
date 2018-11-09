@@ -6,7 +6,9 @@
         <Card :id="item.key" :key="item.key" :title="item.title" :body="item.body" />
       </template>
     </div>
-    <Alert />
+    <Alert
+      :alertAction="test"
+    />
   </div>
 </template>
 
@@ -22,6 +24,11 @@ import Alert from './Alert.vue';
     Card,
     CreateButton,
     Alert
+  },
+  methods: {
+    test: () => {
+      console.log('alert ok')
+    }
   },
   computed: {
     ...mapState([

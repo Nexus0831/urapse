@@ -12,7 +12,7 @@
           style="color: #B00020"
           rippleColor="rgba(176, 0, 32, 0.5)"
           hoverColor="rgba(176, 0, 32, 0.2)"
-          :clickFunction="test"
+          :clickFunction="alertAction"
         />
       </div>
     </div>
@@ -22,7 +22,6 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
-import rippleEffect from '@/functions/ripple';
 
 @Component({
   components: {
@@ -30,6 +29,7 @@ import rippleEffect from '@/functions/ripple';
   },
 })
 export default class Alert extends Vue {
+  @Prop() private alertAction!: Function;
 }
 
 </script>
