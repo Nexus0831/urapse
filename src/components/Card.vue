@@ -29,11 +29,13 @@
         @click-action="alertOpen"
       />
     </div>
-    <Alert
-      :title="title"
-      v-if="alertId === keyNumber"
-      @alert-action="itemDelete"
-    />
+    <transition name="fade">
+      <Alert
+        :title="title"
+        v-if="alertId === keyNumber"
+        @alert-action="itemDelete"
+      />
+    </transition>
   </div>
 </template>
 
