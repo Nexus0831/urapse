@@ -1,6 +1,12 @@
 <template>
   <div id="alert">
-    <div class="surface"></div>
+    <div class="surface">
+      <div class="alert-title">Use Google's location service?</div>
+      <div class="alert-body">
+        Let Google help apps determine location.
+        This means sending anonymous location data to Google, even when no apps are running.
+      </div>
+    </div>
   </div>
 </template>
 
@@ -45,4 +51,37 @@ export default class Alert extends Vue {
   border-radius 4px
   transition all .3s
   /*--- end --- */
+
+  /*--- layout ---*/
+  display grid
+  grid-template-rows 24px 32px 24px 1fr 24px 32px 24px
+  grid-template-columns 24px 1fr 24px
+  /*--- end ---*/
+
+.alert-title
+  /*--- style ---*/
+  font-size 1.25rem
+  font-weight 500
+  letter-spacing: 0.0075em;
+  line-height 1.6
+  /*--- end ---*/
+
+  /*--- position ---*/
+  grid-row 2 / 3
+  grid-column 2 / 3
+  /*--- end ---*/
+
+.alert-body
+  /*--- style ---*/
+  color rgba(255, 255, 255, 0.7)
+  font-size 1rem
+  font-weight 400
+  letter-spacing: 0.00938em;
+  line-height 1.5
+  /*--- end ---*/
+
+  /*--- position ---*/
+  grid-row 4 / 5
+  grid-column 2 / 3
+  /*--- end ---*/
 </style>
