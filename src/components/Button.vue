@@ -1,0 +1,64 @@
+<template>
+  <button
+    class="text-button"
+    @click.stop="(event) => clickAction(event, rippleColor, action)"
+    @mouseover="hoverIn"
+    @mouseout="hoverOut"
+  >
+    {{ buttonText }}
+  </button>
+</template>
+
+<script lang="ts">
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import rippleEffect from '@/functions/ripple';
+
+@Component({
+  methods: {
+    clickAction: (event, rippleColor, action) => {
+      rippleEffect(event, rippleColor);
+      action();
+    },
+  },
+})
+export default class Button extends Vue {
+  @Prop() private buttonText!: string;
+  @Prop() private rippleColor!: string;
+  @Prop() private hoverColor!: string;
+
+  action() {
+    this.$emit('click-action');
+  }
+
+  hoverIn() {
+    this.$el.style.backgroundColor = this.hoverColor;
+  }
+
+  hoverOut() {
+    this.$el.style.backgroundColor = 'transparent';
+  }
+}
+
+</script>
+
+<style lang="stylus" scoped>
+.text-button
+  color #fff
+  background-color transparent
+  border 0
+  outline 0 !important
+  font-weight 500
+  line-height 1.5
+  letter-spacing: 0.02857em;
+  padding 8px 16px
+  border-radius 4
+  min-height 36px
+  min-width 64px
+  transition all 0.3s
+  overflow hidden
+  position relative
+  user-select none
+
+  &:hover
+    cursor pointer
+</style>

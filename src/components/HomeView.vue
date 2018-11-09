@@ -3,7 +3,13 @@
     <CreateButton />
     <div id="cards">
       <template v-for="item in testData">
-        <Card :id="item.key" :key="item.key" :title="item.title" :body="item.body" />
+        <Card
+          :id="item.key"
+          :key="item.key"
+          :keyNumber="item.key"
+          :title="item.title"
+          :body="item.body"
+        />
       </template>
     </div>
   </div>

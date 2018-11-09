@@ -19,11 +19,13 @@ export default new Vuex.Store({
         nodes: [{}, {}, {}],
       },
     ],
+    alertId: '',
   },
   mutations: {
-
+    SET_ALERT_ID: (state, key) => {
+      state.alertId = key;
+    },
   },
   actions: {
-
   },
 });
