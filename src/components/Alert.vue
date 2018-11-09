@@ -6,15 +6,28 @@
         Let Google help apps determine location.
         This means sending anonymous location data to Google, even when no apps are running.
       </div>
+      <div class="button-container">
+        <Button
+          buttonText="DELETE"
+          style="color: #B00020"
+          rippleColor="rgba(176, 0, 32, 0.5)"
+          hoverColor="rgba(176, 0, 32, 0.2)"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
+import Button from '@/components/Button.vue';
 import rippleEffect from '@/functions/ripple';
 
-@Component
+@Component({
+  components: {
+    Button
+  }
+})
 export default class Alert extends Vue {
 }
 
@@ -82,6 +95,18 @@ export default class Alert extends Vue {
 
   /*--- position ---*/
   grid-row 4 / 5
+  grid-column 2 / 3
+  /*--- end ---*/
+
+.button-container
+  /*--- layout ---*/
+  display flex
+  align-items center
+  flex-direction row-reverse
+  /*--- end ---*/
+
+  /*--- position ---*/
+  grid-row 6 / 7
   grid-column 2 / 3
   /*--- end ---*/
 </style>
