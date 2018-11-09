@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import rippleEffect from '@/functions/ripple';
 import MaterialIcon from './MaterialIcon.vue';
 import Alert from './Alert.vue';
@@ -62,9 +62,6 @@ import Alert from './Alert.vue';
     ]),
   },
   methods: {
-    ...mapActions([
-      'setAlertId'
-    ]),
     rippleEvent: (event) => {
       rippleEffect(event, "rgba(32, 32, 32, 0.5)");
     },

@@ -27,8 +27,5 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    setAlertId: (context, key) => {
-      context.commit('SET_ALERT_ID', key);
-    },
   },
 });
