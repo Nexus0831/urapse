@@ -12,7 +12,7 @@
           style="color: #B00020"
           rippleColor="rgba(176, 0, 32, 0.5)"
           hoverColor="rgba(176, 0, 32, 0.2)"
-          :buttonAction="alertAction"
+          @click-action="alertAction"
         />
       </div>
     </div>
@@ -21,7 +21,6 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { mapActions } from 'vuex';
 import Button from '@/components/Button.vue';
 
 @Component({

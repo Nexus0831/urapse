@@ -1,7 +1,7 @@
 <template>
   <button
     class="text-button"
-    @click="(event) => clickAction(event, rippleColor, buttonAction)"
+    @click.stop="(event) => clickAction(event, rippleColor, action)"
     @mouseover="hoverIn"
     @mouseout="hoverOut"
   >
@@ -15,9 +15,9 @@ import rippleEffect from '@/functions/ripple';
 
 @Component({
   methods: {
-    clickAction: (event, rippleColor, buttonAction) => {
+    clickAction: (event, rippleColor, action) => {
       rippleEffect(event, rippleColor);
-      buttonAction();
+      action();
     },
   },
 })
@@ -25,7 +25,10 @@ export default class Button extends Vue {
   @Prop() private buttonText!: string;
   @Prop() private rippleColor!: string;
   @Prop() private hoverColor!: string;
-  @Prop() private buttonAction!: Function;
+
+  action() {
+    this.$emit('click-action');
+  }
 
   hoverIn() {
     this.$el.style.backgroundColor = this.hoverColor;
