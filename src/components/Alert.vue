@@ -12,6 +12,7 @@
           style="color: #B00020"
           rippleColor="rgba(176, 0, 32, 0.5)"
           hoverColor="rgba(176, 0, 32, 0.2)"
+          :clickFunction="test"
         />
       </div>
     </div>
@@ -26,7 +27,7 @@ import rippleEffect from '@/functions/ripple';
 @Component({
   components: {
     Button
-  }
+  },
 })
 export default class Alert extends Vue {
 }
