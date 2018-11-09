@@ -1,10 +1,11 @@
 <template>
   <div id="alert" @click.self.stop="closeAlert">
     <div class="surface">
-      <div class="alert-title">{{ title }}</div>
+      <div class="alert-title">{{ title }} is Delete?</div>
       <div class="alert-body">
-        Let Google help apps determine location.
-        This means sending anonymous location data to Google, even when no apps are running.
+        本当にこのマインドマップを削除しますか？
+        <br>
+        削除したマインドマップは復元できないので注意してください
       </div>
       <div class="button-container">
         <Button
