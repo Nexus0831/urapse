@@ -26,19 +26,28 @@
         style="color: #B00020"
         rippleColor="rgba(176, 0, 32, 0.5)"
         hoverColor="rgba(176, 0, 32, 0.2)"
+        :clickFunction="alertOpen"
       />
     </div>
+    <Alert
+      :title="title"
+      v-if="alertId === keyNumber"
+      @alert-action="test"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { mapState, mapActions } from 'vuex';
 import rippleEffect from '@/functions/ripple';
 import MaterialIcon from './MaterialIcon.vue';
+import Alert from './Alert.vue';
 
 @Component({
   components: {
     MaterialIcon,
+    Alert
   },
   directives: {
     focus: {
@@ -47,18 +56,34 @@ import MaterialIcon from './MaterialIcon.vue';
       }
     }
   },
+  computed: {
+    ...mapState([
+      'alertId'
+    ]),
+  },
   methods: {
+    ...mapActions([
+      'setAlertId'
+    ]),
     rippleEvent: (event) => {
       rippleEffect(event, "rgba(32, 32, 32, 0.5)");
+    },
+    test: () => {
+      console.log('click');
     }
   }
 })
 export default class Card extends Vue {
   @Prop() private title!: string;
   @Prop() private body!: string;
+  @Prop() private keyNumber!: string;
 
   isTitleEdit: boolean = false;
   isBodyEdit: boolean = false;
+
+  alertOpen() {
+    this.$store.commit('SET_ALERT_ID', this.keyNumber);
+  }
 
   toggleTitleEdit() {
     this.isTitleEdit = !this.isTitleEdit;

@@ -3,11 +3,15 @@
     <CreateButton />
     <div id="cards">
       <template v-for="item in testData">
-        <Card :id="item.key" :key="item.key" :title="item.title" :body="item.body" />
-        <!--<Alert :key="item.key" :title="item.title" />-->
+        <Card
+          :id="item.key"
+          :key="item.key"
+          :keyNumber="item.key"
+          :title="item.title"
+          :body="item.body"
+        />
       </template>
     </div>
-    <Alert title="Test" @alert-action="test"/>
   </div>
 </template>
 
@@ -23,11 +27,6 @@ import Alert from './Alert.vue';
     Card,
     CreateButton,
     Alert
-  },
-  methods: {
-    test: () => {
-      console.log('alert ok');
-    }
   },
   computed: {
     ...mapState([

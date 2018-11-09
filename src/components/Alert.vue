@@ -1,5 +1,5 @@
 <template>
-  <div id="alert" @click.self="closeAlert">
+  <div id="alert" @click.self.stop="closeAlert">
     <div class="surface">
       <div class="alert-title">{{ title }}</div>
       <div class="alert-body">
@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
+import { mapActions } from 'vuex';
 import Button from '@/components/Button.vue';
 
 @Component({
@@ -31,19 +32,13 @@ import Button from '@/components/Button.vue';
 export default class Alert extends Vue {
   @Prop() private title!: string;
 
-  isOpen: boolean = false;
-
-  openAlert() {
-    this.isOpen = true;
-  }
-
   closeAlert() {
-    this.isOpen = false;
+    this.$store.commit('SET_ALERT_ID', '');
   }
 
   alertAction() {
-    this.$emit('alert-action');
     this.closeAlert();
+    this.$emit('alert-action');
   }
 }
 
