@@ -62,6 +62,9 @@ export default class Alert extends Vue {
   align-items center
   /*--- end ---*/
 
+  &:hover
+    cursor default
+
 .surface
   /*--- style ---*/
   background-color #424242
