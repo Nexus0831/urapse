@@ -4,11 +4,10 @@
     <div id="cards">
       <template v-for="item in testData">
         <Card :id="item.key" :key="item.key" :title="item.title" :body="item.body" />
+        <!--<Alert :key="item.key" :title="item.title" />-->
       </template>
     </div>
-    <Alert
-      :alertAction="test"
-    />
+    <Alert title="Test" @alert-action="test"/>
   </div>
 </template>
 
@@ -27,7 +26,7 @@ import Alert from './Alert.vue';
   },
   methods: {
     test: () => {
-      console.log('alert ok')
+      console.log('alert ok');
     }
   },
   computed: {

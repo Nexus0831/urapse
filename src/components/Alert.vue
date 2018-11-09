@@ -1,7 +1,7 @@
 <template>
-  <div id="alert">
+  <div id="alert" @click.self="closeAlert">
     <div class="surface">
-      <div class="alert-title">Use Google's location service?</div>
+      <div class="alert-title">{{ title }}</div>
       <div class="alert-body">
         Let Google help apps determine location.
         This means sending anonymous location data to Google, even when no apps are running.
@@ -12,7 +12,7 @@
           style="color: #B00020"
           rippleColor="rgba(176, 0, 32, 0.5)"
           hoverColor="rgba(176, 0, 32, 0.2)"
-          :clickFunction="alertAction"
+          :buttonAction="alertAction"
         />
       </div>
     </div>
@@ -29,7 +29,22 @@ import Button from '@/components/Button.vue';
   },
 })
 export default class Alert extends Vue {
-  @Prop() private alertAction!: Function;
+  @Prop() private title!: string;
+
+  isOpen: boolean = false;
+
+  openAlert() {
+    this.isOpen = true;
+  }
+
+  closeAlert() {
+    this.isOpen = false;
+  }
+
+  alertAction() {
+    this.$emit('alert-action');
+    this.closeAlert();
+  }
 }
 
 </script>
