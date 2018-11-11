@@ -2,7 +2,8 @@
   <div id="icon">
     <div
       class="icon-graphy"
-      @click.stop="(event) => clickAction(event, rippleColor, action)"
+      @click.stop="(event) => clickEffect(event, rippleColor)"
+      @click.capture.stop="$emit('click-action')"
       @mouseover="hoverIn"
       @mouseout="hoverOut"
     >
@@ -17,9 +18,8 @@ import rippleEffect from '@/functions/ripple';
 
 @Component({
   methods: {
-    clickAction(event, rippleColor, action) {
+    clickEffect(event, rippleColor) {
       rippleEffect(event, rippleColor);
-      action();
     },
   },
 })
@@ -27,10 +27,6 @@ export default class MaterialIcon extends Vue {
   @Prop() private icon!: string;
   @Prop() private rippleColor!: string;
   @Prop() private hoverColor!: string;
-
-  action() {
-    this.$emit('click-action');
-  }
 
   hoverIn() {
     this.$el.style.backgroundColor = this.hoverColor;
