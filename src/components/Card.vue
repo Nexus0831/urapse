@@ -29,7 +29,7 @@
         @click-action="alertOpen"
       />
     </div>
-    <transition name="fade">
+    <transition name="alert">
       <Alert
         :title="title"
         v-if="alertId === keyNumber"
