@@ -68,7 +68,6 @@ export default class Alert extends Vue {
 .surface
   /*--- style ---*/
   background-color #424242
-  height 212px
   max-height: calc(100% - 96px);
   width 80%
   max-width 600px
@@ -76,12 +75,14 @@ export default class Alert extends Vue {
     0px 24px 38px 3px rgba(0, 0, 0, 0.14),
     0px 9px 46px 8px rgba(0, 0, 0, 0.12);
   border-radius 4px
+  margin 48px
+  position relative
+  overflow-y auto
   /*--- end --- */
 
   /*--- layout ---*/
-  display grid
-  grid-template-rows 24px 32px 24px 1fr 24px 32px 24px
-  grid-template-columns 24px 1fr 24px
+  display flex
+  flex-direction column
   /*--- end ---*/
 
 .alert-title
@@ -90,11 +91,8 @@ export default class Alert extends Vue {
   font-weight 500
   letter-spacing: 0.0075em;
   line-height 1.6
-  /*--- end ---*/
-
-  /*--- position ---*/
-  grid-row 2 / 3
-  grid-column 2 / 3
+  margin 0
+  padding 24px 24px 20px
   /*--- end ---*/
 
 .alert-body
@@ -104,23 +102,19 @@ export default class Alert extends Vue {
   font-weight 400
   letter-spacing: 0.00938em;
   line-height 1.5
-  /*--- end ---*/
-
-  /*--- position ---*/
-  grid-row 4 / 5
-  grid-column 2 / 3
+  padding 0 24px 24px
+  overflow-y auto
   /*--- end ---*/
 
 .button-container
+  /*--- style ---*/
+  margin 8px 12px
+  /*--- end ---*/
+
   /*--- layout ---*/
   display flex
   align-items center
-  flex-direction row-reverse
-  /*--- end ---*/
-
-  /*--- position ---*/
-  grid-row 6 / 7
-  grid-column 2 / 3
+  justify-content flex-end
   /*--- end ---*/
 
 .fade-enter-active, .fade-leave-active
