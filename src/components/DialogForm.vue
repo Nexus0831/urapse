@@ -2,13 +2,22 @@
   <div id="dialog-form">
     <div class="surface">
       <div class="dialog-form-title">Create Mind Map</div>
+      <div class="dialog-form-input">
+        <MaterialInput idName="create-title" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
+import MaterialInput from '@/components/MaterialInput.vue';
 
+@Component({
+  components: {
+    MaterialInput,
+  }
+})
 export default class DialogForm extends Vue {
 }
 </script>
@@ -63,5 +72,10 @@ export default class DialogForm extends Vue {
     margin 0
     padding 24px 24px 20px
     text-align center
+    /*--- end ---*/
+
+  .dialog-form-input
+    /*--- style ---*/
+    padding 0 24px 24px
     /*--- end ---*/
 </style>
