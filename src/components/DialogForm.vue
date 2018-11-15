@@ -1,6 +1,7 @@
 <template>
   <div id="dialog-form">
     <div class="surface">
+      <div class="dialog-form-title">Create Mind Map</div>
     </div>
   </div>
 </template>
@@ -51,5 +52,16 @@ export default class DialogForm extends Vue {
     /*--- layout ---*/
     display flex
     flex-direction column
-/*--- end ---*/
+    /*--- end ---*/
+
+  .dialog-form-title
+    /*--- style ---*/
+    font-size 1.25rem
+    font-weight 500
+    letter-spacing: 0.0075em;
+    line-height 1.6
+    margin 0
+    padding 24px 24px 20px
+    text-align center
+    /*--- end ---*/
 </style>
