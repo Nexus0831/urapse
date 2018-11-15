@@ -3,10 +3,10 @@
     <div class="surface">
       <div class="dialog-form-title">Create Mind Map</div>
       <div class="dialog-form-input">
-        <MaterialInput idName="create-title" />
+        <MaterialInput idName="create-title" labelText="Title" />
       </div>
       <div class="dialog-form-input">
-        <MaterialInput idName="create-body" />
+        <MaterialInput idName="create-body" labelText="Body"/>
       </div>
     </div>
   </div>
