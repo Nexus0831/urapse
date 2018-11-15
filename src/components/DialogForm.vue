@@ -3,10 +3,10 @@
     <div class="surface">
       <div class="dialog-form-title">Create Mind Map</div>
       <div class="dialog-form-input">
-        <MaterialInput idName="create-title" labelText="Title" />
+        <MaterialInput idName="create-title" labelText="Title" @change-action="titleChangeAction"/>
       </div>
       <div class="dialog-form-input">
-        <MaterialInput idName="create-body" labelText="Body"/>
+        <MaterialInput idName="create-body" labelText="Body" @change-action="bodyChangeAction"/>
       </div>
       <div class="button-container">
         <Button
@@ -21,7 +21,7 @@
           style="color: #e91e63"
           rippleColor="rgba(233, 30, 99, 0.5)"
           hoverColor="rgba(233, 30, 99, 0.2)"
-          @click-action="dialogClose"
+          @click-action="onSubmit(dialogForm.title, dialogForm.body)"
         />
       </div>
     </div>
@@ -30,6 +30,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
+import { mapState } from 'vuex';
 import MaterialInput from '@/components/MaterialInput.vue';
 import Button from '@/components/Button.vue';
 
@@ -37,11 +38,30 @@ import Button from '@/components/Button.vue';
   components: {
     MaterialInput,
     Button
+  },
+  computed: {
+    ...mapState([
+      'dialogForm'
+    ]),
+  },
+  methods: {
+    onSubmit: (title: string, body: string) => {
+      console.log('title: ' + title);
+      console.log('body: ' + body);
+    }
   }
 })
 export default class DialogForm extends Vue {
   dialogClose() {
     this.$store.commit('SET_IS_DIALOG_OPEN', false);
+  }
+
+  titleChangeAction(title: string) {
+    this.$store.commit('SET_DIALOG_FORM_TITLE', title);
+  }
+
+  bodyChangeAction(body: string) {
+    this.$store.commit('SET_DIALOG_FORM_BODY', body);
   }
 }
 </script>

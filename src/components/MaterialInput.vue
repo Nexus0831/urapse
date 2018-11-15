@@ -3,7 +3,7 @@
     <label
       :for="idName"
       class="material-input-label"
-      :class="{focus: isFocus, shift: isShift}"
+      :class="{focus: isFocus, float: isFloat}"
     >
       {{ labelText }}
     </label>
@@ -13,6 +13,7 @@
         class="material-input"
         type="text"
         v-model="valueText"
+        @change="$emit('change-action', valueText)"
         @focus="inputFocus"
         @blur="inputBlur"
       />
@@ -29,13 +30,13 @@ export default class MaterialInput extends Vue {
   @Prop() private labelText!: string;
 
   isFocus: boolean = false;
-  isShift: boolean = false;
+  isFloat: boolean = false;
   valueText: string = '';
 
   inputFocus() {
     if (this.valueText === '') {
       this.isFocus = true;
-      this.isShift = true;
+      this.isFloat = true;
     } else {
       this.isFocus = true;
     }
@@ -44,7 +45,7 @@ export default class MaterialInput extends Vue {
   inputBlur() {
     if (this.valueText === '') {
       this.isFocus = false;
-      this.isShift = false;
+      this.isFloat = false;
     } else {
       this.isFocus = false;
     }
@@ -79,7 +80,7 @@ export default class MaterialInput extends Vue {
   .material-input-label.focus
     color #e91e63
 
-  .material-input-label.shift
+  .material-input-label.float
     transform translate(0, 1.5px) scale(0.75)
     transform-origin top left
 

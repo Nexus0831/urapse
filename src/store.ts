@@ -21,6 +21,10 @@ export default new Vuex.Store({
     ],
     alertId: '',
     isDialogOpen: false,
+    dialogForm: {
+      title: '',
+      body: '',
+    },
   },
   mutations: {
     SET_ALERT_ID: (state, key) => {
@@ -28,6 +32,12 @@ export default new Vuex.Store({
     },
     SET_IS_DIALOG_OPEN: (state, isOpen) => {
       state.isDialogOpen = isOpen;
+    },
+    SET_DIALOG_FORM_TITLE: (state, title) => {
+      state.dialogForm.title = title;
+    },
+    SET_DIALOG_FORM_BODY: (state, body) => {
+      state.dialogForm.body = body;
     },
   },
   actions: {
