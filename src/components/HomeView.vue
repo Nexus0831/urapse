@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <CreateButton />
+    <CreateButton @click-action="openDialog"/>
     <div id="cards">
       <template v-for="item in testData">
         <Card
@@ -12,7 +12,9 @@
         />
       </template>
     </div>
-    <DialogForm />
+    <transition name="dialog">
+      <DialogForm v-if="isDialogOpen"/>
+    </transition>
   </div>
 </template>
 
@@ -31,16 +33,15 @@ import DialogForm from './DialogForm.vue';
   },
   computed: {
     ...mapState([
-      'testData'
+      'testData',
+      'isDialogOpen'
     ]),
   }
 })
 export default class HomeView extends Vue {
-  // @Prop() private mindMap!: object;
-
-  // mounted() {
-  //   console.log(this.$store.state.title);
-  // }
+  openDialog() {
+    this.$store.commit('SET_IS_DIALOG_OPEN', true);
+  }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="dialog-form">
+  <div id="dialog-form" @click.self="dialogClose">
     <div class="surface">
       <div class="dialog-form-title">Create Mind Map</div>
       <div class="dialog-form-input">
@@ -14,14 +14,14 @@
           style="color: #FFF"
           rippleColor="rgba(255, 255, 255, 0.5)"
           hoverColor="rgba(255, 255, 255, 0.08)"
-          @click-action="test"
+          @click-action="dialogClose"
         />
         <Button
           buttonText="SUBMIT"
           style="color: #e91e63"
           rippleColor="rgba(233, 30, 99, 0.5)"
           hoverColor="rgba(233, 30, 99, 0.2)"
-          @click-action="test"
+          @click-action="dialogClose"
         />
       </div>
     </div>
@@ -37,14 +37,12 @@ import Button from '@/components/Button.vue';
   components: {
     MaterialInput,
     Button
-  },
-  methods: {
-    test: () => {
-      console.log("click");
-    }
   }
 })
 export default class DialogForm extends Vue {
+  dialogClose() {
+    this.$store.commit('SET_IS_DIALOG_OPEN', false);
+  }
 }
 </script>
 
@@ -115,4 +113,11 @@ export default class DialogForm extends Vue {
     align-items center
     justify-content flex-end
     /*--- end ---*/
+
+.dialog-enter-active, .dialog-leave-active
+  will-change opacity
+  transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+
+.dialog-enter, .dialog-leave-to
+  opacity: 0
 </style>

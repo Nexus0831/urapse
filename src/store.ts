@@ -20,10 +20,14 @@ export default new Vuex.Store({
       },
     ],
     alertId: '',
+    isDialogOpen: false,
   },
   mutations: {
     SET_ALERT_ID: (state, key) => {
       state.alertId = key;
+    },
+    SET_IS_DIALOG_OPEN: (state, isOpen) => {
+      state.isDialogOpen = isOpen;
     },
   },
   actions: {
