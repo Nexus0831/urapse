@@ -8,6 +8,22 @@
       <div class="dialog-form-input">
         <MaterialInput idName="create-body" labelText="Body"/>
       </div>
+      <div class="button-container">
+        <Button
+          buttonText="CANCEL"
+          style="color: #FFF"
+          rippleColor="rgba(255, 255, 255, 0.5)"
+          hoverColor="rgba(255, 255, 255, 0.08)"
+          @click-action="test"
+        />
+        <Button
+          buttonText="SUBMIT"
+          style="color: #e91e63"
+          rippleColor="rgba(233, 30, 99, 0.5)"
+          hoverColor="rgba(233, 30, 99, 0.2)"
+          @click-action="test"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -15,10 +31,17 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import MaterialInput from '@/components/MaterialInput.vue';
+import Button from '@/components/Button.vue';
 
 @Component({
   components: {
     MaterialInput,
+    Button
+  },
+  methods: {
+    test: () => {
+      console.log("click");
+    }
   }
 })
 export default class DialogForm extends Vue {
@@ -80,5 +103,16 @@ export default class DialogForm extends Vue {
   .dialog-form-input
     /*--- style ---*/
     padding 0 24px 24px
+    /*--- end ---*/
+
+  .button-container
+    /*--- style ---*/
+    margin 8px 12px
+    /*--- end ---*/
+
+    /*--- layout ---*/
+    display flex
+    align-items center
+    justify-content flex-end
     /*--- end ---*/
 </style>
