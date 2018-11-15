@@ -1,9 +1,15 @@
 <template>
   <div id="material-field">
-    <label for="idName" class="material-input-label" :class="{focus: isFocus}">Title</label>
+    <label
+      :for="idName"
+      class="material-input-label"
+      :class="{focus: isFocus}"
+    >
+      {{ labelText }}
+    </label>
     <div class="material-field-input" :class="{focus: isFocus}">
       <input
-        id="idName"
+        :id="idName"
         class="material-input"
         type="text"
         @focus="toggleFocus"
@@ -19,6 +25,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 @Component
 export default class MaterialInput extends Vue {
   @Prop() private idName!: string;
+  @Prop() private labelText!: string;
 
   isFocus: boolean = false;
 
@@ -30,7 +37,7 @@ export default class MaterialInput extends Vue {
 
 <style lang="stylus" scoped>
 #material-field
-  width 200px
+  width 100%
   border 0
   display inline-flex
   padding 0
@@ -53,7 +60,7 @@ export default class MaterialInput extends Vue {
     line-height 1
 
   .material-input-label.focus
-    color #64b5f6
+    color #e91e63
     transform translate(0, 1.5px) scale(0.75)
     transform-origin top left
 
@@ -87,7 +94,7 @@ export default class MaterialInput extends Vue {
       position absolute
       transform scaleX(0)
       transition transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms
-      border-bottom 2px solid #64b5f6
+      border-bottom 2px solid #e91e63
       pointer-events none
 
   .material-field-input.focus

@@ -5,6 +5,9 @@
       <div class="dialog-form-input">
         <MaterialInput idName="create-title" />
       </div>
+      <div class="dialog-form-input">
+        <MaterialInput idName="create-body" />
+      </div>
     </div>
   </div>
 </template>
