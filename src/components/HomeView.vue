@@ -12,6 +12,7 @@
         />
       </template>
     </div>
+    <DialogForm />
   </div>
 </template>
 
@@ -20,11 +21,13 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import Card from './Card.vue';
 import CreateButton from './CreateButton.vue';
+import DialogForm from './DialogForm.vue';
 
 @Component({
   components: {
     Card,
     CreateButton,
+    DialogForm
   },
   computed: {
     ...mapState([
