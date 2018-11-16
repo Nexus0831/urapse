@@ -1,6 +1,6 @@
 <template>
   <div id="create-container">
-    <div class="create-button" @click="rippleEvent">
+    <div class="create-button" @click="rippleEvent" @click.capture="$emit('click-action')" >
       <i class="material-icons">add</i>
       Create New MindMap
     </div>
