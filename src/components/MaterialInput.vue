@@ -12,6 +12,7 @@
         :id="idName"
         class="material-input"
         type="text"
+        autocomplete="off"
         v-model="valueText"
         @change="$emit('change-action', valueText)"
         @focus="inputFocus"

@@ -2,6 +2,9 @@
   <div id="dialog-form" @click.self="dialogClose">
     <div class="surface">
       <div class="dialog-form-title">Create Mind Map</div>
+      <div class="dialog-form-title error" v-if="!createFields.validate">
+        Heyブラザー！TitleとBodyが空だぜ！
+      </div>
       <div class="dialog-form-input">
         <MaterialInput idName="create-title" labelText="Title" @change-action="titleChangeAction"/>
       </div>
@@ -21,7 +24,7 @@
           style="color: #e91e63"
           rippleColor="rgba(233, 30, 99, 0.5)"
           hoverColor="rgba(233, 30, 99, 0.2)"
-          @click-action="onSubmit(dialogForm.title, dialogForm.body)"
+          @click-action="mindMapCreate"
         />
       </div>
     </div>
@@ -30,7 +33,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import MaterialInput from '@/components/MaterialInput.vue';
 import Button from '@/components/Button.vue';
 
@@ -41,14 +44,13 @@ import Button from '@/components/Button.vue';
   },
   computed: {
     ...mapState([
-      'dialogForm'
+      'createFields'
     ]),
   },
   methods: {
-    onSubmit: (title: string, body: string) => {
-      console.log('title: ' + title);
-      console.log('body: ' + body);
-    }
+    ...mapActions([
+      'mindMapCreate'
+    ]),
   }
 })
 export default class DialogForm extends Vue {
@@ -57,11 +59,11 @@ export default class DialogForm extends Vue {
   }
 
   titleChangeAction(title: string) {
-    this.$store.commit('SET_DIALOG_FORM_TITLE', title);
+    this.$store.commit('SET_CREATE_FIELDS_TITLE', title);
   }
 
   bodyChangeAction(body: string) {
-    this.$store.commit('SET_DIALOG_FORM_BODY', body);
+    this.$store.commit('SET_CREATE_FIELDS_BODY', body);
   }
 }
 </script>
@@ -116,6 +118,11 @@ export default class DialogForm extends Vue {
     margin 0
     padding 24px 24px 20px
     text-align center
+    /*--- end ---*/
+
+  .error
+    /*--- style ---*/
+    color #B00020
     /*--- end ---*/
 
   .dialog-form-input

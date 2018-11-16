@@ -21,9 +21,10 @@ export default new Vuex.Store({
     ],
     alertId: '',
     isDialogOpen: false,
-    dialogForm: {
+    createFields: {
       title: '',
       body: '',
+      validate: true
     },
   },
   mutations: {
@@ -33,13 +34,29 @@ export default new Vuex.Store({
     SET_IS_DIALOG_OPEN: (state, isOpen) => {
       state.isDialogOpen = isOpen;
     },
-    SET_DIALOG_FORM_TITLE: (state, title) => {
-      state.dialogForm.title = title;
+    SET_CREATE_FIELDS_TITLE: (state, title) => {
+      state.createFields.title = title;
     },
-    SET_DIALOG_FORM_BODY: (state, body) => {
-      state.dialogForm.body = body;
+    SET_CREATE_FIELDS_BODY: (state, body) => {
+      state.createFields.body = body;
     },
+    SET_CREATE_FIELDS_VALIDATE: (state, validate) => {
+      state.createFields.validate = validate;
+    },
+
   },
   actions: {
+    mindMapCreate: (context) => {
+      if (context.state.createFields.title !== '' && context.state.createFields.body !== '') {
+        console.log(context.state.createFields.title);
+        console.log(context.state.createFields.body);
+        context.commit('SET_IS_DIALOG_OPEN', false);
+        context.commit('SET_CREATE_FIELDS_TITLE', '');
+        context.commit('SET_CREATE_FIELDS_BODY', '');
+        context.commit('SET_CREATE_FIELDS_VALIDATE', true)
+      } else {
+        context.commit('SET_CREATE_FIELDS_VALIDATE', false)
+      }
+    },
   },
 });
