@@ -56,14 +56,19 @@ export default class MaterialInput extends Vue {
 
 <style lang="stylus" scoped>
 #material-field
+  /*--- style ---*/
   width 100%
   border 0
   display inline-flex
   padding 0
   position relative
   min-width 0
+  /*--- end ---*/
+
+  /*--- layout ---*/
   flex-direction column
   vertical-align top
+  /*--- end ---*/
 
   .material-input-label
     transition color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,
@@ -89,13 +94,18 @@ export default class MaterialInput extends Vue {
     margin-top 16px
 
   .material-field-input
+    /*--- style ---*/
     position relative
     color #fff
     cursor text
-    display inline-flex
     font-size 1rem
     line-height 1.1875em
+    /*--- end ---*/
+
+    /*--- layout ---*/
+    display inline-flex
     align-items center
+    /*--- end ---*/
 
     &:before
       left 0
