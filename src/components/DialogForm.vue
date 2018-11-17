@@ -56,6 +56,7 @@ import Button from '@/components/Button.vue';
 export default class DialogForm extends Vue {
   dialogClose() {
     this.$store.commit('SET_IS_DIALOG_OPEN', false);
+    this.$store.commit('SET_CREATE_FIELDS_VALIDATE', true);
   }
 
   titleChangeAction(title: string) {
