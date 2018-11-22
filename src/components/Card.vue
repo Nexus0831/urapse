@@ -1,6 +1,6 @@
 <template>
-  <div class="card" @click="rippleEvent">
-    <div v-if="!isTitleEdit" class="card-title" @dblclick="toggleTitleEdit">
+  <div class="card" @click="rippleEvent" @dblclick="clickAction">
+    <div v-if="!isTitleEdit" class="card-title" @click="toggleTitleEdit">
       {{ title }}
     </div>
     <input
@@ -11,7 +11,7 @@
       :value="title"
       v-focus
     />
-    <div class="card-body" v-if="!isBodyEdit" @dblclick="toggleBodyEdit">{{ body }}</div>
+    <div class="card-body" v-if="!isBodyEdit" @click="toggleBodyEdit">{{ body }}</div>
     <textarea
       class="body-input"
       v-if="isBodyEdit"
@@ -76,6 +76,10 @@ export default class Card extends Vue {
 
   isTitleEdit: boolean = false;
   isBodyEdit: boolean = false;
+
+  clickAction() {
+    this.$router.push({ path: `/detail/${this.keyNumber}` });
+  }
 
   alertOpen() {
     this.$store.commit('SET_ALERT_ID', this.keyNumber);
