@@ -11,7 +11,9 @@
       :value="title"
       v-focus
     />
-    <div class="card-body" v-if="!isBodyEdit" @click="toggleBodyEdit">{{ body }}</div>
+    <div class="card-body" v-if="!isBodyEdit" @click="toggleBodyEdit">
+      {{ body }}
+    </div>
     <textarea
       class="body-input"
       v-if="isBodyEdit"
