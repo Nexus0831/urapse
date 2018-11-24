@@ -49,7 +49,29 @@ export default class DetailView extends Vue {
       color: '#f44336',
       textColor: 'white',
     },
+    {
+      title: 'idea 6',
+      color: '#3f51b5',
+      textColor: 'white',
+    },
   ];
+
+  mounted() {
+    const rotates: HTMLCollection = this.$el.getElementsByClassName('rotate');
+    const len: number = rotates.length;
+    const deg: number = 360.0 / len;
+    const red: number = (deg * Math.PI / 180.0);
+    const circleR: number = 100 * 2.5;
+
+    Array.prototype.forEach.call(rotates, (item: HTMLElement, index: number) => {
+      const rotate: HTMLElement = item as HTMLElement;
+      const x: number = Math.cos(red * index) * circleR + circleR;
+      const y: number = Math.sin(red * index) * circleR + circleR;
+      rotate.style.left = `${x}`;
+      rotate.style.top = `${y}`;
+      console.log(`x: ${x}, y: ${y}`);
+    });
+  }
 }
 </script>
 
@@ -62,6 +84,7 @@ export default class DetailView extends Vue {
 
   .rotate
     animation rotate-anime 10s linear infinite
+    position absolute
     filter drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2)) drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.14)) drop-shadow(0px 1px 18px rgba(0, 0, 0, 0.12))
 
   @keyframes rotate-anime {
