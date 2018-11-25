@@ -83,7 +83,7 @@ export default class DetailView extends Vue {
   height 100%
 
   .rotate
-    animation rotate-anime 10s linear infinite
+    /*animation rotate-anime 10s linear infinite*/
     position absolute
     filter drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2)) drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.14)) drop-shadow(0px 1px 18px rgba(0, 0, 0, 0.12))
 
