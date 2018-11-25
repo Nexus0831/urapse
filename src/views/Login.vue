@@ -1,30 +1,35 @@
 <template>
   <div class="login">
-    <button @click="googleLogin">login</button>
+    <button @click="signIn">login</button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import { mapActions } from 'vuex';
 
 @Component({
   methods: {
-    googleLogin: () => {
-      firebase.auth().languageCode = 'ja';
-      const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider).then((result) => {
-        console.log('ok');
-        console.log(result.user);
-      }).catch((error) => {
-        console.log('error');
-        console.log(error)
-      })
-    }
-  }
+    ...mapActions([
+      'signIn'
+    ]),
+  },
 })
-export default class Login extends Vue {}
+export default class Login extends Vue {
+  // mounted() {
+  //   this.$store.dispatch('checkSignIn');
+  // }
+
+  // created() {
+  //   this.$store.dispatch('checkSignIn');
+  //   console.log(`check: ${this.$store.state.isSignIn}`);
+  //
+  //   if (this.$store.state.isSignIn) {
+  //     // すでにログインしていたら
+  //     this.$router.push('/');
+  //   }
+  // }
+}
 </script>
 
 <style lang="stylus" scoped>

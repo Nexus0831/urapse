@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
 Vue.use(Vuex);
 
@@ -26,6 +28,8 @@ export default new Vuex.Store({
       body: '',
       validate: true
     },
+    user: {},
+    isSignIn: false,
   },
   mutations: {
     SET_ALERT_ID: (state, key) => {
@@ -43,7 +47,12 @@ export default new Vuex.Store({
     SET_CREATE_FIELDS_VALIDATE: (state, validate) => {
       state.createFields.validate = validate;
     },
-
+    SET_USER: (state, user) => {
+      state.user = user;
+    },
+    SET_IS_SIGN_IN: (state, isSignIn) => {
+      state.isSignIn = isSignIn;
+    }
   },
   actions: {
     mindMapCreate: (context) => {
@@ -58,5 +67,28 @@ export default new Vuex.Store({
         context.commit('SET_CREATE_FIELDS_VALIDATE', false)
       }
     },
+    signIn: (context) => {
+      firebase.auth().languageCode = 'ja';
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase.auth().signInWithPopup(provider).then((result) => {
+        console.log(`user: ${result.user}`);
+        context.commit('SET_USER', result.user);
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    checkSignIn: (context) => {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (!user) {
+          console.log('no login');
+          context.commit('SET_IS_SIGN_IN', false);
+        } else {
+          console.log(`login: ${user.displayName}`);
+          context.commit('SET_USER', user);
+          context.commit('SET_IS_SIGN_IN', true);
+        }
+      });
+    }
   },
 });
