@@ -39,7 +39,9 @@
       "@vue/typescript"
     ],
     "rules": {
-      "indent": "off"
+      "indent": "off",
+      "max-len": "off",
+      "no-mixed-operators": "off"
     },
     "parserOptions": {
       "parser": "typescript-eslint-parser"
