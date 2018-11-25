@@ -8,6 +8,8 @@
     <router-view id="content"/>
   </div>
 </template>
+
+
 <style lang="stylus">
 #app
   height 100%
