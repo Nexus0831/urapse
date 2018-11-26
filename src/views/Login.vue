@@ -1,43 +1,17 @@
 <template>
-  <div id="login">
-    <!-- <button @click="signIn">login</button> -->
+  <div class="login">
+    <LoginView />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { mapActions } from 'vuex';
+  import { Component, Vue } from 'vue-property-decorator';
+  import LoginView from '@/components/LoginView.vue'; // @ is an alias to /src
 
-@Component({
-  methods: {
-    ...mapActions([
-      'signIn'
-    ]),
-  },
-})
-export default class Login extends Vue {
-  // mounted() {
-  //   this.$store.dispatch('checkSignIn');
-  // }
-
-  // created() {
-  //   this.$store.dispatch('checkSignIn');
-  //   console.log(`check: ${this.$store.state.isSignIn}`);
-  //
-  //   if (this.$store.state.isSignIn) {
-  //     // すでにログインしていたら
-  //     this.$router.push('/');
-  //   }
-  // }
-}
+  @Component({
+    components: {
+      LoginView,
+    },
+  })
+  export default class Login extends Vue {}
 </script>
-
-<style lang="stylus" scoped>
-#login
-  /*--- layout ---*/
-  display flex
-  justify-content center
-  align-items center
-  flex-direction column
-  /*--- end ---*/
-</style>

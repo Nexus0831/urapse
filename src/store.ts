@@ -62,9 +62,9 @@ export default new Vuex.Store({
         context.commit('SET_IS_DIALOG_OPEN', false);
         context.commit('SET_CREATE_FIELDS_TITLE', '');
         context.commit('SET_CREATE_FIELDS_BODY', '');
-        context.commit('SET_CREATE_FIELDS_VALIDATE', true)
+        context.commit('SET_CREATE_FIELDS_VALIDATE', true);
       } else {
-        context.commit('SET_CREATE_FIELDS_VALIDATE', false)
+        context.commit('SET_CREATE_FIELDS_VALIDATE', false);
       }
     },
     signIn: (context) => {
@@ -75,7 +75,7 @@ export default new Vuex.Store({
         console.log(`user: ${result.user}`);
         context.commit('SET_USER', result.user);
       }).catch((error) => {
-        console.log(error)
+        console.log(error);
       })
     },
     checkSignIn: (context) => {
