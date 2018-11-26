@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <div id="title">
-        Urapse
+      <div>
+        <router-link to="/" class="title">Urapse</router-link>
       </div>
     </div>
     <router-view id="content"/>
@@ -59,9 +59,14 @@
   grid-row 3 / 4
   grid-column 2/ 3
 
-#title
+.title
   font-size 24px
   font-weight 500
+  color white
+  text-decoration none
+
+  &:hover
+    cursor pointer
 
 .ripple
   display block
