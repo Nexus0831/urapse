@@ -35,15 +35,12 @@
     //   this.$store.dispatch('checkSignIn');
     // }
 
-    // created() {
-    //   this.$store.dispatch('checkSignIn');
-    //   console.log(`check: ${this.$store.state.isSignIn}`);
-    //
-    //   if (this.$store.state.isSignIn) {
-    //     // すでにログインしていたら
-    //     this.$router.push('/');
-    //   }
-    // }
+    created() {
+      if (this.$store.state.isSignIn) {
+        // すでにログインしていたら
+        this.$router.push('/');
+      }
+    }
   }
 </script>
 
