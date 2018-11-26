@@ -56,6 +56,13 @@ export default class DetailView extends Vue {
     },
   ];
 
+  created() {
+    if (!this.$store.state.isSignIn) {
+      // すでにログインしていたら
+      this.$router.push('/login');
+    }
+  }
+
   mounted() {
     const rotates: HTMLCollection = this.$el.getElementsByClassName('rotate');
     const len: number = rotates.length;

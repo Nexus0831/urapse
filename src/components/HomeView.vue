@@ -42,6 +42,13 @@ export default class HomeView extends Vue {
   openDialog() {
     this.$store.commit('SET_IS_DIALOG_OPEN', true);
   }
+
+  created() {
+    if (!this.$store.state.isSignIn) {
+      // すでにログインしていたら
+      this.$router.push('/login');
+    }
+  }
 }
 </script>
 

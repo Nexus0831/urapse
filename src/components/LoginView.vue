@@ -35,12 +35,13 @@
     //   this.$store.dispatch('checkSignIn');
     // }
 
-    created() {
-      if (this.$store.state.isSignIn) {
-        // すでにログインしていたら
-        this.$router.push('/');
-      }
-    }
+    // 開発のため言ったんコメントアウト
+    // created() {
+    //   if (this.$store.state.isSignIn) {
+    //     // すでにログインしていたら
+    //     this.$router.push('/');
+    //   }
+    // }
   }
 </script>
 

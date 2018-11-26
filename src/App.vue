@@ -18,6 +18,11 @@ export default class App extends Vue {
   onRouteChange(to: object, from: object) {
     this.$store.dispatch('checkSignIn');
   }
+
+  // 再読み込み時にも実行する為
+  created() {
+    this.$store.dispatch('checkSignIn');
+  }
 }
 </script>
 
