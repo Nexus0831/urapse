@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <button @click="signIn">login</button>
+  <div id="login">
+    <!-- <button @click="signIn">login</button> -->
   </div>
 </template>
 
@@ -33,4 +33,11 @@ export default class Login extends Vue {
 </script>
 
 <style lang="stylus" scoped>
+#login
+  /*--- layout ---*/
+  display flex
+  justify-content center
+  align-items center
+  flex-direction column
+  /*--- end ---*/
 </style>
