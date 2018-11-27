@@ -72,23 +72,19 @@ export default new Vuex.Store({
       const provider = new firebase.auth.GoogleAuthProvider();
 
       firebase.auth().signInWithPopup(provider).then((result) => {
-        console.log(`user: ${result.user}`);
         context.commit('SET_USER', result.user);
       }).catch((error) => {
-        console.log(error);
       })
     },
     checkSignIn: (context) => {
       firebase.auth().onAuthStateChanged((user) => {
         if (!user) {
-          console.log('no login');
           context.commit('SET_IS_SIGN_IN', false);
         } else {
-          console.log(`login: ${user.displayName}`);
           context.commit('SET_USER', user);
           context.commit('SET_IS_SIGN_IN', true);
         }
       });
-    }
+    },
   },
 });
