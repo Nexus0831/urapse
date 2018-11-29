@@ -44,10 +44,11 @@ export default class HomeView extends Vue {
   }
 
   created() {
+    // console.log('home created');
     if (!this.$store.state.isSignIn) {
-      // すでにログインしていたら
       this.$router.push('/login');
     }
+    // console.log('home end');
   }
 }
 </script>
