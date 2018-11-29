@@ -6,24 +6,18 @@
       rippleColor="rgba(255, 255, 255, 0.5)"
       hoverColor="#a31545"
       backgroundColor="#e91e63"
-      @click-action="signIn"
+      @click-action="signInAction"
     />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapActions } from 'vuex';
 import ContainedButton from '@/components/ContainedButton.vue';
 
 @Component({
   components: {
     ContainedButton
-  },
-  methods: {
-    ...mapActions([
-      'signIn'
-    ]),
   },
 })
 export default class Login extends Vue {
@@ -32,6 +26,10 @@ export default class Login extends Vue {
         // すでにログインしていたら
         this.$router.push('/');
       }
+    }
+
+    signInAction() {
+      this.$store.dispatch('signIn', this.$router).then();
     }
   }
 </script>

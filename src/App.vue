@@ -17,12 +17,12 @@ import HeaderNav from '@/components/HeaderNav.vue';
 export default class App extends Vue {
   @Watch('$route')
   onRouteChange(to: object, from: object) {
-    this.$store.dispatch('checkSignIn');
+    this.$store.dispatch('checkSignIn').then();
   }
 
   // 再読み込み時にも実行する為
   created() {
-    this.$store.dispatch('checkSignIn');
+    this.$store.dispatch('checkSignIn').then();
   }
 }
 </script>

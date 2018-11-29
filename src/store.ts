@@ -67,14 +67,14 @@ export default new Vuex.Store({
         context.commit('SET_CREATE_FIELDS_VALIDATE', false);
       }
     },
-    signIn: (context) => {
+    signIn: (context, router) => {
       firebase.auth().languageCode = 'ja';
       const provider = new firebase.auth.GoogleAuthProvider();
 
       firebase.auth().signInWithPopup(provider).then((result) => {
         context.commit('SET_USER', result.user);
-      }).catch((error) => {
-      })
+        router.push('/');
+      }).catch((error) => {});
     },
     checkSignIn: (context) => {
       firebase.auth().onAuthStateChanged((user) => {
