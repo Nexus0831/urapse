@@ -21,17 +21,10 @@ import ContainedButton from '@/components/ContainedButton.vue';
   },
 })
 export default class Login extends Vue {
-    created() {
-      if (this.$store.state.isSignIn) {
-        // すでにログインしていたら
-        this.$router.push('/');
-      }
-    }
-
-    signInAction() {
-      this.$store.dispatch('signIn', this.$router).then();
-    }
+  signInAction() {
+    this.$store.dispatch('signIn', this.$router).then();
   }
+}
 </script>
 
 <style lang="stylus" scoped>

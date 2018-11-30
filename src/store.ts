@@ -76,24 +76,5 @@ export default new Vuex.Store({
         router.push('/');
       }).catch((error) => {});
     },
-    getUser: () => {
-      return new Promise(((resolve, reject) => {
-        firebase.auth().onAuthStateChanged((user) => {
-          if (user) {
-            resolve(user);
-          } else {
-            reject(Error('no login'))
-          }
-        });
-      }));
-    },
-    checkSignIn: async (context) => {
-      await context.dispatch('getUser').then((user) => {
-        context.commit('SET_USER', user);
-        context.commit('SET_IS_SIGN_IN', true);
-      }).catch(() => {
-        context.commit('SET_IS_SIGN_IN', false);
-      });
-    },
   },
 });

@@ -14,31 +14,7 @@ import HeaderNav from '@/components/HeaderNav.vue';
     HeaderNav
   },
 })
-export default class App extends Vue {
-  @Watch('$route')
-  onRouteChange(to: object, from: object) {
-    console.log('route watch');
-    this.$store.dispatch('checkSignIn').then();
-    console.log('route end');
-  }
-
-  // 再読み込み時にも実行する為
-  created() {
-    console.log('app created');
-    this.$store.dispatch('checkSignIn').then(() => {});
-    console.log('app end');
-    // return new Promise((resolve) => {
-    //   setTimeout(() => {
-    //     console.log('checkeSignIn start');
-    //     this.$store.dispatch('checkSignIn').then(() => {
-    //       resolve();
-    //     });
-    //     console.log('checkeSignIn end');
-    //   });
-    //   console.log('app end');
-    // });
-  }
-}
+export default class App extends Vue {}
 </script>
 
 <style lang="stylus">

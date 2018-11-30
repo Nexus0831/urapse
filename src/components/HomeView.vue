@@ -42,24 +42,6 @@ export default class HomeView extends Vue {
   openDialog() {
     this.$store.commit('SET_IS_DIALOG_OPEN', true);
   }
-
-  mounted() {
-    console.log('home created');
-    console.log(this.$store.state.isSignIn);
-    if (!this.$store.state.isSignIn) {
-      this.$router.push('/login');
-    }
-    console.log('home end');
-    // return new Promise((resolve) => {
-    //   setTimeout(() => {
-    //     if (!this.$store.state.isSignIn) {
-    //       this.$router.push('/login');
-    //     }
-    //     resolve();
-    //   });
-    //   console.log('home end');
-    // });
-  }
 }
 </script>
 
