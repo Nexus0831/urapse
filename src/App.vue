@@ -8,8 +8,6 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import HeaderNav from '@/components/HeaderNav.vue';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
 
 @Component({
   components: {
@@ -17,40 +15,27 @@ import 'firebase/auth';
   },
 })
 export default class App extends Vue {
-  // @Watch('$route')
-  // onRouteChange(to: object, from: object) {
-  //   // console.log('route watch');
-  //   this.$store.dispatch('checkSignIn').then();
-  //   // console.log('route end');
-  // }
+  @Watch('$route')
+  onRouteChange(to: object, from: object) {
+    console.log('route watch');
+    this.$store.dispatch('checkSignIn').then();
+    console.log('route end');
+  }
 
   // 再読み込み時にも実行する為
   created() {
-    // console.log('app created');
-    return this.$store.dispatch('checkSignIn').then(() => {
-      // console.log('app end');
-    });
-    // console.log('4');
-    // return new Promise((resolve, reject) => {
-    //   firebase.auth().onAuthStateChanged((user) => {
-    //     if (!user) {
-    //       this.$store.commit('SET_IS_SIGN_IN', false);
-    //     } else {
-    //       this.$store.commit('SET_USER', user);
-    //       this.$store.commit('SET_IS_SIGN_IN', true);
-    //     }
+    console.log('app created');
+    this.$store.dispatch('checkSignIn').then(() => {});
+    console.log('app end');
+    // return new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     console.log('checkeSignIn start');
+    //     this.$store.dispatch('checkSignIn').then(() => {
+    //       resolve();
+    //     });
+    //     console.log('checkeSignIn end');
     //   });
-    // });
-    // const currentPath: string = this.$router.currentRoute.path;
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   if (!user) {
-    //     this.$store.commit('SET_IS_SIGN_IN', false);
-    //     // this.$router.push('/login');
-    //   } else {
-    //     this.$store.commit('SET_USER', user);
-    //     this.$store.commit('SET_IS_SIGN_IN', true);
-    //     // this.$router.push(currentPath);
-    //   }
+    //   console.log('app end');
     // });
   }
 }

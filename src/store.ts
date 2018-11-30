@@ -79,7 +79,6 @@ export default new Vuex.Store({
     getUser: () => {
       return new Promise(((resolve, reject) => {
         firebase.auth().onAuthStateChanged((user) => {
-          console.log('get user');
           if (user) {
             resolve(user);
           } else {
@@ -89,66 +88,12 @@ export default new Vuex.Store({
       }));
     },
     checkSignIn: async (context) => {
-      // let flag = false;
-      console.log('checkSignIn start');
-      // await firebase.auth().onAuthStateChanged((user) => {
-      //   console.log('get user');
-      //   if (user) {
-      //     context.commit('SET_USER', user);
-      //     context.commit('SET_IS_SIGN_IN', true);
-      //     // flag = true;
-      //     console.log('ok login');
-      //   } else {
-      //     context.commit('SET_IS_SIGN_IN', false);
-      //     // flag = false;
-      //     console.log('no login');
-      //   }
-      // });
       await context.dispatch('getUser').then((user) => {
         context.commit('SET_USER', user);
         context.commit('SET_IS_SIGN_IN', true);
-        // flag = true;
-        console.log('ok login');
       }).catch(() => {
         context.commit('SET_IS_SIGN_IN', false);
-        //     // flag = false;
-        console.log('no login');
       });
-      console.log('checkSignIn end');
-
-      // return flag;
-
-      // console.log('checkSignIn start');
-      // const user = await firebase.auth().currentUser;
-      // console.log('get user');
-      // if (!user) {
-      //   context.commit('SET_IS_SIGN_IN', false);
-      //   // flag = false;
-      //   console.log('no login');
-      // } else {
-      //   context.commit('SET_USER', user);
-      //   context.commit('SET_IS_SIGN_IN', true);
-      //   // flag = true;
-      //   console.log('ok login');
-      // }
-      //
-      // console.log('checkSignIn end');
-
-      // return await new Promise((resolve, reject) => {
-      //   console.log('checkSignIn start');
-      //   const user = firebase.auth().currentUser;
-      //   console.log('get user');
-      //   if (!user) {
-      //     context.commit('SET_IS_SIGN_IN', false);
-      //     // flag = false;
-      //     console.log('no login');
-      //   } else {
-      //     context.commit('SET_USER', user);
-      //     context.commit('SET_IS_SIGN_IN', true);
-      //     // flag = true;
-      //     console.log('ok login');
-      //   }
-      // }).then();
     },
   },
 });
