@@ -118,7 +118,9 @@ export default new Vuex.Store({
   },
   getters: {
     getMindMap: (state) => (key: string) => {
-      return state.mindMaps.filter(mindMap => mindMap.key === key);
+      console.log(key);
+      const mindMap = state.mindMaps.filter(mindMap => mindMap.key === key);
+      return mindMap[0];
     }
   },
   actions: {

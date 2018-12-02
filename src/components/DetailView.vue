@@ -1,6 +1,6 @@
 <template>
   <div id="detail">
-    <template v-for="item in mindMap">
+    <template v-for="item in mindMap.nodes">
       <Node :key="item.key" :node="item"/>
     </template>
   </div>
@@ -18,6 +18,10 @@ import Node from '@/components/Node.vue';
 export default class DetailView extends Vue {
   mindMap = {};
 
+  created() {
+    this.mindMap = this.$store.getters.getMindMap(this.$route.params.id);
+  }
+
   mounted() {
     const rotates: HTMLCollection = this.$el.getElementsByClassName('node');
     const len: number = rotates.length;
@@ -31,7 +35,6 @@ export default class DetailView extends Vue {
       const y: number = Math.sin(red * index) * circleR + circleR;
       rotate.style.left = `${x}`;
       rotate.style.top = `${y}`;
-      console.log(`x: ${x}, y: ${y}`);
     });
   }
 }
