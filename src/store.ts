@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    testData: [
+    mindMaps: [
       {
         key: '12345',
         title: 'Urapse Mind Map',

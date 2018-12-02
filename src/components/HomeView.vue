@@ -2,7 +2,7 @@
   <div id="home">
     <CreateButton @click-action="openDialog"/>
     <div id="cards">
-      <template v-for="item in testData">
+      <template v-for="item in mindMaps">
         <Card
           :id="item.key"
           :key="item.key"
@@ -33,7 +33,7 @@ import DialogForm from './DialogForm.vue';
   },
   computed: {
     ...mapState([
-      'testData',
+      'mindMaps',
       'isDialogOpen'
     ]),
   }
