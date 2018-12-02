@@ -12,13 +12,65 @@ export default new Vuex.Store({
         key: '12345',
         title: 'Urapse Mind Map',
         body: 'Lizards \n are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
-        nodes: [{}, {}, {}],
+        nodes: [
+          {
+            title: 'idea 1',
+            color: '#2196f3',
+            textColor: 'white',
+          },
+          {
+            title: 'idea 2',
+            color: '#e91e63',
+            textColor: 'white',
+          },
+          {
+            title: 'idea 3',
+            color: '#8bc34a',
+            textColor: 'black',
+          },
+          {
+            title: 'idea 4',
+            color: '#ffeb3b',
+            textColor: 'black',
+          },
+          {
+            title: 'idea 5',
+            color: '#f44336',
+            textColor: 'white',
+          },
+          {
+            title: 'idea 6',
+            color: '#3f51b5',
+            textColor: 'white',
+          },
+        ],
       },
       {
         key: '67890',
         title: 'プロジェクト演習2',
         body: 'Lizards \n are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
-        nodes: [{}, {}, {}],
+        nodes: [
+          {
+            title: 'idea 7',
+            color: '#2196f3',
+            textColor: 'white',
+          },
+          {
+            title: 'idea 8',
+            color: '#e91e63',
+            textColor: 'white',
+          },
+          {
+            title: 'idea 9',
+            color: '#8bc34a',
+            textColor: 'black',
+          },
+          {
+            title: 'idea 10',
+            color: '#ffeb3b',
+            textColor: 'black',
+          },
+        ],
       },
     ],
     alertId: '',
