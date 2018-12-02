@@ -14,31 +14,37 @@ export default new Vuex.Store({
         body: 'Lizards \n are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
         nodes: [
           {
+            key: 'a',
             title: 'idea 1',
             color: '#2196f3',
             textColor: 'white',
           },
           {
+            key: 'b',
             title: 'idea 2',
             color: '#e91e63',
             textColor: 'white',
           },
           {
+            key: 'c',
             title: 'idea 3',
             color: '#8bc34a',
             textColor: 'black',
           },
           {
+            key: 'd',
             title: 'idea 4',
             color: '#ffeb3b',
             textColor: 'black',
           },
           {
+            key: 'e',
             title: 'idea 5',
             color: '#f44336',
             textColor: 'white',
           },
           {
+            key: 'f',
             title: 'idea 6',
             color: '#3f51b5',
             textColor: 'white',
@@ -51,21 +57,25 @@ export default new Vuex.Store({
         body: 'Lizards \n are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
         nodes: [
           {
+            key: 'g',
             title: 'idea 7',
             color: '#2196f3',
             textColor: 'white',
           },
           {
+            key: 'h',
             title: 'idea 8',
             color: '#e91e63',
             textColor: 'white',
           },
           {
+            key: 'i',
             title: 'idea 9',
             color: '#8bc34a',
             textColor: 'black',
           },
           {
+            key: 'j',
             title: 'idea 10',
             color: '#ffeb3b',
             textColor: 'black',

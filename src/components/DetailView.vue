@@ -1,63 +1,25 @@
 <template>
   <div id="detail">
-    <template v-for="(item, index) in ideas">
-      <svg width="150" height="150" viewBox="0 0 150 150" :key="index" class="rotate">
-        <circle cx="50%" cy="50%" r="50%" cursor="pointer" :fill="item.color"/>
-        <text
-          x="50%"
-          y="50%"
-          :fill="item.textColor"
-          font-size="28"
-          text-anchor="middle"
-          dominant-baseline="central"
-        >
-          {{ item.title }}
-        </text>
-      </svg>
+    <template v-for="item in mindMap">
+      <Node :key="item.key" :node="item"/>
     </template>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import Node from '@/components/Node.vue';
 
-@Component
+@Component({
+  components: {
+    Node,
+  }
+})
 export default class DetailView extends Vue {
-  ideas = [
-    {
-      title: 'idea 1',
-      color: '#2196f3',
-      textColor: 'white',
-    },
-    {
-      title: 'idea 2',
-      color: '#e91e63',
-      textColor: 'white',
-    },
-    {
-      title: 'idea 3',
-      color: '#8bc34a',
-      textColor: 'black',
-    },
-    {
-      title: 'idea 4',
-      color: '#ffeb3b',
-      textColor: 'black',
-    },
-    {
-      title: 'idea 5',
-      color: '#f44336',
-      textColor: 'white',
-    },
-    {
-      title: 'idea 6',
-      color: '#3f51b5',
-      textColor: 'white',
-    },
-  ];
+  mindMap = {};
 
   mounted() {
-    const rotates: HTMLCollection = this.$el.getElementsByClassName('rotate');
+    const rotates: HTMLCollection = this.$el.getElementsByClassName('node');
     const len: number = rotates.length;
     const deg: number = 360.0 / len;
     const red: number = (deg * Math.PI / 180.0);
