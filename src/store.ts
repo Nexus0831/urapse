@@ -116,6 +116,11 @@ export default new Vuex.Store({
       state.isSignIn = isSignIn;
     },
   },
+  getters: {
+    getMindMap: (state) => (key: string) => {
+      return state.mindMaps.filter(mindMap => mindMap.key === key);
+    }
+  },
   actions: {
     mindMapCreate: (context) => {
       if (context.state.createFields.title !== '' && context.state.createFields.body !== '') {
