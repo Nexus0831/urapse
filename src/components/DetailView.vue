@@ -1,5 +1,6 @@
 <template>
   <div id="detail">
+    <!-- TODO: 配列があるかないかでif（ない場合はundefined）-->
     <template v-for="item in mindMap.nodes">
       <Node :key="item.key" :node="item"/>
     </template>
@@ -20,16 +21,18 @@ export default class DetailView extends Vue {
 
   created() {
     this.mindMap = this.$store.getters.getMindMap(this.$route.params.id);
+    console.log(this.mindMap);
   }
 
+  // TODO: 配列があるかないかでif（ない場合はundefined）
   mounted() {
-    const rotates: HTMLCollection = this.$el.getElementsByClassName('node');
-    const len: number = rotates.length;
+    const nodes: HTMLCollection = this.$el.getElementsByClassName('node');
+    const len: number = nodes.length;
     const deg: number = 360.0 / len;
     const red: number = (deg * Math.PI / 180.0);
     const circleR: number = 100 * 2.5;
 
-    Array.prototype.forEach.call(rotates, (item: HTMLElement, index: number) => {
+    Array.prototype.forEach.call(nodes, (item: HTMLElement, index: number) => {
       const rotate: HTMLElement = item as HTMLElement;
       const x: number = Math.cos(red * index) * circleR + circleR;
       const y: number = Math.sin(red * index) * circleR + circleR;

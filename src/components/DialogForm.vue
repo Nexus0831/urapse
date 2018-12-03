@@ -1,30 +1,29 @@
 <template>
-  <div id="dialog-form" @click.self="dialogClose">
+  <div id="dialog-form" @click.self="$emit('dialog-close')">
     <div class="surface">
-      <div class="dialog-form-title">Create Mind Map</div>
-      <div class="dialog-form-title error" v-if="!createFields.validate">
-        Heyブラザー！TitleとBodyが空だぜ！
+      <div class="dialog-form-title">{{ formTitle }}</div>
+      <div class="dialog-form-title error" v-if="!validate">
+        {{ validMessage }}
       </div>
-      <div class="dialog-form-input">
-        <MaterialInput idName="create-title" labelText="Title" @change-action="titleChangeAction"/>
-      </div>
-      <div class="dialog-form-input">
-        <MaterialInput idName="create-body" labelText="Body" @change-action="bodyChangeAction"/>
-      </div>
+      <template v-for="field in fields">
+        <div class="dialog-form-input" :key="field.label">
+          <MaterialInput :idName="field.label" :labelText="field.label" @change-action="field.changeAction"/>
+        </div>
+      </template>
       <div class="button-container">
         <Button
           buttonText="CANCEL"
           style="color: #FFF"
           rippleColor="rgba(255, 255, 255, 0.5)"
           hoverColor="rgba(255, 255, 255, 0.08)"
-          @click-action="dialogClose"
+          @click-action="$emit('dialog-close')"
         />
         <Button
           buttonText="SUBMIT"
           style="color: #e91e63"
           rippleColor="rgba(233, 30, 99, 0.5)"
           hoverColor="rgba(233, 30, 99, 0.2)"
-          @click-action="mindMapCreate"
+          @click-action="$emit('submit-action')"
         />
       </div>
     </div>
@@ -33,7 +32,6 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { mapActions, mapState } from 'vuex';
 import MaterialInput from '@/components/MaterialInput.vue';
 import Button from '@/components/Button.vue';
 
@@ -42,30 +40,12 @@ import Button from '@/components/Button.vue';
     MaterialInput,
     Button
   },
-  computed: {
-    ...mapState([
-      'createFields'
-    ]),
-  },
-  methods: {
-    ...mapActions([
-      'mindMapCreate'
-    ]),
-  }
 })
 export default class DialogForm extends Vue {
-  dialogClose() {
-    this.$store.commit('SET_IS_DIALOG_OPEN', false);
-    this.$store.commit('SET_CREATE_FIELDS_VALIDATE', true);
-  }
-
-  titleChangeAction(title: string) {
-    this.$store.commit('SET_CREATE_FIELDS_TITLE', title);
-  }
-
-  bodyChangeAction(body: string) {
-    this.$store.commit('SET_CREATE_FIELDS_BODY', body);
-  }
+  @Prop() private formTitle!: string;
+  @Prop() private validMessage!: string;
+  @Prop() private fields!: Array<object>;
+  @Prop() private validate!: boolean;
 }
 </script>
 

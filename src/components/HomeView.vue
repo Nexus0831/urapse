@@ -13,14 +13,22 @@
       </template>
     </div>
     <transition name="dialog">
-      <DialogForm v-if="isDialogOpen"/>
+      <DialogForm
+        v-if="isDialogOpen"
+        formTitle="Create MindMap"
+        validMessage="Heyブラザー！TitleとBodyが空だぜ！"
+        :validate="createFields.validate"
+        :fields="fields"
+        @submit-action="mindMapCreate"
+        @dialog-close="dialogClose"
+      />
     </transition>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import Card from './Card.vue';
 import CreateButton from './CreateButton.vue';
 import DialogForm from './DialogForm.vue';
@@ -34,13 +42,39 @@ import DialogForm from './DialogForm.vue';
   computed: {
     ...mapState([
       'mindMaps',
-      'isDialogOpen'
+      'isDialogOpen',
+      'createFields'
+    ]),
+  },
+  methods: {
+    ...mapActions([
+      'mindMapCreate'
     ]),
   }
 })
 export default class HomeView extends Vue {
+  fields = [
+    {
+      label: 'title',
+      changeAction: (title: string) => {
+        this.$store.commit('SET_CREATE_FIELDS_TITLE', title);
+      },
+    },
+    {
+      label: 'body',
+      changeAction: (body: string) => {
+        this.$store.commit('SET_CREATE_FIELDS_BODY', body);
+      },
+    },
+  ];
+
   openDialog() {
     this.$store.commit('SET_IS_DIALOG_OPEN', true);
+  }
+
+  dialogClose() {
+    this.$store.commit('SET_IS_DIALOG_OPEN', false);
+    this.$store.commit('SET_CREATE_FIELDS_VALIDATE', true);
   }
 }
 </script>
