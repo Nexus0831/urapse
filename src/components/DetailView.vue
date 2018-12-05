@@ -35,7 +35,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { mapActions, mapState } from 'vuex';
-import { MindMap, OriginalNode } from '@/Interfaces/intarface';
+import { MindMap, IdeaNode } from '@/Interfaces/intarface';
 import Node from '@/components/Node.vue';
 import FAB from '@/components/FloatingActionButton.vue';
 import DialogForm from '@/components/DialogForm.vue';
@@ -122,7 +122,7 @@ export default class DetailView extends Vue {
   }
 
   dialogEditOpen(key: string) {
-    const node = this.mindMap.nodes.filter((e: OriginalNode) => e.key === key)[0];
+    const node = this.mindMap.nodes.filter((e: IdeaNode) => e.key === key)[0];
     this.fields[0].value = node.title;
     this.fields[1].value = node.backgroundColor;
     this.fields[2].value = node.textColor;

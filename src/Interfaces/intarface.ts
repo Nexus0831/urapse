@@ -1,4 +1,4 @@
-export interface OriginalNode {
+export interface IdeaNode {
   key: string,
   title: string,
   backgroundColor: string,
@@ -10,5 +10,5 @@ export interface MindMap {
   key: string,
   title: string,
   body: string,
-  nodes: Array<OriginalNode>
+  nodes: Array<IdeaNode>
 }
