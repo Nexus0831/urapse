@@ -56,12 +56,14 @@ export default class HomeView extends Vue {
   fields = [
     {
       label: 'Title',
+      value: '',
       changeAction: (title: string) => {
         this.$store.commit('SET_MAP_CREATE_FIELDS_TITLE', title);
       },
     },
     {
       label: 'Body',
+      value: '',
       changeAction: (body: string) => {
         this.$store.commit('SET_MAP_CREATE_FIELDS_BODY', body);
       },

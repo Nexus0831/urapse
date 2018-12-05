@@ -1,6 +1,12 @@
 <template>
-  <svg width="150" height="150" viewBox="0 0 150 150" class="node">
-    <circle cx="50%" cy="50%" r="50%" cursor="pointer" :fill="node.color"/>
+  <svg
+    width="150"
+    height="150"
+    viewBox="0 0 150 150"
+    class="node"
+    @click="$emit('click-action')"
+  >
+    <circle cx="50%" cy="50%" r="50%" cursor="pointer" :fill="node.backgroundColor"/>
     <text
       x="50%"
       y="50%"

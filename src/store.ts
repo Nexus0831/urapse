@@ -16,38 +16,44 @@ export default new Vuex.Store({
           {
             key: 'a',
             title: 'idea 1',
-            color: '#2196f3',
+            backgroundColor: '#2196f3',
             textColor: 'white',
+            link: '',
           },
           {
             key: 'b',
             title: 'idea 2',
-            color: '#e91e63',
+            backgroundColor: '#e91e63',
             textColor: 'white',
+            link: '',
           },
           {
             key: 'c',
             title: 'idea 3',
-            color: '#8bc34a',
+            backgroundColor: '#8bc34a',
             textColor: 'black',
+            link: '',
           },
           {
             key: 'd',
             title: 'idea 4',
-            color: '#ffeb3b',
+            backgroundColor: '#ffeb3b',
             textColor: 'black',
+            link: '',
           },
           {
             key: 'e',
             title: 'idea 5',
-            color: '#f44336',
+            backgroundColor: '#f44336',
             textColor: 'white',
+            link: '',
           },
           {
             key: 'f',
             title: 'idea 6',
-            color: '#3f51b5',
+            backgroundColor: '#3f51b5',
             textColor: 'white',
+            link: '',
           },
         ],
       },
@@ -59,26 +65,30 @@ export default new Vuex.Store({
           {
             key: 'g',
             title: 'idea 7',
-            color: '#2196f3',
+            backgroundColor: '#2196f3',
             textColor: 'white',
+            link: '',
           },
           {
             key: 'h',
             title: 'idea 8',
-            color: '#e91e63',
+            backgroundColor: '#e91e63',
             textColor: 'white',
+            link: '',
           },
           {
             key: 'i',
             title: 'idea 9',
-            color: '#8bc34a',
+            backgroundColor: '#8bc34a',
             textColor: 'black',
+            link: '',
           },
           {
             key: 'j',
             title: 'idea 10',
-            color: '#ffeb3b',
+            backgroundColor: '#ffeb3b',
             textColor: 'black',
+            link: '',
           },
         ],
       },
@@ -173,13 +183,13 @@ export default new Vuex.Store({
         console.log(context.state.nodeCreateFields.backgroundColor);
         console.log(context.state.nodeCreateFields.textColor);
         console.log(context.state.nodeCreateFields.link);
+        context.commit('SET_IS_NODE_DIALOG_OPEN', false);
         context.dispatch('nodeFieldsClear');
       } else {
         context.commit('SET_NODE_CREATE_FIELDS_VALIDATE', false);
       }
     },
     nodeFieldsClear: (context) => {
-      context.commit('SET_IS_NODE_DIALOG_OPEN', false);
       context.commit('SET_NODE_CREATE_FIELDS_TITLE', '');
       context.commit('SET_NODE_CREATE_FIELDS_BACKGROUND_COLOR', '');
       context.commit('SET_NODE_CREATE_FIELDS_TEXT_COLOR', '');

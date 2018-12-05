@@ -2,7 +2,11 @@
   <div id="detail">
     <template v-if="typeof mindMap !== 'undefined'">
       <template v-for="item in mindMap.nodes">
-        <Node :key="item.key" :node="item"/>
+        <Node
+          :key="item.key"
+          :node="item"
+          @click-action="dialogEditOpen(item.key)"
+        />
       </template>
       <FAB
         icon="add"
@@ -31,6 +35,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { mapActions, mapState } from 'vuex';
+import { MindMap, OriginalNode } from '@/Interfaces/intarface';
 import Node from '@/components/Node.vue';
 import FAB from '@/components/FloatingActionButton.vue';
 import DialogForm from '@/components/DialogForm.vue';
@@ -54,28 +59,33 @@ import DialogForm from '@/components/DialogForm.vue';
   }
 })
 export default class DetailView extends Vue {
-  mindMap: object = {};
+  mindMap: MindMap = {};
+
   fields = [
     {
       label: 'Title',
+      value: '',
       changeAction: (title: string) => {
         this.$store.commit('SET_NODE_CREATE_FIELDS_TITLE', title);
       },
     },
     {
       label: 'BackgroundColor',
+      value: '',
       changeAction: (backgroundColor: string) => {
         this.$store.commit('SET_NODE_CREATE_FIELDS_BACKGROUND_COLOR', backgroundColor);
       },
     },
     {
       label: 'TextColor',
+      value: '',
       changeAction: (textColor: string) => {
         this.$store.commit('SET_NODE_CREATE_FIELDS_TEXT_COLOR', textColor);
       },
     },
     {
       label: 'Link',
+      value: '',
       changeAction: (link: string) => {
         this.$store.commit('SET_NODE_CREATE_FIELDS_LINK', link);
       },
@@ -105,12 +115,24 @@ export default class DetailView extends Vue {
   }
 
   dialogOpen() {
+    this.fields.forEach((e) => {
+      e.value = '';
+    });
+    this.$store.commit('SET_IS_NODE_DIALOG_OPEN', true);
+  }
+
+  dialogEditOpen(key: string) {
+    const node = this.mindMap.nodes.filter((e: OriginalNode) => e.key === key)[0];
+    this.fields[0].value = node.title;
+    this.fields[1].value = node.backgroundColor;
+    this.fields[2].value = node.textColor;
+    this.fields[3].value = node.link;
     this.$store.commit('SET_IS_NODE_DIALOG_OPEN', true);
   }
 
   dialogClose() {
     this.$store.commit('SET_IS_NODE_DIALOG_OPEN', false);
-    this.$store.commit('SET_NODE_CREATE_FIELDS_VALIDATE', true);
+    this.$store.dispatch('nodeFieldsClear');
   }
 }
 </script>

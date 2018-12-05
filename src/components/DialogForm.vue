@@ -7,7 +7,12 @@
       </div>
       <template v-for="field in fields">
         <div class="dialog-form-input" :key="field.label">
-          <MaterialInput :idName="field.label" :labelText="field.label" @change-action="field.changeAction"/>
+          <MaterialInput
+            :idName="field.label"
+            :labelText="field.label"
+            :value="field.value"
+            @change-action="field.changeAction"
+          />
         </div>
       </template>
       <div class="button-container">
