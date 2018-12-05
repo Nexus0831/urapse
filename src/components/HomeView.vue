@@ -17,7 +17,7 @@
         v-if="isDialogOpen"
         formTitle="Create MindMap"
         validMessage="Heyブラザー！TitleとBodyが空だぜ！"
-        :validate="createFields.validate"
+        :validate="mapCreateFields.validate"
         :fields="fields"
         @submit-action="mindMapCreate"
         @dialog-close="dialogClose"
@@ -43,7 +43,7 @@ import DialogForm from './DialogForm.vue';
     ...mapState([
       'mindMaps',
       'isDialogOpen',
-      'createFields'
+      'mapCreateFields'
     ]),
   },
   methods: {

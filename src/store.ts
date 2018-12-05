@@ -85,7 +85,7 @@ export default new Vuex.Store({
     ],
     alertId: '',
     isDialogOpen: false,
-    createFields: {
+    mapCreateFields: {
       title: '',
       body: '',
       validate: true
@@ -101,13 +101,13 @@ export default new Vuex.Store({
       state.isDialogOpen = isOpen;
     },
     SET_CREATE_FIELDS_TITLE: (state, title) => {
-      state.createFields.title = title;
+      state.mapCreateFields.title = title;
     },
     SET_CREATE_FIELDS_BODY: (state, body) => {
-      state.createFields.body = body;
+      state.mapCreateFields.body = body;
     },
     SET_CREATE_FIELDS_VALIDATE: (state, validate) => {
-      state.createFields.validate = validate;
+      state.mapCreateFields.validate = validate;
     },
     SET_USER: (state, user) => {
       state.user = user;
@@ -124,9 +124,9 @@ export default new Vuex.Store({
   },
   actions: {
     mindMapCreate: (context) => {
-      if (context.state.createFields.title !== '' && context.state.createFields.body !== '') {
-        console.log(context.state.createFields.title);
-        console.log(context.state.createFields.body);
+      if (context.state.mapCreateFields.title !== '' && context.state.mapCreateFields.body !== '') {
+        console.log(context.state.mapCreateFields.title);
+        console.log(context.state.mapCreateFields.body);
         context.commit('SET_IS_DIALOG_OPEN', false);
         context.commit('SET_CREATE_FIELDS_TITLE', '');
         context.commit('SET_CREATE_FIELDS_BODY', '');
