@@ -1,76 +1,138 @@
 <template>
   <div id="detail">
-    <template v-for="(item, index) in ideas">
-      <svg width="150" height="150" viewBox="0 0 150 150" :key="index" class="rotate">
-        <circle cx="50%" cy="50%" r="50%" cursor="pointer" :fill="item.color"/>
-        <text
-          x="50%"
-          y="50%"
-          :fill="item.textColor"
-          font-size="28"
-          text-anchor="middle"
-          dominant-baseline="central"
-        >
-          {{ item.title }}
-        </text>
-      </svg>
+    <template v-if="typeof mindMap !== 'undefined'">
+      <template v-for="item in mindMap.nodes">
+        <Node
+          :key="item.key"
+          :node="item"
+          @click-action="dialogEditOpen(item.key)"
+        />
+      </template>
+      <FAB
+        icon="add"
+        style="color: #FFF"
+        rippleColor="rgba(255, 255, 255, 0.2)"
+        hoverColor="#a31545"
+        backgroundColor="#e91e63"
+        @click-action="dialogOpen"
+      />
+      <transition name="fade">
+        <DialogForm
+          v-if="isNodeDialogOpen"
+          formTitle="Node"
+          validMessage="Heyブラザー！TitleとBodyが空だぜ！"
+          :validate="nodeCreateFields.validate"
+          :fields="fields"
+          @submit-action="nodeCreate"
+          @dialog-close="dialogClose"
+        />
+      </transition>
     </template>
+    <h1 v-else>マインドマップが見つかりません</h1>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { mapActions, mapState } from 'vuex';
+import { MindMap, IdeaNode } from '@/Interfaces/intarface';
+import Node from '@/components/Node.vue';
+import FAB from '@/components/FloatingActionButton.vue';
+import DialogForm from '@/components/DialogForm.vue';
 
-@Component
+@Component({
+  components: {
+    DialogForm,
+    Node,
+    FAB
+  },
+  computed: {
+    ...mapState([
+      'isNodeDialogOpen',
+      'nodeCreateFields'
+    ]),
+  },
+  methods: {
+    ...mapActions([
+      'nodeCreate'
+    ]),
+  }
+})
 export default class DetailView extends Vue {
-  ideas = [
+  mindMap: MindMap = {} as MindMap;
+
+  fields = [
     {
-      title: 'idea 1',
-      color: '#2196f3',
-      textColor: 'white',
+      label: 'Title',
+      value: '',
+      changeAction: (title: string) => {
+        this.$store.commit('SET_NODE_CREATE_FIELDS_TITLE', title);
+      },
     },
     {
-      title: 'idea 2',
-      color: '#e91e63',
-      textColor: 'white',
+      label: 'BackgroundColor',
+      value: '',
+      changeAction: (backgroundColor: string) => {
+        this.$store.commit('SET_NODE_CREATE_FIELDS_BACKGROUND_COLOR', backgroundColor);
+      },
     },
     {
-      title: 'idea 3',
-      color: '#8bc34a',
-      textColor: 'black',
+      label: 'TextColor',
+      value: '',
+      changeAction: (textColor: string) => {
+        this.$store.commit('SET_NODE_CREATE_FIELDS_TEXT_COLOR', textColor);
+      },
     },
     {
-      title: 'idea 4',
-      color: '#ffeb3b',
-      textColor: 'black',
-    },
-    {
-      title: 'idea 5',
-      color: '#f44336',
-      textColor: 'white',
-    },
-    {
-      title: 'idea 6',
-      color: '#3f51b5',
-      textColor: 'white',
+      label: 'Link',
+      value: '',
+      changeAction: (link: string) => {
+        this.$store.commit('SET_NODE_CREATE_FIELDS_LINK', link);
+      },
     },
   ];
 
-  mounted() {
-    const rotates: HTMLCollection = this.$el.getElementsByClassName('rotate');
-    const len: number = rotates.length;
-    const deg: number = 360.0 / len;
-    const red: number = (deg * Math.PI / 180.0);
-    const circleR: number = 100 * 2.5;
+  created() {
+    this.mindMap = this.$store.getters.getMindMap(this.$route.params.id);
+  }
 
-    Array.prototype.forEach.call(rotates, (item: HTMLElement, index: number) => {
-      const rotate: HTMLElement = item as HTMLElement;
-      const x: number = Math.cos(red * index) * circleR + circleR;
-      const y: number = Math.sin(red * index) * circleR + circleR;
-      rotate.style.left = `${x}`;
-      rotate.style.top = `${y}`;
-      console.log(`x: ${x}, y: ${y}`);
+  mounted() {
+    if (typeof this.mindMap !== 'undefined') {
+      const nodes: HTMLCollection = this.$el.getElementsByClassName('node');
+      const len: number = nodes.length;
+      const deg: number = 360.0 / len;
+      const red: number = (deg * Math.PI / 180.0);
+      const circleR: number = 100 * 2.5;
+
+      Array.prototype.forEach.call(nodes, (item: HTMLElement, index: number) => {
+        const rotate: HTMLElement = item as HTMLElement;
+        const x: number = Math.cos(red * index) * circleR + circleR;
+        const y: number = Math.sin(red * index) * circleR + circleR;
+        rotate.style.left = `${x}`;
+        rotate.style.top = `${y}`;
+      });
+    }
+  }
+
+  dialogOpen() {
+    this.fields.forEach((e) => {
+      e.value = '';
     });
+    this.$store.commit('SET_IS_NODE_DIALOG_OPEN', true);
+  }
+
+  dialogEditOpen(key: string) {
+    const node = this.mindMap.nodes.filter((e: IdeaNode) => e.key === key)[0];
+    this.fields[0].value = node.title;
+    this.fields[1].value = node.backgroundColor;
+    this.fields[2].value = node.textColor;
+    this.fields[3].value = node.link;
+    this.$store.commit('SET_IS_NODE_DIALOG_OPEN', true);
+  }
+
+  dialogClose() {
+    this.$store.commit('SET_IS_NODE_DIALOG_OPEN', false);
+    this.$store.dispatch('nodeFieldsClear');
   }
 }
 </script>

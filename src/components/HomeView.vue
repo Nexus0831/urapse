@@ -1,8 +1,8 @@
 <template>
   <div id="home">
-    <CreateButton @click-action="openDialog"/>
+    <CreateButton @click-action="dialogOpen"/>
     <div id="cards">
-      <template v-for="item in testData">
+      <template v-for="item in mindMaps">
         <Card
           :id="item.key"
           :key="item.key"
@@ -12,15 +12,23 @@
         />
       </template>
     </div>
-    <transition name="dialog">
-      <DialogForm v-if="isDialogOpen"/>
+    <transition name="fade">
+      <DialogForm
+        v-if="isDialogOpen"
+        formTitle="Create MindMap"
+        validMessage="Heyブラザー！TitleとBodyが空だぜ！"
+        :validate="mapCreateFields.validate"
+        :fields="fields"
+        @submit-action="mindMapCreate"
+        @dialog-close="dialogClose"
+      />
     </transition>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import Card from './Card.vue';
 import CreateButton from './CreateButton.vue';
 import DialogForm from './DialogForm.vue';
@@ -33,14 +41,42 @@ import DialogForm from './DialogForm.vue';
   },
   computed: {
     ...mapState([
-      'testData',
-      'isDialogOpen'
+      'mindMaps',
+      'isDialogOpen',
+      'mapCreateFields'
+    ]),
+  },
+  methods: {
+    ...mapActions([
+      'mindMapCreate'
     ]),
   }
 })
 export default class HomeView extends Vue {
-  openDialog() {
+  fields = [
+    {
+      label: 'Title',
+      value: '',
+      changeAction: (title: string) => {
+        this.$store.commit('SET_MAP_CREATE_FIELDS_TITLE', title);
+      },
+    },
+    {
+      label: 'Body',
+      value: '',
+      changeAction: (body: string) => {
+        this.$store.commit('SET_MAP_CREATE_FIELDS_BODY', body);
+      },
+    },
+  ];
+
+  dialogOpen() {
     this.$store.commit('SET_IS_DIALOG_OPEN', true);
+  }
+
+  dialogClose() {
+    this.$store.commit('SET_IS_DIALOG_OPEN', false);
+    this.$store.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
   }
 }
 </script>

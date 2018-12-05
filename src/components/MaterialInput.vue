@@ -29,10 +29,20 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 export default class MaterialInput extends Vue {
   @Prop() private idName!: string;
   @Prop() private labelText!: string;
+  @Prop() private value!: string;
 
   isFocus: boolean = false;
   isFloat: boolean = false;
   valueText: string = '';
+
+  mounted() {
+    this.valueText = this.value;
+    if (this.valueText !== '') {
+      this.isFocus = false;
+      this.isFloat = true;
+      this.$emit('change-action', this.valueText);
+    }
+  }
 
   inputFocus() {
     if (this.valueText === '') {
