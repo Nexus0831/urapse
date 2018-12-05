@@ -59,7 +59,7 @@ import DialogForm from '@/components/DialogForm.vue';
   }
 })
 export default class DetailView extends Vue {
-  mindMap: MindMap = {};
+  mindMap: MindMap = {} as MindMap;
 
   fields = [
     {
