@@ -5,12 +5,11 @@
         <Node :key="item.key" :node="item"/>
       </template>
       <FAB
-        buttonText="LOGIN is GOOGLE"
+        icon="add"
         style="color: #FFF"
-        rippleColor="rgba(255, 255, 255, 0.5)"
+        rippleColor="rgba(255, 255, 255, 0.2)"
         hoverColor="#a31545"
         backgroundColor="#e91e63"
-        @click.capture="() => console.log('test')"
       />
     </template>
     <h1 v-else>マインドマップが見つかりません</h1>

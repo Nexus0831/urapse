@@ -1,15 +1,29 @@
 <template>
-  <button class="fab">
-    <i class="material-icon">{{ icon }}</i>
+  <button
+    class="fab"
+    @click="(event) => clickAction(event, rippleColor)"
+    @mouseover="hoverIn"
+    @mouseout="hoverOut"
+  >
+    <span class="icon-container">
+      <i class="material-icons fab-icon">{{ icon }}</i>
+    </span>
   </button>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import rippleEffect from '@/functions/ripple';
 
-@Component
+@Component({
+  methods: {
+    clickAction: (event, rippleColor) => {
+      rippleEffect(event, rippleColor);
+    },
+  },
+})
 export default class FloatingActionButton extends Vue {
-  @Prop private icon!: string;
+  @Prop() private icon!: string;
   @Prop() private rippleColor!: string;
   @Prop() private hoverColor!: string;
   @Prop() private backgroundColor!: string;
@@ -35,8 +49,15 @@ export default class FloatingActionButton extends Vue {
   width 56px
   height 56px
   padding 0
+  border 0
+  cursor pointer
+  outline none
+  overflow hidden
+  user-select none
+  text-decoration none
   font-size 0.875em
   box-sizing border-box
+  min-width 0px
   min-height 36px
   transition background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
@@ -49,5 +70,35 @@ export default class FloatingActionButton extends Vue {
   border-radius 50%
   letter-spacing 0.02857em
   text-transform uppercase
+  z-index 50
   /*--- end ---*/
+
+  /*--- layout ---*/
+  display inline-flex
+  align-items center
+  vertical-align middle
+  justify-content center
+  /*--- end *---*/
+
+  /*--- position ---*/
+  position fixed
+  bottom 30px
+  right 5px
+  /*--- end ---*/
+
+  .icon-container
+    width 100%
+    display inherit
+    align-items inherit
+    justify-content inherit
+
+  .fab-icon
+    /*--- style ---*/
+    width 1em
+    height 1em
+    overflow hidden
+    font-size 24px
+    user-select none
+    flex-shrink 0
+    /*--- end ---*/
 </style>
