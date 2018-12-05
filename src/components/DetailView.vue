@@ -10,7 +10,19 @@
         rippleColor="rgba(255, 255, 255, 0.2)"
         hoverColor="#a31545"
         backgroundColor="#e91e63"
+        @click-action="dialogOpen"
       />
+      <transition name="fade">
+        <DialogForm
+          v-if="isNodeDialogOpen"
+          formTitle="Node"
+          validMessage="Heyブラザー！TitleとBodyが空だぜ！"
+          :validate="nodeCreateFields.validate"
+          :fields="fields"
+          @submit-action="nodeCreate"
+          @dialog-close="dialogClose"
+        />
+      </transition>
     </template>
     <h1 v-else>マインドマップが見つかりません</h1>
   </div>
@@ -18,17 +30,57 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { mapActions, mapState } from 'vuex';
 import Node from '@/components/Node.vue';
 import FAB from '@/components/FloatingActionButton.vue';
+import DialogForm from '@/components/DialogForm.vue';
 
 @Component({
   components: {
+    DialogForm,
     Node,
     FAB
+  },
+  computed: {
+    ...mapState([
+      'isNodeDialogOpen',
+      'nodeCreateFields'
+    ]),
+  },
+  methods: {
+    ...mapActions([
+      'nodeCreate'
+    ]),
   }
 })
 export default class DetailView extends Vue {
   mindMap: object = {};
+  fields = [
+    {
+      label: 'Title',
+      changeAction: (title: string) => {
+        this.$store.commit('SET_NODE_CREATE_FIELDS_TITLE', title);
+      },
+    },
+    {
+      label: 'BackgroundColor',
+      changeAction: (backgroundColor: string) => {
+        this.$store.commit('SET_NODE_CREATE_FIELDS_BACKGROUND_COLOR', backgroundColor);
+      },
+    },
+    {
+      label: 'TextColor',
+      changeAction: (textColor: string) => {
+        this.$store.commit('SET_NODE_CREATE_FIELDS_TEXT_COLOR', textColor);
+      },
+    },
+    {
+      label: 'Link',
+      changeAction: (link: string) => {
+        this.$store.commit('SET_NODE_CREATE_FIELDS_LINK', link);
+      },
+    },
+  ];
 
   created() {
     this.mindMap = this.$store.getters.getMindMap(this.$route.params.id);
@@ -50,6 +102,15 @@ export default class DetailView extends Vue {
         rotate.style.top = `${y}`;
       });
     }
+  }
+
+  dialogOpen() {
+    this.$store.commit('SET_IS_NODE_DIALOG_OPEN', true);
+  }
+
+  dialogClose() {
+    this.$store.commit('SET_IS_NODE_DIALOG_OPEN', false);
+    this.$store.commit('SET_NODE_CREATE_FIELDS_VALIDATE', true);
   }
 }
 </script>

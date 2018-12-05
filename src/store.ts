@@ -85,9 +85,17 @@ export default new Vuex.Store({
     ],
     alertId: '',
     isDialogOpen: false,
+    isNodeDialogOpen: false,
     mapCreateFields: {
       title: '',
       body: '',
+      validate: true
+    },
+    nodeCreateFields: {
+      title: '',
+      backgroundColor: '',
+      textColor: '',
+      link: '',
       validate: true
     },
     user: {},
@@ -100,14 +108,32 @@ export default new Vuex.Store({
     SET_IS_DIALOG_OPEN: (state, isOpen) => {
       state.isDialogOpen = isOpen;
     },
-    SET_CREATE_FIELDS_TITLE: (state, title) => {
+    SET_IS_NODE_DIALOG_OPEN: (state, isOpen) => {
+      state.isNodeDialogOpen = isOpen;
+    },
+    SET_MAP_CREATE_FIELDS_TITLE: (state, title) => {
       state.mapCreateFields.title = title;
     },
-    SET_CREATE_FIELDS_BODY: (state, body) => {
+    SET_MAP_CREATE_FIELDS_BODY: (state, body) => {
       state.mapCreateFields.body = body;
     },
-    SET_CREATE_FIELDS_VALIDATE: (state, validate) => {
+    SET_MAP_CREATE_FIELDS_VALIDATE: (state, validate) => {
       state.mapCreateFields.validate = validate;
+    },
+    SET_NODE_CREATE_FIELDS_TITLE: (state, title) => {
+      state.nodeCreateFields.title = title;
+    },
+    SET_NODE_CREATE_FIELDS_BACKGROUND_COLOR: (state, backgroundColor) => {
+      state.nodeCreateFields.backgroundColor = backgroundColor;
+    },
+    SET_NODE_CREATE_FIELDS_TEXT_COLOR: (state, textColor) => {
+      state.nodeCreateFields.textColor = textColor;
+    },
+    SET_NODE_CREATE_FIELDS_LINK: (state, link) => {
+      state.nodeCreateFields.link = link;
+    },
+    SET_NODE_CREATE_FIELDS_VALIDATE: (state, validate) => {
+      state.nodeCreateFields.link = validate;
     },
     SET_USER: (state, user) => {
       state.user = user;
@@ -128,12 +154,37 @@ export default new Vuex.Store({
         console.log(context.state.mapCreateFields.title);
         console.log(context.state.mapCreateFields.body);
         context.commit('SET_IS_DIALOG_OPEN', false);
-        context.commit('SET_CREATE_FIELDS_TITLE', '');
-        context.commit('SET_CREATE_FIELDS_BODY', '');
-        context.commit('SET_CREATE_FIELDS_VALIDATE', true);
+        context.commit('SET_MAP_CREATE_FIELDS_TITLE', '');
+        context.commit('SET_MAP_CREATE_FIELDS_BODY', '');
+        context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
       } else {
-        context.commit('SET_CREATE_FIELDS_VALIDATE', false);
+        context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', false);
       }
+    },
+    nodeCreate: (context) => {
+      if (
+        context.state.nodeCreateFields.title !== ''
+        &&
+        context.state.nodeCreateFields.backgroundColor !== ''
+        &&
+        context.state.nodeCreateFields.textColor !== ''
+      ) {
+        console.log(context.state.nodeCreateFields.title);
+        console.log(context.state.nodeCreateFields.backgroundColor);
+        console.log(context.state.nodeCreateFields.textColor);
+        console.log(context.state.nodeCreateFields.link);
+        context.dispatch('nodeFieldsClear');
+      } else {
+        context.commit('SET_NODE_CREATE_FIELDS_VALIDATE', false);
+      }
+    },
+    nodeFieldsClear: (context) => {
+      context.commit('SET_IS_NODE_DIALOG_OPEN', false);
+      context.commit('SET_NODE_CREATE_FIELDS_TITLE', '');
+      context.commit('SET_NODE_CREATE_FIELDS_BACKGROUND_COLOR', '');
+      context.commit('SET_NODE_CREATE_FIELDS_TEXT_COLOR', '');
+      context.commit('SET_NODE_CREATE_FIELDS_LINK', '');
+      context.commit('SET_NODE_CREATE_FIELDS_VALIDATE', true);
     },
     signIn: (context, router) => {
       firebase.auth().languageCode = 'ja';

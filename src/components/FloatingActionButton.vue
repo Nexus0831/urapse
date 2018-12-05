@@ -2,6 +2,7 @@
   <button
     class="fab"
     @click="(event) => clickAction(event, rippleColor)"
+    @click.capture.stop="$emit('click-action')"
     @mouseover="hoverIn"
     @mouseout="hoverOut"
   >

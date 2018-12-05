@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <CreateButton @click-action="openDialog"/>
+    <CreateButton @click-action="dialogOpen"/>
     <div id="cards">
       <template v-for="item in mindMaps">
         <Card
@@ -12,7 +12,7 @@
         />
       </template>
     </div>
-    <transition name="dialog">
+    <transition name="fade">
       <DialogForm
         v-if="isDialogOpen"
         formTitle="Create MindMap"
@@ -55,26 +55,26 @@ import DialogForm from './DialogForm.vue';
 export default class HomeView extends Vue {
   fields = [
     {
-      label: 'title',
+      label: 'Title',
       changeAction: (title: string) => {
-        this.$store.commit('SET_CREATE_FIELDS_TITLE', title);
+        this.$store.commit('SET_MAP_CREATE_FIELDS_TITLE', title);
       },
     },
     {
-      label: 'body',
+      label: 'Body',
       changeAction: (body: string) => {
-        this.$store.commit('SET_CREATE_FIELDS_BODY', body);
+        this.$store.commit('SET_MAP_CREATE_FIELDS_BODY', body);
       },
     },
   ];
 
-  openDialog() {
+  dialogOpen() {
     this.$store.commit('SET_IS_DIALOG_OPEN', true);
   }
 
   dialogClose() {
     this.$store.commit('SET_IS_DIALOG_OPEN', false);
-    this.$store.commit('SET_CREATE_FIELDS_VALIDATE', true);
+    this.$store.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
   }
 }
 </script>

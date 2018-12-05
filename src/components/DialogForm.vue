@@ -121,11 +121,4 @@ export default class DialogForm extends Vue {
     align-items center
     justify-content flex-end
     /*--- end ---*/
-
-.dialog-enter-active, .dialog-leave-active
-  will-change opacity
-  transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-
-.dialog-enter, .dialog-leave-to
-  opacity: 0
 </style>
