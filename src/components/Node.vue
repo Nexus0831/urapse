@@ -22,10 +22,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { IdeaNode } from '../Interfaces/intarface';
 
 @Component
 export default class Node extends Vue {
-  @Prop() private node!: object;
+  @Prop() private node!: IdeaNode;
 }
 </script>
 
