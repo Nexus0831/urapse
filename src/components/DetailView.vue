@@ -4,6 +4,14 @@
       <template v-for="item in mindMap.nodes">
         <Node :key="item.key" :node="item"/>
       </template>
+      <FAB
+        buttonText="LOGIN is GOOGLE"
+        style="color: #FFF"
+        rippleColor="rgba(255, 255, 255, 0.5)"
+        hoverColor="#a31545"
+        backgroundColor="#e91e63"
+        @click.capture="() => console.log('test')"
+      />
     </template>
     <h1 v-else>マインドマップが見つかりません</h1>
   </div>
@@ -12,10 +20,12 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Node from '@/components/Node.vue';
+import FAB from '@/components/FloatingActionButton.vue';
 
 @Component({
   components: {
     Node,
+    FAB
   }
 })
 export default class DetailView extends Vue {
