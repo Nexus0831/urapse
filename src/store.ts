@@ -5,7 +5,6 @@ import 'firebase/auth';
 import 'firebase/database';
 
 Vue.use(Vuex);
-// const database = firebase.database();
 
 export default new Vuex.Store({
   state: {

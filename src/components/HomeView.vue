@@ -11,6 +11,13 @@
           :body="item.body"
           @update-action="dialogEditOpen"
         />
+        <transition name="alert" :key="item.key">
+          <Alert
+            :title="item.title"
+            v-if="alertId === item.key"
+            @alert-action="mindMapDelete(item.key)"
+          />
+        </transition>
       </template>
     </div>
     <transition name="fade">
@@ -33,23 +40,27 @@ import { mapActions, mapState } from 'vuex';
 import Card from './Card.vue';
 import CreateButton from './CreateButton.vue';
 import DialogForm from './DialogForm.vue';
+import Alert from './Alert.vue';
 
 @Component({
   components: {
     Card,
     CreateButton,
-    DialogForm
+    DialogForm,
+    Alert
   },
   computed: {
     ...mapState([
       'mindMaps',
+      'alertId',
       'isDialogOpen',
       'mapCreateFields'
     ]),
   },
   methods: {
     ...mapActions([
-      'mindMapSubmit'
+      'mindMapSubmit',
+      'mindMapDelete',
     ]),
   }
 })

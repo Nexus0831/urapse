@@ -1,25 +1,9 @@
 <template>
-  <div class="card" @click="rippleEvent" @dblclick="clickAction">
-    <div v-if="!isTitleEdit" class="card-title" @click="toggleTitleEdit">
+  <div class="card" @click="clickAction">
+    <div class="card-title">
       {{ title }}
     </div>
-    <input
-      class="title-input"
-      v-if="isTitleEdit"
-      type="text"
-      @blur="toggleTitleEdit"
-      :value="title"
-      v-focus
-    />
-    <div class="card-body" v-if="!isBodyEdit" @click="toggleBodyEdit">{{ body }}</div>
-    <textarea
-      class="body-input"
-      v-if="isBodyEdit"
-      @blur="toggleBodyEdit"
-      :value="body"
-      v-focus
-    >
-    </textarea>
+    <div class="card-body">{{ body }}</div>
     <div class="icon-container">
       <MaterialIcon
         icon="delete"
@@ -36,39 +20,17 @@
         @click-action="editAction"
       />
     </div>
-    <transition name="alert">
-      <Alert
-        :title="title"
-        v-if="alertId === keyNumber"
-        @alert-action="itemDelete"
-      />
-    </transition>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { mapState } from 'vuex';
 import rippleEffect from '@/functions/ripple';
 import MaterialIcon from './MaterialIcon.vue';
-import Alert from './Alert.vue';
 
 @Component({
   components: {
-    MaterialIcon,
-    Alert
-  },
-  directives: {
-    focus: {
-      inserted: (el) => {
-        el.focus()
-      }
-    }
-  },
-  computed: {
-    ...mapState([
-      'alertId'
-    ]),
+    MaterialIcon
   },
   methods: {
     rippleEvent: (event) => {
@@ -81,9 +43,6 @@ export default class Card extends Vue {
   @Prop() private body!: string;
   @Prop() private keyNumber!: string;
 
-  isTitleEdit: boolean = false;
-  isBodyEdit: boolean = false;
-
   clickAction() {
     this.$router.push({ path: `/detail/${this.keyNumber}` });
   }
@@ -94,24 +53,6 @@ export default class Card extends Vue {
 
   editAction() {
     this.$emit('update-action', this.keyNumber);
-  }
-
-  toggleTitleEdit() {
-    this.isTitleEdit = !this.isTitleEdit;
-  }
-
-  toggleBodyEdit() {
-    this.isBodyEdit = !this.isBodyEdit;
-  }
-
-  // itemUpdate() {
-  //   // this.$store.commit('SET_MAP_CREATE_FIELDS_TITLE', 'update');
-  //   // this.$store.commit('SET_MAP_CREATE_FIELDS_BODY', 'this mindMap update');
-  //   // this.$store.dispatch('mindMapUpdate', this.keyNumber).then();
-  // }
-
-  itemDelete() {
-    this.$store.dispatch('mindMapDelete', this.keyNumber).then();
   }
 }
 </script>
@@ -171,7 +112,7 @@ export default class Card extends Vue {
     overflow hidden
     text-overflow ellipsis
     user-select none
-    white-space pre-wrap
+    white-space nowrap
     z-index 10
     /*--- end ---*/
 
