@@ -83,12 +83,6 @@ export default new Vuex.Store({
       state.isSignIn = isSignIn;
     },
   },
-  getters: {
-    getMindMap: (state) => (key: string) => {
-      const mindMap = state.mindMaps.filter(mindMap => mindMap.key === key);
-      return mindMap[0];
-    }
-  },
   actions: {
     mindMapRead: (context) => {
       const uid = context.state.user.uid;
@@ -123,7 +117,7 @@ export default new Vuex.Store({
       }
     },
     mindMapUpdate: (context, key) => {
-      const uid = context.state.user.uid;
+      const uid = context.state.user.getUid;
       firebase.database().ref(`/users/${uid}/mindMap/${key}`).update({
         title: context.state.mapCreateFields.title,
         body: context.state.mapCreateFields.body
@@ -203,7 +197,7 @@ export default new Vuex.Store({
         link: context.state.nodeCreateFields.link
       }).then(() => {
         context.commit('SET_IS_NODE_DIALOG_OPEN', false);
-        context.dispatch('nodeFieldsClear');
+        context.dispatch('nodeFieldsClear').then();
         context.dispatch('nodeRead', mindMapKey).then();
       });
     },
