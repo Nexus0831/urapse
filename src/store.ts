@@ -10,6 +10,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     mindMaps: [],
+    nodes: [],
     alertId: '',
     isDialogOpen: false,
     isNodeDialogOpen: false,
@@ -32,6 +33,9 @@ export default new Vuex.Store({
   mutations: {
     SET_MINDMAPS: (state, mindMaps) => {
       state.mindMaps = mindMaps;
+    },
+    SET_NODES: (state, nodes) => {
+      state.nodes = nodes;
     },
     SET_ALERT_ID: (state, key) => {
       state.alertId = key;
@@ -151,7 +155,23 @@ export default new Vuex.Store({
       context.commit('SET_MAP_CREATE_FIELDS_BODY', '');
       context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
     },
-    nodeCreate: (context) => {
+    nodeRead: (context, key) => {
+      const uid = context.state.user.uid;
+      return firebase.database().ref(`/users/${uid}/mindMap/${key}/nodes`).once('value').then((snapshot) => {
+        let nodes: Array<object> = [];
+
+        snapshot.forEach((item) => {
+          nodes.push(Object.assign({key: item.key}, item.val()));
+        });
+
+        console.log(nodes);
+
+        context.commit('SET_NODES', nodes);
+      }).catch(() => {
+        context.commit('SET_MINDMAPS', []);
+      });
+    },
+    nodeCreate: (context, key) => {
       if (
         context.state.nodeCreateFields.title !== ''
         &&
@@ -159,12 +179,21 @@ export default new Vuex.Store({
         &&
         context.state.nodeCreateFields.textColor !== ''
       ) {
-        console.log(context.state.nodeCreateFields.title);
-        console.log(context.state.nodeCreateFields.backgroundColor);
-        console.log(context.state.nodeCreateFields.textColor);
-        console.log(context.state.nodeCreateFields.link);
-        context.commit('SET_IS_NODE_DIALOG_OPEN', false);
-        context.dispatch('nodeFieldsClear');
+        const uid = context.state.user.uid;
+        const data = {
+          title: context.state.nodeCreateFields.title,
+          backgroundColor: context.state.nodeCreateFields.backgroundColor,
+          textColor: context.state.nodeCreateFields.textColor,
+          link: context.state.nodeCreateFields.link
+        };
+
+        const database = firebase.database().ref(`/users/${uid}/mindMap/${key}/nodes`).push();
+        database.update(data).then(() => {
+          context.commit('SET_IS_NODE_DIALOG_OPEN', false);
+          context.dispatch('nodeFieldsClear');
+        }) .catch((error) => {
+          console.log(error);
+        });
       } else {
         context.commit('SET_NODE_CREATE_FIELDS_VALIDATE', false);
       }

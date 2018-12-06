@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
-    <template v-if="typeof mindMap !== 'undefined'">
-      <template v-for="item in mindMap.nodes">
+    <template v-if="this.$store.state.nodes.length !== 0">
+      <template v-for="item in nodes">
         <Node
           :key="item.key"
           :node="item"
@@ -23,7 +23,7 @@
           validMessage="Heyブラザー！TitleとBodyが空だぜ！"
           :validate="nodeCreateFields.validate"
           :fields="fields"
-          @submit-action="nodeCreate"
+          @submit-action="submitAction"
           @dialog-close="dialogClose"
         />
       </transition>
@@ -48,6 +48,7 @@ import DialogForm from '@/components/DialogForm.vue';
   },
   computed: {
     ...mapState([
+      'nodes',
       'isNodeDialogOpen',
       'nodeCreateFields'
     ]),
@@ -59,7 +60,6 @@ import DialogForm from '@/components/DialogForm.vue';
   }
 })
 export default class DetailView extends Vue {
-  mindMap: MindMap = {} as MindMap;
 
   fields = [
     {
@@ -92,26 +92,28 @@ export default class DetailView extends Vue {
     },
   ];
 
-  created() {
-    this.mindMap = this.$store.getters.getMindMap(this.$route.params.id);
+  mounted() {
+    this.$store.dispatch('nodeRead', this.$route.params.id).then(() => {
+      if (this.$store.state.nodes.length !== 0) {
+        const nodes: HTMLCollection = this.$el.getElementsByClassName('node');
+        const len: number = nodes.length;
+        const deg: number = 360.0 / len;
+        const red: number = (deg * Math.PI / 180.0);
+        const circleR: number = 100 * 2.5;
+
+        Array.prototype.forEach.call(nodes, (item: HTMLElement, index: number) => {
+          const rotate: HTMLElement = item as HTMLElement;
+          const x: number = Math.cos(red * index) * circleR + circleR;
+          const y: number = Math.sin(red * index) * circleR + circleR;
+          rotate.style.left = `${x}`;
+          rotate.style.top = `${y}`;
+        });
+      }
+    });
   }
 
-  mounted() {
-    if (typeof this.mindMap !== 'undefined') {
-      const nodes: HTMLCollection = this.$el.getElementsByClassName('node');
-      const len: number = nodes.length;
-      const deg: number = 360.0 / len;
-      const red: number = (deg * Math.PI / 180.0);
-      const circleR: number = 100 * 2.5;
-
-      Array.prototype.forEach.call(nodes, (item: HTMLElement, index: number) => {
-        const rotate: HTMLElement = item as HTMLElement;
-        const x: number = Math.cos(red * index) * circleR + circleR;
-        const y: number = Math.sin(red * index) * circleR + circleR;
-        rotate.style.left = `${x}`;
-        rotate.style.top = `${y}`;
-      });
-    }
+  submitAction() {
+    this.$store.dispatch('nodeCreate', this.$route.params.id);
   }
 
   dialogOpen() {
@@ -122,7 +124,7 @@ export default class DetailView extends Vue {
   }
 
   dialogEditOpen(key: string) {
-    const node = this.mindMap.nodes.filter((e: IdeaNode) => e.key === key)[0];
+    const node = this.$store.state.nodes.filter((e: IdeaNode) => e.key === key)[0];
     this.fields[0].value = node.title;
     this.fields[1].value = node.backgroundColor;
     this.fields[2].value = node.textColor;
