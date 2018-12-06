@@ -9,6 +9,7 @@
           :keyNumber="item.key"
           :title="item.title"
           :body="item.body"
+          @update-action="dialogEditOpen"
         />
       </template>
     </div>
@@ -19,7 +20,7 @@
         validMessage="Heyブラザー！TitleとBodyが空だぜ！"
         :validate="mapCreateFields.validate"
         :fields="fields"
-        @submit-action="mindMapCreate"
+        @submit-action="mindMapSubmit"
         @dialog-close="dialogClose"
       />
     </transition>
@@ -48,7 +49,7 @@ import DialogForm from './DialogForm.vue';
   },
   methods: {
     ...mapActions([
-      'mindMapCreate'
+      'mindMapSubmit'
     ]),
   }
 })
@@ -71,12 +72,23 @@ export default class HomeView extends Vue {
   ];
 
   dialogOpen() {
+    this.fields.forEach((e) => {
+      e.value = '';
+    });
+    this.$store.commit('SET_IS_DIALOG_OPEN', true);
+  }
+
+  dialogEditOpen(key: string) {
+    const mindMap = this.$store.getters.getMindMap(key);
+    this.fields[0].value = mindMap.title;
+    this.fields[1].value = mindMap.body;
+    this.$store.commit('SET_MAP_CREATE_FIELDS_KEY', key);
     this.$store.commit('SET_IS_DIALOG_OPEN', true);
   }
 
   dialogClose() {
     this.$store.commit('SET_IS_DIALOG_OPEN', false);
-    this.$store.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
+    this.$store.dispatch('mindMapFieldsClear');
   }
 }
 </script>

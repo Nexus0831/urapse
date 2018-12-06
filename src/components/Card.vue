@@ -28,6 +28,13 @@
         hoverColor="rgba(176, 0, 32, 0.2)"
         @click-action="alertOpen"
       />
+      <MaterialIcon
+        icon="edit"
+        style="color: #FFF"
+        rippleColor="rgba(255, 255, 255, 0.5)"
+        hoverColor="rgba(255, 255, 255, 0.2)"
+        @click-action="editAction"
+      />
     </div>
     <transition name="alert">
       <Alert
@@ -85,6 +92,10 @@ export default class Card extends Vue {
     this.$store.commit('SET_ALERT_ID', this.keyNumber);
   }
 
+  editAction() {
+    this.$emit('update-action', this.keyNumber);
+  }
+
   toggleTitleEdit() {
     this.isTitleEdit = !this.isTitleEdit;
   }
@@ -92,6 +103,12 @@ export default class Card extends Vue {
   toggleBodyEdit() {
     this.isBodyEdit = !this.isBodyEdit;
   }
+
+  // itemUpdate() {
+  //   // this.$store.commit('SET_MAP_CREATE_FIELDS_TITLE', 'update');
+  //   // this.$store.commit('SET_MAP_CREATE_FIELDS_BODY', 'this mindMap update');
+  //   // this.$store.dispatch('mindMapUpdate', this.keyNumber).then();
+  // }
 
   itemDelete() {
     this.$store.dispatch('mindMapDelete', this.keyNumber).then();

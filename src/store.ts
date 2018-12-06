@@ -14,6 +14,7 @@ export default new Vuex.Store({
     isDialogOpen: false,
     isNodeDialogOpen: false,
     mapCreateFields: {
+      key: '',
       title: '',
       body: '',
       validate: true
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     SET_IS_NODE_DIALOG_OPEN: (state, isOpen) => {
       state.isNodeDialogOpen = isOpen;
+    },
+    SET_MAP_CREATE_FIELDS_KEY: (state, key) => {
+      state.mapCreateFields.key = key;
     },
     SET_MAP_CREATE_FIELDS_TITLE: (state, title) => {
       state.mapCreateFields.title = title;
@@ -88,10 +92,10 @@ export default new Vuex.Store({
           mindMaps.push(Object.assign({key: item.key}, item.val()));
         });
 
-        console.log(mindMaps);
         context.commit('SET_MINDMAPS', mindMaps);
+      }).catch(() => {
+        context.commit('SET_MINDMAPS', []);
       });
-
     },
     mindMapCreate: (context) => {
       if (context.state.mapCreateFields.title !== '' && context.state.mapCreateFields.body !== '') {
@@ -104,9 +108,8 @@ export default new Vuex.Store({
         const database = firebase.database().ref(`/users/${uid}/mindMap`).push();
         database.update(data).then(() => {
           context.commit('SET_IS_DIALOG_OPEN', false);
-          context.commit('SET_MAP_CREATE_FIELDS_TITLE', '');
-          context.commit('SET_MAP_CREATE_FIELDS_BODY', '');
-          context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
+          context.dispatch('mindMapFieldsClear');
+          context.dispatch('mindMapRead').then();
         }) .catch((error) => {
           console.log(error);
         });
@@ -114,14 +117,39 @@ export default new Vuex.Store({
         context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', false);
       }
     },
-    mindMapUpdate: (context) => {
+    mindMapUpdate: (context, key) => {
+      const uid = context.state.user.uid;
+      firebase.database().ref(`/users/${uid}/mindMap/${key}`).update({
+        title: context.state.mapCreateFields.title,
+        body: context.state.mapCreateFields.body
+      }).then(() => {
+        context.commit('SET_IS_DIALOG_OPEN', false);
+        context.dispatch('mindMapFieldsClear');
+        context.dispatch('mindMapRead').then();
+      }).catch((error) => {
+        console.log(error);
+      });
+    },
+    mindMapSubmit: (context) => {
+      const key = context.state.mapCreateFields.key;
 
+      if (key === '') {
+        context.dispatch('mindMapCreate');
+      } else {
+        context.dispatch('mindMapUpdate', key);
+      }
     },
     mindMapDelete: (context, key) => {
       const uid = context.state.user.uid;
       firebase.database().ref(`/users/${uid}/mindMap/${key}`).remove().then(() => {
-        console.log('delete');
+        context.dispatch('mindMapRead').then();
       })
+    },
+    mindMapFieldsClear: (context) => {
+      context.commit('SET_MAP_CREATE_FIELDS_KEY', '');
+      context.commit('SET_MAP_CREATE_FIELDS_TITLE', '');
+      context.commit('SET_MAP_CREATE_FIELDS_BODY', '');
+      context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
     },
     nodeCreate: (context) => {
       if (
