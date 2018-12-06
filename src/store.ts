@@ -117,8 +117,6 @@ export default new Vuex.Store({
           context.commit('SET_IS_DIALOG_OPEN', false);
           context.dispatch('mindMapFieldsClear');
           context.dispatch('mindMapRead').then();
-        }) .catch((error) => {
-          console.log(error);
         });
       } else {
         context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', false);
@@ -133,8 +131,6 @@ export default new Vuex.Store({
         context.commit('SET_IS_DIALOG_OPEN', false);
         context.dispatch('mindMapFieldsClear');
         context.dispatch('mindMapRead').then();
-      }).catch((error) => {
-        console.log(error);
       });
     },
     mindMapSubmit: (context) => {
@@ -150,7 +146,7 @@ export default new Vuex.Store({
       const uid = context.state.user.uid;
       firebase.database().ref(`/users/${uid}/mindMap/${key}`).remove().then(() => {
         context.dispatch('mindMapRead').then();
-      })
+      });
     },
     mindMapFieldsClear: (context) => {
       context.commit('SET_MAP_CREATE_FIELDS_KEY', '');
@@ -193,9 +189,7 @@ export default new Vuex.Store({
           context.commit('SET_IS_NODE_DIALOG_OPEN', false);
           context.dispatch('nodeFieldsClear');
           context.dispatch('nodeRead', key);
-        }) .catch((error) => {
-          console.log(error);
-        });
+        })
       } else {
         context.commit('SET_NODE_CREATE_FIELDS_VALIDATE', false);
       }
@@ -211,8 +205,6 @@ export default new Vuex.Store({
         context.commit('SET_IS_NODE_DIALOG_OPEN', false);
         context.dispatch('nodeFieldsClear');
         context.dispatch('nodeRead', mindMapKey).then();
-      }).catch((error) => {
-        console.log(error);
       });
     },
     nodeSubmit: (context, mindMapKey) => {
