@@ -2,8 +2,10 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 
 Vue.use(Vuex);
+// const database = firebase.database();
 
 export default new Vuex.Store({
   state: {
@@ -161,12 +163,21 @@ export default new Vuex.Store({
   actions: {
     mindMapCreate: (context) => {
       if (context.state.mapCreateFields.title !== '' && context.state.mapCreateFields.body !== '') {
-        console.log(context.state.mapCreateFields.title);
-        console.log(context.state.mapCreateFields.body);
-        context.commit('SET_IS_DIALOG_OPEN', false);
-        context.commit('SET_MAP_CREATE_FIELDS_TITLE', '');
-        context.commit('SET_MAP_CREATE_FIELDS_BODY', '');
-        context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
+        const uid = context.state.user.uid;
+        const data = {
+          title: context.state.mapCreateFields.title,
+          body: context.state.mapCreateFields.body,
+        };
+
+        const database = firebase.database().ref(`/users/${uid}/mindMap`).push();
+        database.update(data).then(() => {
+          context.commit('SET_IS_DIALOG_OPEN', false);
+          context.commit('SET_MAP_CREATE_FIELDS_TITLE', '');
+          context.commit('SET_MAP_CREATE_FIELDS_BODY', '');
+          context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
+        }) .catch((error) => {
+          console.log(error);
+        });
       } else {
         context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', false);
       }
