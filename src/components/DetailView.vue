@@ -1,34 +1,31 @@
 <template>
   <div id="detail">
-    <template v-if="typeof mindMap !== 'undefined'">
-      <template v-for="item in mindMap.nodes">
+      <template v-for="item in nodes">
         <Node
           :key="item.key"
           :node="item"
           @click-action="dialogEditOpen(item.key)"
         />
       </template>
-      <FAB
-        icon="add"
-        style="color: #FFF"
-        rippleColor="rgba(255, 255, 255, 0.2)"
-        hoverColor="#a31545"
-        backgroundColor="#e91e63"
-        @click-action="dialogOpen"
+    <FAB
+      icon="add"
+      style="color: #FFF"
+      rippleColor="rgba(255, 255, 255, 0.2)"
+      hoverColor="#a31545"
+      backgroundColor="#e91e63"
+      @click-action="dialogOpen"
+    />
+    <transition name="fade">
+      <DialogForm
+        v-if="isNodeDialogOpen"
+        formTitle="Node"
+        validMessage="Heyブラザー！TitleとBodyが空だぜ！"
+        :validate="nodeCreateFields.validate"
+        :fields="fields"
+        @submit-action="submitAction"
+        @dialog-close="dialogClose"
       />
-      <transition name="fade">
-        <DialogForm
-          v-if="isNodeDialogOpen"
-          formTitle="Node"
-          validMessage="Heyブラザー！TitleとBodyが空だぜ！"
-          :validate="nodeCreateFields.validate"
-          :fields="fields"
-          @submit-action="nodeCreate"
-          @dialog-close="dialogClose"
-        />
-      </transition>
-    </template>
-    <h1 v-else>マインドマップが見つかりません</h1>
+    </transition>
   </div>
 </template>
 
@@ -48,6 +45,7 @@ import DialogForm from '@/components/DialogForm.vue';
   },
   computed: {
     ...mapState([
+      'nodes',
       'isNodeDialogOpen',
       'nodeCreateFields'
     ]),
@@ -59,7 +57,6 @@ import DialogForm from '@/components/DialogForm.vue';
   }
 })
 export default class DetailView extends Vue {
-  mindMap: MindMap = {} as MindMap;
 
   fields = [
     {
@@ -92,12 +89,18 @@ export default class DetailView extends Vue {
     },
   ];
 
-  created() {
-    this.mindMap = this.$store.getters.getMindMap(this.$route.params.id);
+  mounted() {
+    this.$store.dispatch('nodeRead', this.$route.params.id).then(() => {
+      this.positionSort();
+    });
   }
 
-  mounted() {
-    if (typeof this.mindMap !== 'undefined') {
+  update() {
+    this.positionSort();
+  }
+
+  positionSort() {
+    if (this.$store.state.nodes.length !== 0) {
       const nodes: HTMLCollection = this.$el.getElementsByClassName('node');
       const len: number = nodes.length;
       const deg: number = 360.0 / len;
@@ -114,6 +117,10 @@ export default class DetailView extends Vue {
     }
   }
 
+  submitAction() {
+    this.$store.dispatch('nodeSubmit', this.$route.params.id);
+  }
+
   dialogOpen() {
     this.fields.forEach((e) => {
       e.value = '';
@@ -122,11 +129,12 @@ export default class DetailView extends Vue {
   }
 
   dialogEditOpen(key: string) {
-    const node = this.mindMap.nodes.filter((e: IdeaNode) => e.key === key)[0];
+    const node = this.$store.state.nodes.filter((e: IdeaNode) => e.key === key)[0];
     this.fields[0].value = node.title;
     this.fields[1].value = node.backgroundColor;
     this.fields[2].value = node.textColor;
     this.fields[3].value = node.link;
+    this.$store.commit('SET_NODE_CREATE_FIELDS_KEY', key);
     this.$store.commit('SET_IS_NODE_DIALOG_OPEN', true);
   }
 

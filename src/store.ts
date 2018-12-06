@@ -2,106 +2,25 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    mindMaps: [
-      {
-        key: '12345',
-        title: 'Urapse Mind Map',
-        body: 'Lizards \n are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
-        nodes: [
-          {
-            key: 'a',
-            title: 'idea 1',
-            backgroundColor: '#2196f3',
-            textColor: 'white',
-            link: '',
-          },
-          {
-            key: 'b',
-            title: 'idea 2',
-            backgroundColor: '#e91e63',
-            textColor: 'white',
-            link: '',
-          },
-          {
-            key: 'c',
-            title: 'idea 3',
-            backgroundColor: '#8bc34a',
-            textColor: 'black',
-            link: '',
-          },
-          {
-            key: 'd',
-            title: 'idea 4',
-            backgroundColor: '#ffeb3b',
-            textColor: 'black',
-            link: '',
-          },
-          {
-            key: 'e',
-            title: 'idea 5',
-            backgroundColor: '#f44336',
-            textColor: 'white',
-            link: '',
-          },
-          {
-            key: 'f',
-            title: 'idea 6',
-            backgroundColor: '#3f51b5',
-            textColor: 'white',
-            link: '',
-          },
-        ],
-      },
-      {
-        key: '67890',
-        title: 'プロジェクト演習2',
-        body: 'Lizards \n are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
-        nodes: [
-          {
-            key: 'g',
-            title: 'idea 7',
-            backgroundColor: '#2196f3',
-            textColor: 'white',
-            link: '',
-          },
-          {
-            key: 'h',
-            title: 'idea 8',
-            backgroundColor: '#e91e63',
-            textColor: 'white',
-            link: '',
-          },
-          {
-            key: 'i',
-            title: 'idea 9',
-            backgroundColor: '#8bc34a',
-            textColor: 'black',
-            link: '',
-          },
-          {
-            key: 'j',
-            title: 'idea 10',
-            backgroundColor: '#ffeb3b',
-            textColor: 'black',
-            link: '',
-          },
-        ],
-      },
-    ],
+    mindMaps: [],
+    nodes: [],
     alertId: '',
     isDialogOpen: false,
     isNodeDialogOpen: false,
     mapCreateFields: {
+      key: '',
       title: '',
       body: '',
       validate: true
     },
     nodeCreateFields: {
+      key: '',
       title: '',
       backgroundColor: '',
       textColor: '',
@@ -112,6 +31,12 @@ export default new Vuex.Store({
     isSignIn: false,
   },
   mutations: {
+    SET_MINDMAPS: (state, mindMaps) => {
+      state.mindMaps = mindMaps;
+    },
+    SET_NODES: (state, nodes) => {
+      state.nodes = nodes;
+    },
     SET_ALERT_ID: (state, key) => {
       state.alertId = key;
     },
@@ -121,6 +46,9 @@ export default new Vuex.Store({
     SET_IS_NODE_DIALOG_OPEN: (state, isOpen) => {
       state.isNodeDialogOpen = isOpen;
     },
+    SET_MAP_CREATE_FIELDS_KEY: (state, key) => {
+      state.mapCreateFields.key = key;
+    },
     SET_MAP_CREATE_FIELDS_TITLE: (state, title) => {
       state.mapCreateFields.title = title;
     },
@@ -129,6 +57,9 @@ export default new Vuex.Store({
     },
     SET_MAP_CREATE_FIELDS_VALIDATE: (state, validate) => {
       state.mapCreateFields.validate = validate;
+    },
+    SET_NODE_CREATE_FIELDS_KEY: (state, key) => {
+      state.nodeCreateFields.key = key;
     },
     SET_NODE_CREATE_FIELDS_TITLE: (state, title) => {
       state.nodeCreateFields.title = title;
@@ -159,19 +90,85 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    mindMapRead: (context) => {
+      const uid = context.state.user.uid;
+      return firebase.database().ref(`/users/${uid}/mindMap`).once('value').then((snapshot) => {
+        let mindMaps: Array<object> = [];
+
+        snapshot.forEach((item) => {
+          mindMaps.push(Object.assign({key: item.key}, item.val()));
+        });
+
+        context.commit('SET_MINDMAPS', mindMaps);
+      }).catch(() => {
+        context.commit('SET_MINDMAPS', []);
+      });
+    },
     mindMapCreate: (context) => {
       if (context.state.mapCreateFields.title !== '' && context.state.mapCreateFields.body !== '') {
-        console.log(context.state.mapCreateFields.title);
-        console.log(context.state.mapCreateFields.body);
-        context.commit('SET_IS_DIALOG_OPEN', false);
-        context.commit('SET_MAP_CREATE_FIELDS_TITLE', '');
-        context.commit('SET_MAP_CREATE_FIELDS_BODY', '');
-        context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
+        const uid = context.state.user.uid;
+        const data = {
+          title: context.state.mapCreateFields.title,
+          body: context.state.mapCreateFields.body,
+        };
+
+        const database = firebase.database().ref(`/users/${uid}/mindMap`).push();
+        database.update(data).then(() => {
+          context.commit('SET_IS_DIALOG_OPEN', false);
+          context.dispatch('mindMapFieldsClear');
+          context.dispatch('mindMapRead').then();
+        });
       } else {
         context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', false);
       }
     },
-    nodeCreate: (context) => {
+    mindMapUpdate: (context, key) => {
+      const uid = context.state.user.uid;
+      firebase.database().ref(`/users/${uid}/mindMap/${key}`).update({
+        title: context.state.mapCreateFields.title,
+        body: context.state.mapCreateFields.body
+      }).then(() => {
+        context.commit('SET_IS_DIALOG_OPEN', false);
+        context.dispatch('mindMapFieldsClear');
+        context.dispatch('mindMapRead').then();
+      });
+    },
+    mindMapSubmit: (context) => {
+      const key = context.state.mapCreateFields.key;
+
+      if (key === '') {
+        context.dispatch('mindMapCreate');
+      } else {
+        context.dispatch('mindMapUpdate', key);
+      }
+    },
+    mindMapDelete: (context, key) => {
+      const uid = context.state.user.uid;
+      firebase.database().ref(`/users/${uid}/mindMap/${key}`).remove().then(() => {
+        context.dispatch('mindMapRead').then();
+      });
+    },
+    mindMapFieldsClear: (context) => {
+      context.commit('SET_MAP_CREATE_FIELDS_KEY', '');
+      context.commit('SET_MAP_CREATE_FIELDS_TITLE', '');
+      context.commit('SET_MAP_CREATE_FIELDS_BODY', '');
+      context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
+    },
+    nodeRead: (context, key) => {
+      const uid = context.state.user.uid;
+      return firebase.database().ref(`/users/${uid}/mindMap/${key}/nodes`).once('value').then((snapshot) => {
+        let nodes: Array<object> = [];
+
+        snapshot.forEach((item) => {
+          nodes.push(Object.assign({key: item.key}, item.val()));
+        });
+
+        context.commit('SET_NODES', nodes);
+      }).catch(() => {
+        context.commit('SET_NODES', []);
+      });
+    },
+    nodeCreate: (context, key) => {
       if (
         context.state.nodeCreateFields.title !== ''
         &&
@@ -179,17 +176,48 @@ export default new Vuex.Store({
         &&
         context.state.nodeCreateFields.textColor !== ''
       ) {
-        console.log(context.state.nodeCreateFields.title);
-        console.log(context.state.nodeCreateFields.backgroundColor);
-        console.log(context.state.nodeCreateFields.textColor);
-        console.log(context.state.nodeCreateFields.link);
-        context.commit('SET_IS_NODE_DIALOG_OPEN', false);
-        context.dispatch('nodeFieldsClear');
+        const uid = context.state.user.uid;
+        const data = {
+          title: context.state.nodeCreateFields.title,
+          backgroundColor: context.state.nodeCreateFields.backgroundColor,
+          textColor: context.state.nodeCreateFields.textColor,
+          link: context.state.nodeCreateFields.link
+        };
+
+        const database = firebase.database().ref(`/users/${uid}/mindMap/${key}/nodes`).push();
+        database.update(data).then(() => {
+          context.commit('SET_IS_NODE_DIALOG_OPEN', false);
+          context.dispatch('nodeFieldsClear');
+          context.dispatch('nodeRead', key);
+        })
       } else {
         context.commit('SET_NODE_CREATE_FIELDS_VALIDATE', false);
       }
     },
+    nodeUpdate: (context, mindMapKey) => {
+      const uid = context.state.user.uid;
+      firebase.database().ref(`/users/${uid}/mindMap/${mindMapKey}/nodes/${context.state.nodeCreateFields.key}`).update({
+        title: context.state.nodeCreateFields.title,
+        backgroundColor: context.state.nodeCreateFields.backgroundColor,
+        textColor: context.state.nodeCreateFields.textColor,
+        link: context.state.nodeCreateFields.link
+      }).then(() => {
+        context.commit('SET_IS_NODE_DIALOG_OPEN', false);
+        context.dispatch('nodeFieldsClear');
+        context.dispatch('nodeRead', mindMapKey).then();
+      });
+    },
+    nodeSubmit: (context, mindMapKey) => {
+      const key = context.state.nodeCreateFields.key;
+
+      if (key === '') {
+        context.dispatch('nodeCreate', mindMapKey);
+      } else {
+        context.dispatch('nodeUpdate', mindMapKey);
+      }
+    },
     nodeFieldsClear: (context) => {
+      context.commit('SET_NODE_CREATE_FIELDS_KEY', '');
       context.commit('SET_NODE_CREATE_FIELDS_TITLE', '');
       context.commit('SET_NODE_CREATE_FIELDS_BACKGROUND_COLOR', '');
       context.commit('SET_NODE_CREATE_FIELDS_TEXT_COLOR', '');

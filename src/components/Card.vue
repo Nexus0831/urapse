@@ -1,25 +1,9 @@
 <template>
-  <div class="card" @click="rippleEvent" @dblclick="clickAction">
-    <div v-if="!isTitleEdit" class="card-title" @click="toggleTitleEdit">
+  <div class="card" @click="clickAction">
+    <div class="card-title">
       {{ title }}
     </div>
-    <input
-      class="title-input"
-      v-if="isTitleEdit"
-      type="text"
-      @blur="toggleTitleEdit"
-      :value="title"
-      v-focus
-    />
-    <div class="card-body" v-if="!isBodyEdit" @click="toggleBodyEdit">{{ body }}</div>
-    <textarea
-      class="body-input"
-      v-if="isBodyEdit"
-      @blur="toggleBodyEdit"
-      :value="body"
-      v-focus
-    >
-    </textarea>
+    <div class="card-body">{{ body }}</div>
     <div class="icon-container">
       <MaterialIcon
         icon="delete"
@@ -28,54 +12,36 @@
         hoverColor="rgba(176, 0, 32, 0.2)"
         @click-action="alertOpen"
       />
-    </div>
-    <transition name="alert">
-      <Alert
-        :title="title"
-        v-if="alertId === keyNumber"
-        @alert-action="itemDelete"
+      <MaterialIcon
+        icon="edit"
+        style="color: #FFF"
+        rippleColor="rgba(255, 255, 255, 0.5)"
+        hoverColor="rgba(255, 255, 255, 0.2)"
+        @click-action="editAction"
       />
-    </transition>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { mapState } from 'vuex';
 import rippleEffect from '@/functions/ripple';
 import MaterialIcon from './MaterialIcon.vue';
-import Alert from './Alert.vue';
 
 @Component({
   components: {
-    MaterialIcon,
-    Alert
-  },
-  directives: {
-    focus: {
-      inserted: (el) => {
-        el.focus()
-      }
-    }
-  },
-  computed: {
-    ...mapState([
-      'alertId'
-    ]),
+    MaterialIcon
   },
   methods: {
     rippleEvent: (event) => {
       rippleEffect(event, "rgba(32, 32, 32, 0.5)");
-    },
+    }
   }
 })
 export default class Card extends Vue {
   @Prop() private title!: string;
   @Prop() private body!: string;
   @Prop() private keyNumber!: string;
-
-  isTitleEdit: boolean = false;
-  isBodyEdit: boolean = false;
 
   clickAction() {
     this.$router.push({ path: `/detail/${this.keyNumber}` });
@@ -85,16 +51,8 @@ export default class Card extends Vue {
     this.$store.commit('SET_ALERT_ID', this.keyNumber);
   }
 
-  toggleTitleEdit() {
-    this.isTitleEdit = !this.isTitleEdit;
-  }
-
-  toggleBodyEdit() {
-    this.isBodyEdit = !this.isBodyEdit;
-  }
-
-  itemDelete() {
-    console.log(`${this.keyNumber}delete action`);
+  editAction() {
+    this.$emit('update-action', this.keyNumber);
   }
 }
 </script>
@@ -154,7 +112,7 @@ export default class Card extends Vue {
     overflow hidden
     text-overflow ellipsis
     user-select none
-    white-space pre-wrap
+    white-space nowrap
     z-index 10
     /*--- end ---*/
 

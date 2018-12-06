@@ -9,7 +9,15 @@
           :keyNumber="item.key"
           :title="item.title"
           :body="item.body"
+          @update-action="dialogEditOpen"
         />
+        <transition name="alert" :key="item.key">
+          <Alert
+            :title="item.title"
+            v-if="alertId === item.key"
+            @alert-action="mindMapDelete(item.key)"
+          />
+        </transition>
       </template>
     </div>
     <transition name="fade">
@@ -19,7 +27,7 @@
         validMessage="Heyブラザー！TitleとBodyが空だぜ！"
         :validate="mapCreateFields.validate"
         :fields="fields"
-        @submit-action="mindMapCreate"
+        @submit-action="mindMapSubmit"
         @dialog-close="dialogClose"
       />
     </transition>
@@ -32,23 +40,27 @@ import { mapActions, mapState } from 'vuex';
 import Card from './Card.vue';
 import CreateButton from './CreateButton.vue';
 import DialogForm from './DialogForm.vue';
+import Alert from './Alert.vue';
 
 @Component({
   components: {
     Card,
     CreateButton,
-    DialogForm
+    DialogForm,
+    Alert
   },
   computed: {
     ...mapState([
       'mindMaps',
+      'alertId',
       'isDialogOpen',
       'mapCreateFields'
     ]),
   },
   methods: {
     ...mapActions([
-      'mindMapCreate'
+      'mindMapSubmit',
+      'mindMapDelete',
     ]),
   }
 })
@@ -71,12 +83,23 @@ export default class HomeView extends Vue {
   ];
 
   dialogOpen() {
+    this.fields.forEach((e) => {
+      e.value = '';
+    });
+    this.$store.commit('SET_IS_DIALOG_OPEN', true);
+  }
+
+  dialogEditOpen(key: string) {
+    const mindMap = this.$store.getters.getMindMap(key);
+    this.fields[0].value = mindMap.title;
+    this.fields[1].value = mindMap.body;
+    this.$store.commit('SET_MAP_CREATE_FIELDS_KEY', key);
     this.$store.commit('SET_IS_DIALOG_OPEN', true);
   }
 
   dialogClose() {
     this.$store.commit('SET_IS_DIALOG_OPEN', false);
-    this.$store.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
+    this.$store.dispatch('mindMapFieldsClear');
   }
 }
 </script>
