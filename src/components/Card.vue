@@ -66,7 +66,7 @@ import Alert from './Alert.vue';
   methods: {
     rippleEvent: (event) => {
       rippleEffect(event, "rgba(32, 32, 32, 0.5)");
-    },
+    }
   }
 })
 export default class Card extends Vue {
@@ -94,7 +94,7 @@ export default class Card extends Vue {
   }
 
   itemDelete() {
-    console.log(`${this.keyNumber}delete action`);
+    this.$store.dispatch('mindMapDelete', this.keyNumber).then();
   }
 }
 </script>

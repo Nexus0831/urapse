@@ -14,6 +14,7 @@ firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     store.commit('SET_USER', user);
     store.commit('SET_IS_SIGN_IN', true);
+    store.dispatch('mindMapRead').then();
 
     if (router.currentRoute.path === '/login') {
       router.push('/');

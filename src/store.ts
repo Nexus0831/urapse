@@ -9,92 +9,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    mindMaps: [
-      {
-        key: '12345',
-        title: 'Urapse Mind Map',
-        body: 'Lizards \n are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
-        nodes: [
-          {
-            key: 'a',
-            title: 'idea 1',
-            backgroundColor: '#2196f3',
-            textColor: 'white',
-            link: '',
-          },
-          {
-            key: 'b',
-            title: 'idea 2',
-            backgroundColor: '#e91e63',
-            textColor: 'white',
-            link: '',
-          },
-          {
-            key: 'c',
-            title: 'idea 3',
-            backgroundColor: '#8bc34a',
-            textColor: 'black',
-            link: '',
-          },
-          {
-            key: 'd',
-            title: 'idea 4',
-            backgroundColor: '#ffeb3b',
-            textColor: 'black',
-            link: '',
-          },
-          {
-            key: 'e',
-            title: 'idea 5',
-            backgroundColor: '#f44336',
-            textColor: 'white',
-            link: '',
-          },
-          {
-            key: 'f',
-            title: 'idea 6',
-            backgroundColor: '#3f51b5',
-            textColor: 'white',
-            link: '',
-          },
-        ],
-      },
-      {
-        key: '67890',
-        title: 'プロジェクト演習2',
-        body: 'Lizards \n are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
-        nodes: [
-          {
-            key: 'g',
-            title: 'idea 7',
-            backgroundColor: '#2196f3',
-            textColor: 'white',
-            link: '',
-          },
-          {
-            key: 'h',
-            title: 'idea 8',
-            backgroundColor: '#e91e63',
-            textColor: 'white',
-            link: '',
-          },
-          {
-            key: 'i',
-            title: 'idea 9',
-            backgroundColor: '#8bc34a',
-            textColor: 'black',
-            link: '',
-          },
-          {
-            key: 'j',
-            title: 'idea 10',
-            backgroundColor: '#ffeb3b',
-            textColor: 'black',
-            link: '',
-          },
-        ],
-      },
-    ],
+    mindMaps: [],
     alertId: '',
     isDialogOpen: false,
     isNodeDialogOpen: false,
@@ -114,6 +29,9 @@ export default new Vuex.Store({
     isSignIn: false,
   },
   mutations: {
+    SET_MINDMAPS: (state, mindMaps) => {
+      state.mindMaps = mindMaps;
+    },
     SET_ALERT_ID: (state, key) => {
       state.alertId = key;
     },
@@ -161,6 +79,20 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    mindMapRead: (context) => {
+      const uid = context.state.user.uid;
+      return firebase.database().ref(`/users/${uid}/mindMap`).once('value').then((snapshot) => {
+        let mindMaps: Array<object> = [];
+
+        snapshot.forEach((item) => {
+          mindMaps.push(Object.assign({key: item.key}, item.val()));
+        });
+
+        console.log(mindMaps);
+        context.commit('SET_MINDMAPS', mindMaps);
+      });
+
+    },
     mindMapCreate: (context) => {
       if (context.state.mapCreateFields.title !== '' && context.state.mapCreateFields.body !== '') {
         const uid = context.state.user.uid;
@@ -181,6 +113,15 @@ export default new Vuex.Store({
       } else {
         context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', false);
       }
+    },
+    mindMapUpdate: (context) => {
+
+    },
+    mindMapDelete: (context, key) => {
+      const uid = context.state.user.uid;
+      firebase.database().ref(`/users/${uid}/mindMap/${key}`).remove().then(() => {
+        console.log('delete');
+      })
     },
     nodeCreate: (context) => {
       if (
