@@ -20,6 +20,7 @@ export default new Vuex.Store({
       validate: true
     },
     nodeCreateFields: {
+      key: '',
       title: '',
       backgroundColor: '',
       textColor: '',
@@ -56,6 +57,9 @@ export default new Vuex.Store({
     },
     SET_MAP_CREATE_FIELDS_VALIDATE: (state, validate) => {
       state.mapCreateFields.validate = validate;
+    },
+    SET_NODE_CREATE_FIELDS_KEY: (state, key) => {
+      state.nodeCreateFields.key = key;
     },
     SET_NODE_CREATE_FIELDS_TITLE: (state, title) => {
       state.nodeCreateFields.title = title;
@@ -163,11 +167,9 @@ export default new Vuex.Store({
           nodes.push(Object.assign({key: item.key}, item.val()));
         });
 
-        console.log(nodes);
-
         context.commit('SET_NODES', nodes);
       }).catch(() => {
-        context.commit('SET_MINDMAPS', []);
+        context.commit('SET_NODES', []);
       });
     },
     nodeCreate: (context, key) => {
@@ -190,6 +192,7 @@ export default new Vuex.Store({
         database.update(data).then(() => {
           context.commit('SET_IS_NODE_DIALOG_OPEN', false);
           context.dispatch('nodeFieldsClear');
+          context.dispatch('nodeRead', key);
         }) .catch((error) => {
           console.log(error);
         });
@@ -197,7 +200,32 @@ export default new Vuex.Store({
         context.commit('SET_NODE_CREATE_FIELDS_VALIDATE', false);
       }
     },
+    nodeUpdate: (context, mindMapKey) => {
+      const uid = context.state.user.uid;
+      firebase.database().ref(`/users/${uid}/mindMap/${mindMapKey}/nodes/${context.state.nodeCreateFields.key}`).update({
+        title: context.state.nodeCreateFields.title,
+        backgroundColor: context.state.nodeCreateFields.backgroundColor,
+        textColor: context.state.nodeCreateFields.textColor,
+        link: context.state.nodeCreateFields.link
+      }).then(() => {
+        context.commit('SET_IS_NODE_DIALOG_OPEN', false);
+        context.dispatch('nodeFieldsClear');
+        context.dispatch('nodeRead', mindMapKey).then();
+      }).catch((error) => {
+        console.log(error);
+      });
+    },
+    nodeSubmit: (context, mindMapKey) => {
+      const key = context.state.nodeCreateFields.key;
+
+      if (key === '') {
+        context.dispatch('nodeCreate', mindMapKey);
+      } else {
+        context.dispatch('nodeUpdate', mindMapKey);
+      }
+    },
     nodeFieldsClear: (context) => {
+      context.commit('SET_NODE_CREATE_FIELDS_KEY', '');
       context.commit('SET_NODE_CREATE_FIELDS_TITLE', '');
       context.commit('SET_NODE_CREATE_FIELDS_BACKGROUND_COLOR', '');
       context.commit('SET_NODE_CREATE_FIELDS_TEXT_COLOR', '');
