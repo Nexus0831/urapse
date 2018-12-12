@@ -57,7 +57,6 @@ import DialogForm from '@/components/DialogForm.vue';
   }
 })
 export default class DetailView extends Vue {
-
   fields = [
     {
       label: 'Title',
@@ -111,8 +110,10 @@ export default class DetailView extends Vue {
         const rotate: HTMLElement = item as HTMLElement;
         const x: number = Math.cos(red * index) * circleR + circleR;
         const y: number = Math.sin(red * index) * circleR + circleR;
-        rotate.style.left = `${x}`;
-        rotate.style.top = `${y}`;
+        rotate.style.left = `${x}px`;
+        rotate.style.top = `${y}px`;
+        // console.log(`${rotate.style.left}`);
+        // console.log(`${rotate.style.top}`);
       });
     }
   }
@@ -151,18 +152,4 @@ export default class DetailView extends Vue {
   justify-content center
   align-items center
   height 100%
-
-  .rotate
-    /*animation rotate-anime 10s linear infinite*/
-    position absolute
-    filter drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2)) drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.14)) drop-shadow(0px 1px 18px rgba(0, 0, 0, 0.12))
-
-  @keyframes rotate-anime {
-    0% {
-      transform: rotate(0)
-    }
-    100% {
-      transform: rotate(360deg)
-    }
-  }
 </style>
