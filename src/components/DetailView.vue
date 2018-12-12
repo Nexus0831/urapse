@@ -116,8 +116,8 @@ export default class DetailView extends Vue {
 
       Array.prototype.forEach.call(nodes, (item: HTMLElement, index: number) => {
         const node: HTMLElement = item as HTMLElement;
-        const x: number = Math.cos(angle * index) * circleR + centerX;
-        const y: number = Math.sin(angle * index) * circleR + centerY;
+        const x: number = Math.cos(angle * index) * circleR + (centerX - node.clientWidth / 2);
+        const y: number = Math.sin(angle * index) * circleR + (centerY - node.clientHeight / 2);
         node.style.left = `${x}px`;
         node.style.top = `${y}px`;
       });
