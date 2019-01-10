@@ -10,7 +10,7 @@
       </div>
     </template>
     <template v-else>
-      <a :href="node.link" target="_blank" class="node-text" :style="{color: node.textColor}">
+      <a @click.stop :href="node.link" target="_blank" class="node-text" :style="{color: node.textColor}">
         {{ node.title }}
       </a>
     </template>
