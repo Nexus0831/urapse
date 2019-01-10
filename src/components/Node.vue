@@ -4,9 +4,16 @@
     @click="$emit('click-action')"
   >
     <div class="circle" :style="{backgroundColor: node.backgroundColor}"></div>
-    <div class="node-text" :style="{color: node.textColor}">
-      {{ node.title }}
-    </div>
+    <template v-if="node.link === ''">
+      <div class="node-text" :style="{color: node.textColor}">
+        {{ node.title }}
+      </div>
+    </template>
+    <template v-else>
+      <a :href="node.link" target="_blank" class="node-text" :style="{color: node.textColor}">
+        {{ node.title }}
+      </a>
+    </template>
   </div>
 </template>
 
