@@ -1,6 +1,6 @@
 <template>
   <div
-    class="node"
+    class="node run-anime"
     @click="$emit('click-action')"
   >
     <div class="circle" :style="{backgroundColor: node.backgroundColor}"></div>
@@ -29,7 +29,6 @@ export default class Node extends Vue {
 
 <style lang="stylus" scoped>
 .node
-  animation rotate-anime 60s linear infinite
   /*--- layout ---*/
   display flex
   justify-content center
@@ -52,6 +51,9 @@ export default class Node extends Vue {
     font-size 18px
     font-weight 400
     padding-left 10px
+
+.run-anime
+  animation rotate-anime 180s linear infinite
 
 @keyframes rotate-anime {
   100% {

@@ -1,6 +1,6 @@
 <template>
   <div id="detail">
-    <div class="node-container">
+    <div class="node-container anime-container">
       <template v-for="item in nodes">
         <Node
           :key="item.key"
@@ -106,7 +106,14 @@ export default class DetailView extends Vue {
   //   this.positionSort();
   // }
 
+  // @Watch('nodes')
+  // onNodesChange() {
+  //   this.positionSort();
+  // }
+
   positionSort() {
+    const nodeContainer: HTMLElement = this.$el.getElementsByClassName('node-container')[0] as HTMLElement;
+    nodeContainer.classList.remove('anime-container');
     if (this.$store.state.nodes.length !== 0) {
       const nodes: HTMLCollection = this.$el.getElementsByClassName('node');
       const angle: number = 2 * Math.PI / nodes.length;
@@ -116,11 +123,14 @@ export default class DetailView extends Vue {
 
       Array.prototype.forEach.call(nodes, (item: HTMLElement, index: number) => {
         const node: HTMLElement = item as HTMLElement;
+        node.classList.remove('run-anime');
         const x: number = Math.cos(angle * index) * circleR + (centerX - node.clientWidth / 2);
         const y: number = Math.sin(angle * index) * circleR + (centerY - node.clientHeight / 2);
         node.style.left = `${x}px`;
         node.style.top = `${y}px`;
+        node.classList.add('run-anime');
       });
+      nodeContainer.classList.add('anime-container');
     }
   }
 
@@ -158,14 +168,17 @@ export default class DetailView extends Vue {
   justify-content center
   align-items center
   height 100%
+  overflow hidden
 
   .node-container
-    animation rotate 60s linear infinite
     display flex
     justify-content center
     align-items center
     width 100%
     height 100%
+
+  .anime-container
+    animation rotate 180s linear infinite
 
 @keyframes rotate {
   100% { transform: rotate(360deg); }

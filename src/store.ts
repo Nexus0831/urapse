@@ -73,7 +73,7 @@ export default new Vuex.Store({
       state.nodeCreateFields.textColor = textColor;
     },
     SET_NODE_CREATE_FIELDS_LINK: (state, link) => {
-      state.nodeCreateFields.link = link;
+      state.nodeCreateFields.link = link as string;
     },
     SET_NODE_CREATE_FIELDS_VALIDATE: (state, validate) => {
       state.nodeCreateFields.link = validate;
@@ -149,12 +149,6 @@ export default new Vuex.Store({
         context.dispatch('mindMapRead').then();
       });
     },
-    mindMapFieldsClear: (context) => {
-      context.commit('SET_MAP_CREATE_FIELDS_KEY', '');
-      context.commit('SET_MAP_CREATE_FIELDS_TITLE', '');
-      context.commit('SET_MAP_CREATE_FIELDS_BODY', '');
-      context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
-    },
     nodeRead: (context, key) => {
       const uid: string = context.state.user.uid;
       return firebase.database().ref(`/users/${uid}/mindMap/${key}/nodes`).once('value').then((snapshot) => {
@@ -170,6 +164,7 @@ export default new Vuex.Store({
       });
     },
     nodeCreate: (context, key) => {
+      console.log('edit1: ' + context.state.nodeCreateFields.link);
       if (
         context.state.nodeCreateFields.title !== ''
         &&
@@ -178,11 +173,14 @@ export default new Vuex.Store({
         context.state.nodeCreateFields.textColor !== ''
       ) {
         const uid: string = context.state.user.uid;
+        const link: string = context.state.nodeCreateFields.link;
+        console.log('edit2: ' + context.state.nodeCreateFields.link);
+
         const data: object = {
           title: context.state.nodeCreateFields.title,
           backgroundColor: context.state.nodeCreateFields.backgroundColor,
           textColor: context.state.nodeCreateFields.textColor,
-          link: context.state.nodeCreateFields.link,
+          link: link,
         };
 
         firebase.database().ref(`/users/${uid}/mindMap/${key}/nodes`).push().update(data).then(() => {
@@ -196,12 +194,14 @@ export default new Vuex.Store({
     },
     nodeUpdate: (context, mindMapKey) => {
       const uid: string = context.state.user.uid;
+      const link: string = context.state.nodeCreateFields.link;
+      console.log(link);
 
       firebase.database().ref(`/users/${uid}/mindMap/${mindMapKey}/nodes/${context.state.nodeCreateFields.key}`).update({
         title: context.state.nodeCreateFields.title,
         backgroundColor: context.state.nodeCreateFields.backgroundColor,
         textColor: context.state.nodeCreateFields.textColor,
-        link: context.state.nodeCreateFields.link,
+        link: link,
       }).then(() => {
         context.commit('SET_IS_NODE_DIALOG_OPEN', false);
         context.dispatch('nodeFieldsClear').then();
@@ -216,6 +216,12 @@ export default new Vuex.Store({
       } else {
         context.dispatch('nodeUpdate', mindMapKey);
       }
+    },
+    mindMapFieldsClear: (context) => {
+      context.commit('SET_MAP_CREATE_FIELDS_KEY', '');
+      context.commit('SET_MAP_CREATE_FIELDS_TITLE', '');
+      context.commit('SET_MAP_CREATE_FIELDS_BODY', '');
+      context.commit('SET_MAP_CREATE_FIELDS_VALIDATE', true);
     },
     nodeFieldsClear: (context) => {
       context.commit('SET_NODE_CREATE_FIELDS_KEY', '');
