@@ -92,8 +92,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    mindMapRead: (context) => {
+    mindMapRead: async (context) => {
       const uid: string = context.state.user.uid;
+
       return firebase.database().ref(`/users/${uid}/mindMap`).once('value').then((snapshot) => {
         let mindMaps: Array<object> = [];
 
@@ -174,7 +175,6 @@ export default new Vuex.Store({
       ) {
         const uid: string = context.state.user.uid;
         const link: string = context.state.nodeCreateFields.link;
-        console.log('edit2: ' + context.state.nodeCreateFields.link);
 
         const data: object = {
           title: context.state.nodeCreateFields.title,
@@ -195,7 +195,6 @@ export default new Vuex.Store({
     nodeUpdate: (context, mindMapKey) => {
       const uid: string = context.state.user.uid;
       const link: string = context.state.nodeCreateFields.link;
-      console.log(link);
 
       firebase.database().ref(`/users/${uid}/mindMap/${mindMapKey}/nodes/${context.state.nodeCreateFields.key}`).update({
         title: context.state.nodeCreateFields.title,

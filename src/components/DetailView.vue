@@ -91,9 +91,15 @@ export default class DetailView extends Vue {
   ];
 
   mounted() {
-    this.$store.dispatch('nodeRead', this.$route.params.id).then(() => {
-      this.positionSort();
-    });
+    this.$store.dispatch('nodeRead', this.$route.params.id).then();
+
+    this.$store.watch(
+      state => state.user.uid,
+      () => {
+        this.$store.dispatch('nodeRead', this.$route.params.id).then();
+      },
+    );
+
     this.$store.watch(
       state => state.nodes,
       () => {
