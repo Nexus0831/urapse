@@ -1,5 +1,6 @@
 <template>
   <div id="detail">
+    <div class="node-container anime-container">
       <template v-for="item in nodes">
         <Node
           :key="item.key"
@@ -7,12 +8,13 @@
           @click-action="dialogEditOpen(item.key)"
         />
       </template>
+    </div>
     <FAB
       icon="add"
       style="color: #FFF"
       rippleColor="rgba(255, 255, 255, 0.2)"
-      hoverColor="#a31545"
-      backgroundColor="#e91e63"
+      hoverColor="#ab003c"
+      backgroundColor="#f50057"
       @click-action="dialogOpen"
     />
     <transition name="fade">
@@ -30,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 import { mapActions, mapState } from 'vuex';
 import { MindMap, IdeaNode } from '@/Interfaces/intarface';
 import Node from '@/components/Node.vue';
@@ -57,7 +59,6 @@ import DialogForm from '@/components/DialogForm.vue';
   }
 })
 export default class DetailView extends Vue {
-
   fields = [
     {
       label: 'Title',
@@ -90,30 +91,52 @@ export default class DetailView extends Vue {
   ];
 
   mounted() {
-    this.$store.dispatch('nodeRead', this.$route.params.id).then(() => {
-      this.positionSort();
-    });
+    this.$store.dispatch('nodeRead', this.$route.params.id).then();
+
+    this.$store.watch(
+      state => state.user.uid,
+      () => {
+        this.$store.dispatch('nodeRead', this.$route.params.id).then();
+      },
+    );
+
+    this.$store.watch(
+      state => state.nodes,
+      () => {
+        this.positionSort();
+      },
+    );
   }
 
-  update() {
-    this.positionSort();
-  }
+  // update() {
+  //   this.positionSort();
+  // }
+
+  // @Watch('nodes')
+  // onNodesChange() {
+  //   this.positionSort();
+  // }
 
   positionSort() {
+    const nodeContainer: HTMLElement = this.$el.getElementsByClassName('node-container')[0] as HTMLElement;
+    nodeContainer.classList.remove('anime-container');
     if (this.$store.state.nodes.length !== 0) {
       const nodes: HTMLCollection = this.$el.getElementsByClassName('node');
-      const len: number = nodes.length;
-      const deg: number = 360.0 / len;
-      const red: number = (deg * Math.PI / 180.0);
+      const angle: number = 2 * Math.PI / nodes.length;
       const circleR: number = 100 * 2.5;
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
 
       Array.prototype.forEach.call(nodes, (item: HTMLElement, index: number) => {
-        const rotate: HTMLElement = item as HTMLElement;
-        const x: number = Math.cos(red * index) * circleR + circleR;
-        const y: number = Math.sin(red * index) * circleR + circleR;
-        rotate.style.left = `${x}`;
-        rotate.style.top = `${y}`;
+        const node: HTMLElement = item as HTMLElement;
+        node.classList.remove('run-anime');
+        const x: number = Math.cos(angle * index) * circleR + (centerX - node.clientWidth / 2);
+        const y: number = Math.sin(angle * index) * circleR + (centerY - node.clientHeight / 2);
+        node.style.left = `${x}px`;
+        node.style.top = `${y}px`;
+        node.classList.add('run-anime');
       });
+      nodeContainer.classList.add('anime-container');
     }
   }
 
@@ -151,18 +174,19 @@ export default class DetailView extends Vue {
   justify-content center
   align-items center
   height 100%
+  overflow hidden
 
-  .rotate
-    /*animation rotate-anime 10s linear infinite*/
-    position absolute
-    filter drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2)) drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.14)) drop-shadow(0px 1px 18px rgba(0, 0, 0, 0.12))
+  .node-container
+    display flex
+    justify-content center
+    align-items center
+    width 100%
+    height 100%
 
-  @keyframes rotate-anime {
-    0% {
-      transform: rotate(0)
-    }
-    100% {
-      transform: rotate(360deg)
-    }
-  }
+  .anime-container
+    animation rotate 180s linear infinite
+
+@keyframes rotate {
+  100% { transform: rotate(360deg); }
+}
 </style>

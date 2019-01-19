@@ -1,23 +1,20 @@
 <template>
-  <svg
-    width="150"
-    height="150"
-    viewBox="0 0 150 150"
-    class="node"
+  <div
+    class="node run-anime"
     @click="$emit('click-action')"
   >
-    <circle cx="50%" cy="50%" r="50%" cursor="pointer" :fill="node.backgroundColor"/>
-    <text
-      x="50%"
-      y="50%"
-      :fill="node.textColor"
-      font-size="28"
-      text-anchor="middle"
-      dominant-baseline="central"
-    >
-      {{ node.title }}
-    </text>
-  </svg>
+    <div class="circle" :style="{backgroundColor: node.backgroundColor}"></div>
+    <template v-if="node.link === ''">
+      <div class="node-text" :style="{color: node.textColor}">
+        {{ node.title }}
+      </div>
+    </template>
+    <template v-else>
+      <a @click.stop :href="node.link" target="_blank" class="node-text" :style="{color: node.textColor}">
+        {{ node.title }}
+      </a>
+    </template>
+  </div>
 </template>
 
 <script lang="ts">
@@ -32,16 +29,35 @@ export default class Node extends Vue {
 
 <style lang="stylus" scoped>
 .node
-  /*animation rotate-anime 10s linear infinite*/
+  /*--- layout ---*/
+  display flex
+  justify-content center
+  align-items center
+  /*--- end ---*/
   position absolute
-  filter drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2)) drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.14)) drop-shadow(0px 1px 18px rgba(0, 0, 0, 0.12))
 
-  @keyframes rotate-anime {
-    0% {
-      transform: rotate(0)
-    }
-    100% {
-      transform: rotate(360deg)
-    }
+  &:hover
+    cursor pointer
+
+  .circle
+    border-radius 50%
+    width 30px
+    height 30px
+    box-shadow 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 18px 0px rgba(0, 0, 0, 0.12)
+
+  .node-text
+    font-size 18px
+    font-weight 400
+    padding-left 10px
+
+.run-anime
+  animation rotate-anime 180s linear infinite
+
+@keyframes rotate-anime {
+  100% {
+    transform: rotate(-360deg)
   }
+}
 </style>
